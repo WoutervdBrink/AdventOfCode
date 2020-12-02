@@ -14,9 +14,14 @@ $part = intval($argv[2] ?? 0);
 $part = append_zero(max(0, min(2, $part)));
 
 $file = sprintf('%s/puzzles/day%s.php', __DIR__, $day);
-$input1 = sprintf('%s/input/day%spart01', __DIR__, $day);
-$input2 = sprintf('%s/input/day%spart02', __DIR__, $day);
+$input = sprintf('%s/input/day%s', __DIR__, $day);
 $template = sprintf('%s/solution.php', __DIR__);
+
+if (!file_exists($input)) {
+    echo 'The puzzle input does not exist yet!'.PHP_EOL;
+    echo 'I will create one for you.'.PHP_EOL;
+    file_put_contents($input, '');
+}
 
 if (!file_exists($file)) {
     echo 'The puzzle solution does not exist yet!'.PHP_EOL;
@@ -28,15 +33,17 @@ if (!file_exists($file)) {
 /** @noinspection PhpIncludeInspection */
 require_once $file;
 
+$input = file_get_contents($input);
+
 switch ($part) {
     case 0:
-        echo part1(file_get_contents($input1));
-        echo part2(file_get_contents($input2));
+        echo part1($input).PHP_EOL;
+        echo part2($input).PHP_EOL;
         break;
     case 1:
-        echo part1(file_get_contents($input1));
+        echo part1($input).PHP_EOL;
         break;
     case 2:
-        echo part2(file_get_contents($input2));
+        echo part2($input).PHP_EOL;
         break;
 }
