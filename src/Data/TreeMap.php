@@ -1,6 +1,10 @@
 <?php
 
-class Map {
+
+namespace Knevelina\AdventOfCode\Data;
+
+
+class TreeMap {
     private $map;
     private $size;
 
@@ -53,22 +57,4 @@ class Map {
 
         return $trees;
     }
-}
-
-function part1(string $input) {
-    $map = new Map($input);
-
-    return $map->traverse(3, 1);
-}
-
-function part2(string $input) {
-    $map = new Map($input);
-
-    return (
-        $map->traverse(1, 1) *
-        $map->traverse(3, 1) *
-        $map->traverse(5, 1) *
-        $map->traverse(7, 1) *
-        $map->traverse(1, 2)
-    );
 }
