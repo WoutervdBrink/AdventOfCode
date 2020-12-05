@@ -4,9 +4,11 @@
 namespace Knevelina\AdventOfCode\Data;
 
 
+use JetBrains\PhpStorm\Pure;
+
 class TreeMap {
-    private $map;
-    private $size;
+    private array $map;
+    private int $size;
 
     public function __construct(string $input)
     {
@@ -31,7 +33,7 @@ class TreeMap {
         }
     }
 
-    public function getHeight()
+    #[Pure] public function getHeight(): int
     {
         return count($this->map);
     }

@@ -1,33 +1,59 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data;
 
+use JetBrains\PhpStorm\Pure;
 
+/**
+ * @property string|null byr
+ * @property string|null iyr
+ * @property string|null eyr
+ * @property string|null hgt
+ * @property string|null hcl
+ * @property string|null ecl
+ * @property string|null pid
+ * @property string|null cid
+ */
 class Passport {
-    private $data;
+    private array $data;
 
     public function __construct()
     {
         $this->data = [];
     }
 
+    /**
+     * @param string $name
+     * @param $value
+     */
     public function __set(string $name, $value)
     {
         $this->data[$name] = $value;
     }
 
-    public function __get(string $name)
+    /**
+     * @param string $name
+     * @return string|null
+     */
+    public function __get(string $name): string|null
     {
         return $this->data[$name] ?? null;
     }
 
-    public function has(string $name)
+    /**
+     * @param string $name
+     * @return bool
+     */
+    #[Pure] public function has(string $name): bool
     {
         return isset($this->data[$name]) && !is_null($this->data[$name]);
     }
 
-    public static function fromSpecification(string $specification): Passport
+    /**
+     * @param string $specification
+     * @return static
+     */
+    public static function fromSpecification(string $specification): static
     {
         $specification = str_replace("\n", ' ', $specification);
 
@@ -45,7 +71,10 @@ class Passport {
         return $passport;
     }
 
-    public function hasAllFields(): bool
+    /**
+     * @return bool
+     */
+    #[Pure] public function hasAllFields(): bool
     {
         foreach (['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'] as $key) {
             if (!$this->has($key)) {
@@ -56,6 +85,9 @@ class Passport {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function isValid(): bool
     {
         if (!$this->hasAllFields()) {

@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode;
 
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use RuntimeException;
 
 class PuzzleSolverExecutor
 {
@@ -14,9 +15,9 @@ class PuzzleSolverExecutor
      * @param int $day
      * @param int $part
      * @param string|null $input
-     * @return
+     * @return int
      */
-    public static function execute(int $day, int $part, ?string $input = null)
+    public static function execute(int $day, int $part, ?string $input = null): int
     {
         if (is_null($input)) {
             $input = InputLoader::getInput($day);
@@ -26,14 +27,14 @@ class PuzzleSolverExecutor
 
         if (!class_exists($class)) {
             echo $class;
-            throw new \RuntimeException(sprintf('No implementation exists for day %d!', $day));
+            throw new RuntimeException(sprintf('No implementation exists for day %d!', $day));
         }
 
         /** @var PuzzleSolver $solver */
         $solver = new $class();
 
         if (!($solver instanceof PuzzleSolver)) {
-            throw new \RuntimeException(sprintf('The implementation for day %d is not a PuzzleSolver!', $day));
+            throw new RuntimeException(sprintf('The implementation for day %d is not a PuzzleSolver!', $day));
         }
 
         $method = sprintf('part%d', $part);

@@ -14,7 +14,7 @@ class Day04 implements PuzzleSolver
     /**
      * @inheritDoc
      */
-    public function part1(string $input)
+    public function part1(string $input): int
     {
         $input = explode("\n\n", $input);
         $valid = 0;
@@ -33,7 +33,7 @@ class Day04 implements PuzzleSolver
     /**
      * @inheritDoc
      */
-    public function part2(string $input)
+    public function part2(string $input): int
     {
         $input = explode("\n\n", $input);
         $valid = 0;

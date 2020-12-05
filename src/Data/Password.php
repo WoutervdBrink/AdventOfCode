@@ -3,7 +3,10 @@
 
 namespace Knevelina\AdventOfCode\Data;
 
+use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Pure;
 
+#[Immutable]
 class Password
 {
     private int $min;
@@ -70,7 +73,7 @@ class Password
      * @param int $position
      * @return string
      */
-    public function getCharacterAt(int $position): string
+    #[Pure] public function getCharacterAt(int $position): string
     {
         return substr($this->password, $position - 1, 1);
     }

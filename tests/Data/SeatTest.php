@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class SeatTest extends TestCase
 {
+    /**
+     * @return array[]
+     */
     public function seats(): array
     {
         return [
@@ -26,7 +29,7 @@ class SeatTest extends TestCase
      * @param int $column
      * @param int $id
      */
-    function it_parses_a_seat(string $specification, int $row, int $column, int $id)
+    function it_parses_a_seat(string $specification, int $row, int $column, int $id): void
     {
         $seat = Seat::fromSpecification($specification);
 

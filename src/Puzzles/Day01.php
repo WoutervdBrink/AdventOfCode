@@ -12,7 +12,10 @@ use Knevelina\AdventOfCode\InputManipulator;
  */
 class Day01 implements PuzzleSolver
 {
-    public function part1(string $input)
+    /**
+     * @inheritDoc
+     */
+    public function part1(string $input): int
     {
         $values = InputManipulator::getListOfIntegers($input);
 
@@ -31,7 +34,10 @@ class Day01 implements PuzzleSolver
         return 0;
     }
 
-    public function part2(string $input)
+    /**
+     * @inheritDoc
+     */
+    public function part2(string $input): int
     {
         $values = InputManipulator::getListOfIntegers($input);
 

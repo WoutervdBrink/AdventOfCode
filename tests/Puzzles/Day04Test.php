@@ -18,12 +18,12 @@ class Day04Test extends PuzzleSolverTestCase
         ];
     }
 
-    public function getSolutionForPart1()
+    public function getSolutionForPart1(): int
     {
         return 256;
     }
 
-    public function getSolutionForPart2()
+    public function getSolutionForPart2(): int
     {
         return 198;
     }

@@ -4,6 +4,10 @@ namespace Knevelina\AdventOfCode\Tests\Puzzles;
 
 use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
 
+/**
+ * @covers \Knevelina\AdventOfCode\Puzzles\Day01
+ * @package Knevelina\AdventOfCode\Tests\Puzzles
+ */
 class Day01Test extends PuzzleSolverTestCase
 {
     public function getExamples(): array
@@ -14,12 +18,15 @@ class Day01Test extends PuzzleSolverTestCase
         ];
     }
 
-    public function getSolutionForPart1()
+    public function getSolutionForPart1(): int
     {
         return 542619;
     }
 
-    public function getSolutionForPart2()
+    /**
+     * @return int
+     */
+    public function getSolutionForPart2(): int
     {
         return 32858450;
     }

@@ -11,7 +11,10 @@ use Knevelina\AdventOfCode\InputManipulator;
 class Day05 implements PuzzleSolver
 {
 
-    public function part1(string $input)
+    /**
+     * @inheritDoc
+     */
+    public function part1(string $input): int
     {
         $seats = InputManipulator::splitLines($input);
         $maxId = 0;
@@ -23,7 +26,10 @@ class Day05 implements PuzzleSolver
         return $maxId;
     }
 
-    public function part2(string $input)
+    /**
+     * @inheritDoc
+     */
+    public function part2(string $input): int
     {
         $seats = InputManipulator::splitLines($input);
         $ids = array_map(fn ($spec) => Seat::fromSpecification($spec)->getId(), $seats);
@@ -37,5 +43,7 @@ class Day05 implements PuzzleSolver
                 return $ids[$i] - 1;
             }
         }
+
+        return 0;
     }
 }

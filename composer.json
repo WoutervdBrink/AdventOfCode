@@ -3,7 +3,8 @@
     "description": "My Advent of Code 2020 efforts.",
     "type": "project",
     "require-dev": {
-        "phpunit/phpunit": "^9.4"
+        "phpunit/phpunit": "^9.4",
+        "vimeo/psalm": "^4.3"
     },
     "license": "MIT",
     "authors": [

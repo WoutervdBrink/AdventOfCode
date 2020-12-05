@@ -4,6 +4,7 @@
 namespace Knevelina\AdventOfCode\Data;
 
 use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Pure;
 
 #[Immutable]
 class Seat
@@ -16,7 +17,11 @@ class Seat
     {
     }
 
-    public static function fromSpecification(string $specification)
+    /**
+     * @param string $specification
+     * @return Seat
+     */
+    public static function fromSpecification(string $specification): static
     {
         $rowSpecification = substr($specification, 0, 7);
         $colSpecification = substr($specification, 7, 3);
@@ -46,7 +51,7 @@ class Seat
     /**
      * @return int
      */
-    public function getId(): int
+    #[Pure] public function getId(): int
     {
         return 8 * $this->getRow() + $this->getColumn();
     }

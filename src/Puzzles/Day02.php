@@ -15,7 +15,7 @@ class Day02 implements PuzzleSolver
     /**
      * @inheritDoc
      */
-    public function part1(string $input)
+    public function part1(string $input): int
     {
         $specifications = InputManipulator::splitLines($input);
 
@@ -32,7 +32,7 @@ class Day02 implements PuzzleSolver
     /**
      * @inheritDoc
      */
-    public function part2(string $input)
+    public function part2(string $input): int
     {
         $specifications = InputManipulator::splitLines($input);
 

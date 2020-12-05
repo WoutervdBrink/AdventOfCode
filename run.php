@@ -22,7 +22,7 @@ try {
         echo PuzzleSolverExecutor::execute($argv[1], 2);
         echo PHP_EOL;
     }
-} catch (\RuntimeException $e) {
+} catch (RuntimeException $e) {
     echo $e->getMessage();
     exit(1);
 }

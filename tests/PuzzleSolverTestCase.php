@@ -7,6 +7,8 @@ namespace Knevelina\AdventOfCode\Tests;
 use Knevelina\AdventOfCode\InputLoader;
 use Knevelina\AdventOfCode\PuzzleSolverExecutor;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use RuntimeException;
 
 abstract class PuzzleSolverTestCase extends TestCase
 {
@@ -19,9 +21,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      *
      * Override this method to enable regression tests.
      *
-     * @return mixed
+     * @return int|null
      */
-    public function getSolutionForPart1() {
+    public function getSolutionForPart1(): int|null {
         return null;
     }
 
@@ -30,22 +32,18 @@ abstract class PuzzleSolverTestCase extends TestCase
      *
      * Override this method to enable regression tests.
      *
-     * @return mixed
+     * @return int|null
      */
-    public function getSolutionForPart2() {
+    public function getSolutionForPart2(): int|null {
         return null;
     }
 
     public function setUp(): void
     {
-        try {
-            $class = (new \ReflectionClass($this))->getShortName();
-        } catch (\ReflectionException $e) {
-            throw new \RuntimeException('The test class could not be reflected upon!');
-        }
+        $class = (new ReflectionClass($this))->getShortName();
 
         if (!preg_match('/^Day([0-9]+)Test$/', $class, $matches)) {
-            throw new \RuntimeException('The test class is invalid: it should be DayNNTest!');
+            throw new RuntimeException('The test class is invalid: it should be DayNNTest!');
         }
 
         $this->day = intval($matches[1]);
@@ -54,6 +52,9 @@ abstract class PuzzleSolverTestCase extends TestCase
     /**
      * @dataProvider getExamples
      * @test
+     * @param int $example
+     * @param int $part
+     * @param $expected
      */
     function it_solves_an_example(int $example, int $part, $expected): void
     {
