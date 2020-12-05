@@ -15,4 +15,14 @@ class Day05Test extends PuzzleSolverTestCase
             [1, 1, 368]
         ];ś
     }
+
+    public function getSolutionForPart1()
+    {
+        return 878;
+    }
+
+    public function getSolutionForPart2()
+    {
+        return 504;
+    }
 }
