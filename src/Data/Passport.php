@@ -17,16 +17,16 @@ use JetBrains\PhpStorm\Pure;
 class Passport {
     private array $data;
 
-    public function __construct()
+    public final function __construct()
     {
         $this->data = [];
     }
 
     /**
      * @param string $name
-     * @param $value
+     * @param mixed $value
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, mixed $value)
     {
         $this->data[$name] = $value;
     }
@@ -51,9 +51,9 @@ class Passport {
 
     /**
      * @param string $specification
-     * @return static
+     * @return Passport
      */
-    public static function fromSpecification(string $specification): static
+    public static function fromSpecification(string $specification): Passport
     {
         $specification = str_replace("\n", ' ', $specification);
 

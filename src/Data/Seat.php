@@ -21,7 +21,7 @@ class Seat
      * @param string $specification
      * @return Seat
      */
-    public static function fromSpecification(string $specification): static
+    public static function fromSpecification(string $specification): Seat
     {
         $rowSpecification = substr($specification, 0, 7);
         $colSpecification = substr($specification, 7, 3);
@@ -29,7 +29,7 @@ class Seat
         $rowSpecification = str_replace(['F', 'B'], ['0', '1'], $rowSpecification);
         $colSpecification = str_replace(['L', 'R'], ['0', '1'], $colSpecification);
 
-        return new Seat(bindec($rowSpecification), bindec($colSpecification));
+        return new Seat((int) bindec($rowSpecification), (int) bindec($colSpecification));
     }
 
     /**

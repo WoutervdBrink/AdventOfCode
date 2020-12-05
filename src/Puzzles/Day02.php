@@ -41,8 +41,8 @@ class Day02 implements PuzzleSolver
         return count(array_filter(
             $passwords,
             fn ($password) =>
-                ($password->getCharacterAt($password->getMin()) === $password->getLetter()) ^
-                ($password->getCharacterAt($password->getMax()) === $password->getLetter())
+                ($password->getCharacterAt($password->getMin()) === $password->getLetter() ? 1 : 0) ^
+                ($password->getCharacterAt($password->getMax()) === $password->getLetter() ? 1 : 0)
         ));
     }
 }

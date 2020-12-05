@@ -33,10 +33,6 @@ class PuzzleSolverExecutor
         /** @var PuzzleSolver $solver */
         $solver = new $class();
 
-        if (!($solver instanceof PuzzleSolver)) {
-            throw new RuntimeException(sprintf('The implementation for day %d is not a PuzzleSolver!', $day));
-        }
-
         $method = sprintf('part%d', $part);
 
         return $solver->{$method}($input);

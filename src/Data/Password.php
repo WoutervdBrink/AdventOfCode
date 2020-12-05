@@ -29,7 +29,7 @@ class Password
      * @param string $letter
      * @param string $password
      */
-    public function __construct(int $min, int $max, string $letter, string $password)
+    public final function __construct(int $min, int $max, string $letter, string $password)
     {
         $this->min = $min;
         $this->max = $max;
