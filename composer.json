@@ -12,7 +12,9 @@
             "email": "git@woutervdb.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": "^8.0"
+    },
     "autoload": {
         "psr-4": {
             "Knevelina\\AdventOfCode\\": "src/",
