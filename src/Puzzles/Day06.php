@@ -4,6 +4,7 @@
 namespace Knevelina\AdventOfCode\Puzzles;
 
 
+use Illuminate\Support\Collection;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
 
@@ -12,35 +13,28 @@ class Day06 implements PuzzleSolver
 
     public function part1(string $input): int
     {
-        $groups = InputManipulator::splitLines($input, "\n\n");
-
-        $value = 0;
-
-        foreach ($groups as $group) {
-            $group = str_replace("\n", '', $group);
-            $group = str_split($group);
-            sort($group);
-            $value += count(array_unique($group));
-        }
-
-        return $value;
+        return collect(InputManipulator::splitLines($input, "\n\n"))
+            ->map(fn (string $group): int =>
+                collect(str_split(str_replace("\n", '', $group)))
+                    ->unique()
+                    ->count()
+            )
+            ->sum();
     }
 
     public function part2(string $input): int
     {
-        $groups = InputManipulator::splitLines($input, "\n\n");
-
-        $value = 0;
-
-        foreach ($groups as $group) {
-            $answers = explode("\n", $group);
-            $answers = array_map(fn (string $answer): array => str_split($answer), $answers);
-
-            $common = call_user_func_array('array_intersect', $answers);
-
-            $value += count($common);
-        }
-
-        return $value;
+        return collect(InputManipulator::splitLines($input, "\n\n"))
+            ->map(callback: fn (string $group): int =>
+                collect(explode("\n", $group))
+                    ->map(fn (string $answer): array => str_split($answer))
+                    ->reduce(callback: fn (?Collection $intersect, array $answer):
+                        Collection => $intersect ?
+                            $intersect->intersect($answer) :
+                            collect($answer)
+                    )
+                    ->count()
+            )
+            ->sum();
     }
 }
