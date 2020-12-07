@@ -25,6 +25,7 @@ class Day07 implements PuzzleSolver
     /**
      * @param string $input
      * @return int
+     * @noinspection PhpUnusedParameterInspection
      */
     public function part1(string $input): int
     {

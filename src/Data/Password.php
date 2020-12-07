@@ -62,14 +62,6 @@ class Password
     }
 
     /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
      * @param int $position
      * @return string
      */

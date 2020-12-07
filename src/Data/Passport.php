@@ -17,11 +17,6 @@ use JetBrains\PhpStorm\Pure;
 class Passport {
     private array $data;
 
-    public final function __construct()
-    {
-        $this->data = [];
-    }
-
     /**
      * @param string $name
      * @param mixed $value

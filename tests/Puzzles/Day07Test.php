@@ -4,7 +4,9 @@
 namespace Knevelina\AdventOfCode\Tests\Puzzles;
 
 
-class Day07Test extends \Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase
+use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
+
+class Day07Test extends PuzzleSolverTestCase
 {
 
     public function getExamples(): array

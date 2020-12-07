@@ -84,6 +84,7 @@ class BagTest extends TestCase
      * @param string $specification
      * @param string $color
      * @param array ...$acceptedColors
+     * @noinspection PhpUnusedParameterInspection
      */
     function it_has_a_to_string_method(string $specification, string $color, array ...$acceptedColors): void
     {

@@ -4,6 +4,7 @@
 namespace Knevelina\AdventOfCode\Data;
 
 
+use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 
 class Bag
@@ -79,7 +80,7 @@ class Bag
     public static function fromSpecification(string $specification): Bag
     {
         if (!preg_match('/^([a-z ]+) bags contain/', $specification, $matches)) {
-            throw new \InvalidArgumentException('Specification is missing the bag color!');
+            throw new InvalidArgumentException('Specification is missing the bag color!');
         }
 
         $bag = new Bag($matches[1]);

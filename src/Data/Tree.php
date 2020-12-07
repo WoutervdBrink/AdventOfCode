@@ -3,8 +3,6 @@
 
 namespace Knevelina\AdventOfCode\Data;
 
-use Illuminate\Support\Collection;
-
 class Tree
 {
     private string $id;
@@ -43,14 +41,6 @@ class Tree
     }
 
     /**
-     * @return Tree|null
-     */
-    public function getParent(): ?Tree
-    {
-        return $this->parent;
-    }
-
-    /**
      * @return array
      */
     public function getChildren(): array
@@ -60,6 +50,7 @@ class Tree
 
     /**
      * @return string
+     * @noinspection PhpUnused
      */
     public function __toString(): string
     {
