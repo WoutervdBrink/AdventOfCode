@@ -17,8 +17,15 @@ class Day06Test extends PuzzleSolverTestCase
         ];
     }
 
-    public function getSolutionForPart1(): int
-    {
-        return 400410;
-    }
+    // At the moment, the implementation is very slow and thus not included in the test suite.
+    // Feel free to include these tests if another day uses the lights system.
+//    public function getSolutionForPart1(): int
+//    {
+//        return 400410;
+//    }
+//
+//    public function getSolutionForPart2(): int
+//    {
+//        return 15343601;
+//    }
 }

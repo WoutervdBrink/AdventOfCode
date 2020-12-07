@@ -47,7 +47,7 @@ class LightGrid
         $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (bool $old): bool => false);
     }
 
-    #[Pure] public function getEnabledLights(): int
+    public function getEnabledLights(): int
     {
         $sum = 0;
 

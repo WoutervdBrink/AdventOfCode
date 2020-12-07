@@ -44,7 +44,7 @@ class AdvancedLightGrid extends LightGrid
         $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (int $old): int => max(0, $old - 1));
     }
 
-    #[Pure] public function getBrightness(): int
+    public function getBrightness(): int
     {
         $sum = 0;
 
