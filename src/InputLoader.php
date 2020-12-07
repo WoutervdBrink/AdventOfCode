@@ -9,31 +9,31 @@ use RuntimeException;
 
 class InputLoader
 {
-    #[Pure] private static function getInputPath(int $day): string
+    #[Pure] private static function getInputPath(int $year, int $day): string
     {
-        return sprintf('%s/../resources/inputs/day%02d.txt', __DIR__, $day);
+        return sprintf('%s/../resources/inputs/%d/day%02d.txt', __DIR__, $year, $day);
     }
 
-    #[Pure] private static function getExamplePath(int $day, int $example): string
+    #[Pure] private static function getExamplePath(int $year, $day, int $example): string
     {
-        return sprintf('%s/../resources/examples/day%02d_example%d.txt', __DIR__, $day, $example);
+        return sprintf('%s/../resources/examples/%d/%02d/example%d.txt', __DIR__, $year, $day, $example);
     }
 
-    public static function getInput(int $day): string
+    public static function getInput(int $year, $day): string
     {
-        if (!file_exists($path = self::getInputPath($day))) {
+        if (!file_exists($path = self::getInputPath($year, $day))) {
             throw new RuntimeException(sprintf('Input for day %d does not exist!', $day));
         }
 
-        return file_get_contents(self::getInputPath($day));
+        return file_get_contents($path);
     }
 
-    public static function getExample(int $day, int $example): string
+    public static function getExample(int $year, $day, int $example): string
     {
-        if (!file_exists($path = self::getExamplePath($day, $example))) {
+        if (!file_exists($path = self::getExamplePath($year, $day, $example))) {
             throw new RuntimeException(sprintf('Input for example %d of day %d does not exist!', $day, $example));
         }
 
-        return file_get_contents(self::getExamplePath($day, $example));
+        return file_get_contents($path);
     }
 }

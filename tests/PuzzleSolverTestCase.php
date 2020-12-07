@@ -12,6 +12,7 @@ use RuntimeException;
 
 abstract class PuzzleSolverTestCase extends TestCase
 {
+    private int $year;
     private int $day;
 
     public abstract function getExamples(): array;
@@ -40,13 +41,19 @@ abstract class PuzzleSolverTestCase extends TestCase
 
     public function setUp(): void
     {
-        $class = (new ReflectionClass($this))->getShortName();
+        $reflection = new ReflectionClass($this);
 
-        if (!preg_match('/^Day([0-9]+)Test$/', $class, $matches)) {
+        if (!preg_match('/^Day([0-9]+)Test$/', $reflection->getShortName(), $matches)) {
             throw new RuntimeException('The test class is invalid: it should be DayNNTest!');
         }
 
         $this->day = intval($matches[1]);
+
+        if (!preg_match('/Year(\d{4})/', $reflection->getNamespaceName(), $matches)) {
+            throw new RuntimeException('The test class is invalid: it should be in a YearNNNN namesapce!');
+        }
+
+        $this->year = intval($matches[1]);
     }
 
     /**
@@ -58,9 +65,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      */
     function it_solves_an_example(int $example, int $part, $expected): void
     {
-        $input = InputLoader::getExample($this->day, $example);
+        $input = InputLoader::getExample($this->year, $this->day, $example);
 
-        $this->assertEquals($expected, PuzzleSolverExecutor::execute($this->day, $part, $input));
+        $this->assertEquals($expected, PuzzleSolverExecutor::execute($this->year, $this->day, $part, $input));
     }
 
     /** @test */
@@ -70,11 +77,11 @@ abstract class PuzzleSolverTestCase extends TestCase
         $part2 = $this->getSolutionForPart2();
 
         if (!is_null($part1)) {
-            self::assertEquals($part1, PuzzleSolverExecutor::execute($this->day, 1));
+            self::assertEquals($part1, PuzzleSolverExecutor::execute($this->year, $this->day, 1));
         }
 
         if (!is_null($part2)) {
-            self::assertEquals($part2, PuzzleSolverExecutor::execute($this->day, 2));
+            self::assertEquals($part2, PuzzleSolverExecutor::execute($this->year, $this->day, 2));
         }
 
         if (is_null($part1) && is_null($part2)) {

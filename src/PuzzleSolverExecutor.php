@@ -17,13 +17,13 @@ class PuzzleSolverExecutor
      * @param string|null $input
      * @return int
      */
-    public static function execute(int $day, int $part, ?string $input = null): int
+    public static function execute(int $year, int $day, int $part, ?string $input = null): int
     {
         if (is_null($input)) {
-            $input = InputLoader::getInput($day);
+            $input = InputLoader::getInput($year, $day);
         }
 
-        $class = sprintf('Knevelina\\AdventOfCode\\Puzzles\\Day%02d', $day);
+        $class = sprintf('Knevelina\\AdventOfCode\\Puzzles\\Year%04d\\Day%02d', $year, $day);
 
         if (!class_exists($class)) {
             echo $class;
