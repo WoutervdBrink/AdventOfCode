@@ -11,8 +11,9 @@ class Day07Test extends PuzzleSolverTestCase
 
     public function getExamples(): array
     {
-        // Covered by WireCollectionTest
-        return [];
+        return [
+            [1, 1, 65079]
+        ];
     }
 
     public function getSolutionForPart1(): int
