@@ -6,7 +6,6 @@ use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
 use Knevelina\AdventOfCode\Contracts\PuzzleVisualizer;
-use Knevelina\AdventOfCode\Data\Year2020\Instruction;
 use Knevelina\AdventOfCode\Data\Year2020\Operation;
 use Knevelina\AdventOfCode\Data\Year2020\Program;
 
