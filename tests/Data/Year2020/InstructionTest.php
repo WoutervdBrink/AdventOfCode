@@ -12,6 +12,16 @@ use PHPUnit\Framework\TestCase;
 class InstructionTest extends TestCase
 {
     /**
+     * @test
+     * @dataProvider invalidInstructions
+     */
+    function it_rejects_invalid_instructions(string $instruction): void
+    {
+        $this->expectExceptionMessage('Invalid instruction format');
+
+        Instruction::fromSpecification($instruction);
+    }
+    /**
      * @dataProvider instructions
      * @test
      * @param string $specification
@@ -57,6 +67,16 @@ class InstructionTest extends TestCase
             ['eof +0', Operation::EOF, 0],
             ['eof -10', Operation::EOF, -10],
             ['eof +300', Operation::EOF, 300]
+        ];
+    }
+
+    public function invalidInstructions(): array
+    {
+        return [
+            ['eof'],
+            ['nop 0'],
+            ['nop --1'],
+            ['eof ++1']
         ];
     }
 }

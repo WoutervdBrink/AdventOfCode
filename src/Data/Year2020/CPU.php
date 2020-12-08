@@ -1,10 +1,7 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2020;
 
-
-use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 
 class CPU

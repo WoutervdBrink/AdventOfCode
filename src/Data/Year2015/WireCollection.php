@@ -36,7 +36,7 @@ class WireCollection
                 continue;
             }
 
-            throw new RuntimeException(sprintf('Could not parse gate specification "%s".', $gate));
+            throw new RuntimeException(sprintf('Invalid gate specification "%s".', $gate));
         }
     }
 

@@ -3,7 +3,9 @@
 
 namespace Knevelina\AdventOfCode\Tests\Data\Year2020;
 
+use InvalidArgumentException;
 use Knevelina\AdventOfCode\Data\Year2020\Bag;
+use Knevelina\AdventOfCode\Data\Year2020\Program;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,6 +22,14 @@ class BagTest extends TestCase
     }
 
     /** @test */
+    function it_rejects_invalid_colors(): void
+    {
+        $this->expectExceptionObject(new InvalidArgumentException('Specification is missing the bag color!'));
+
+        Bag::fromSpecification('bags contain no other bags.');
+    }
+
+    /** @test */
     function it_accepts_colors()
     {
         $bag = new Bag('red');
@@ -28,6 +38,8 @@ class BagTest extends TestCase
 
         $this->assertEquals(1, $bag->accepts('red'));
         $this->assertEquals(2, $bag->accepts('green'));
+
+        $this->assertEquals(['red' => 1, 'green' => 2], $bag->getAcceptableColors());
     }
 
     /** @test */

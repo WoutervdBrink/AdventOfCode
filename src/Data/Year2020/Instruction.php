@@ -3,7 +3,7 @@
 
 namespace Knevelina\AdventOfCode\Data\Year2020;
 
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 use JetBrains\PhpStorm\Immutable;
 use JetBrains\PhpStorm\Pure;
 

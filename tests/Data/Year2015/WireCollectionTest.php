@@ -1,12 +1,15 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Tests\Data\Year2015;
 
-
+use Knevelina\AdventOfCode\Data\Year2015\Wire;
 use Knevelina\AdventOfCode\Data\Year2015\WireCollection;
+use Knevelina\AdventOfCode\Data\Year2015\WireOperator;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Knevelina\AdventOfCode\Data\Year2015\WireCollection
+ */
 class WireCollectionTest extends TestCase
 {
     /** @test */
@@ -29,5 +32,52 @@ NOT y -> i');
         $this->assertEquals(65079, $wc->getValue('i'));
         $this->assertEquals(123, $wc->getValue('x'));
         $this->assertEquals(456, $wc->getValue('y'));
+    }
+
+    /** @test */
+    function it_rejects_invalid_gates(): void
+    {
+        $this->expectExceptionMessage('Invalid gate specification');
+
+        new WireCollection('abc');
+    }
+
+    /** @test */
+    function it_rejects_double_wires(): void
+    {
+        $this->expectExceptionMessage('Trying to add existing');
+
+        new WireCollection("123 -> y\n456 -> y");
+    }
+
+    /** @test */
+    function it_rejects_non_existent_wires(): void
+    {
+        $wc = new WireCollection('123 -> y');
+
+        $this->expectExceptionMessage('Trying to get the value of non-existent wire');
+
+        $wc->getValue('x');
+    }
+
+    /** @test */
+    function it_gets_wires(): void
+    {
+        $wc = new WireCollection("123 -> y\nNOT y -> x");
+
+        $this->assertEquals([
+            'y' => new Wire(WireOperator::VALUE, [123]),
+            'x' => new Wire(WireOperator::NOT, ['y'])
+        ], $wc->getWires());
+    }
+
+    /** @test */
+    function it_removes_wires(): void
+    {
+        $wc = new WireCollection("123 -> y\nNOT y -> x");
+
+        $wc->removeWire('y');;
+
+        $this->assertEquals(['x' => new Wire(WireOperator::NOT, ['y'])], $wc->getWires());
     }
 }

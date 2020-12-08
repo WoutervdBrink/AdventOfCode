@@ -6,6 +6,9 @@ namespace Knevelina\AdventOfCode\Tests\Puzzles\Year2020;
 
 use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
 
+/**
+ * @covers \Knevelina\AdventOfCode\Puzzles\Year2020\Day08
+ */
 class Day08Test extends PuzzleSolverTestCase
 {
 

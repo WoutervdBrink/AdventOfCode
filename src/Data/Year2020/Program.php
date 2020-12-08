@@ -9,6 +9,11 @@ class Program
 {
     private array $instructions;
 
+    public function __construct()
+    {
+        $this->instructions = [];
+    }
+
     public static function fromSpecification(string $specification): Program
     {
         $program = new Program();

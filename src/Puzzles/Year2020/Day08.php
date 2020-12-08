@@ -9,7 +9,6 @@ use Knevelina\AdventOfCode\Data\Year2020\CPU;
 use Knevelina\AdventOfCode\Data\Year2020\Instruction;
 use Knevelina\AdventOfCode\Data\Year2020\Operation;
 use Knevelina\AdventOfCode\Data\Year2020\Program;
-use Knevelina\AdventOfCode\InputManipulator;
 
 class Day08 implements PuzzleSolver
 {

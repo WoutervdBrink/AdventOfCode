@@ -6,7 +6,7 @@ use Knevelina\AdventOfCode\Data\Year2020\Seat;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Seat
+ * @covers \Knevelina\AdventOfCode\Data\Year2020\Seat
  */
 class SeatTest extends TestCase
 {
