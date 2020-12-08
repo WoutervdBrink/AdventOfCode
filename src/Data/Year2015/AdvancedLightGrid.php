@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2015;
-
 
 use JetBrains\PhpStorm\Pure;
 
@@ -12,6 +10,8 @@ class AdvancedLightGrid extends LightGrid
 
     public function __construct()
     {
+        parent::__construct();
+
         for ($row = 0; $row < self::HEIGHT; $row++) {
             $this->lights[$row] = [];
             for ($col = 0; $col < self::WIDTH; $col++) {
@@ -44,7 +44,7 @@ class AdvancedLightGrid extends LightGrid
         $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (int $old): int => max(0, $old - 1));
     }
 
-    public function getBrightness(): int
+    #[Pure] public function getBrightness(): int
     {
         $sum = 0;
 

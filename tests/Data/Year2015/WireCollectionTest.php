@@ -76,7 +76,7 @@ NOT y -> i');
     {
         $wc = new WireCollection("123 -> y\nNOT y -> x");
 
-        $wc->removeWire('y');;
+        $wc->removeWire('y');
 
         $this->assertEquals(['x' => new Wire(WireOperator::NOT, ['y'])], $wc->getWires());
     }

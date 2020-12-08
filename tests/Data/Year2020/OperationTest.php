@@ -37,6 +37,8 @@ class OperationTest extends TestCase
     /**
      * @dataProvider mnemonics
      * @test
+     * @param string $expected
+     * @param int $operation
      */
     function it_translates_operations(string $expected, int $operation): void
     {

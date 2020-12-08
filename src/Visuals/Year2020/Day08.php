@@ -19,10 +19,7 @@ class Day08 implements PuzzleVisualizer
     private function getVertex(int $address): Vertex
     {
         if (!isset($this->vertices[$address])) {
-            $instruction = $this->program->getInstruction($address);
-            $this->vertices[$address] = $this->graph->createVertex($address, [
-                'name' => $address.': '.$instruction->__toString()
-            ]);
+            $this->vertices[$address] = $this->graph->createVertex($address);
         }
 
         return $this->vertices[$address];

@@ -61,9 +61,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      * @test
      * @param int $example
      * @param int $part
-     * @param $expected
+     * @param int $expected
      */
-    function it_solves_an_example(int $example, int $part, $expected): void
+    function it_solves_an_example(int $example, int $part, int $expected): void
     {
         $input = InputLoader::getExample($this->year, $this->day, $example);
 

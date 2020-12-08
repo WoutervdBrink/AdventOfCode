@@ -18,6 +18,8 @@ class Day04 implements PuzzleSolver
                 return $num;
             }
         }
+
+        return 0;
     }
 
     public function part2(string $input): int
@@ -31,5 +33,7 @@ class Day04 implements PuzzleSolver
                 return $num;
             }
         }
+
+        return 0;
     }
 }

@@ -17,8 +17,6 @@ class Day08 implements PuzzleSolver
     {
         $program = Program::fromSpecification($input);
         $cpu = new CPU($program);
-        $cache = [];
-        $i = 0;
 
         $cpu->terminates();
 
@@ -41,7 +39,8 @@ class Day08 implements PuzzleSolver
             $clone->setInstruction($add, new Instruction(
                 match ($ins->getOperation()) {
                     Operation::JMP => Operation::NOP,
-                    Operation::NOP => Operation::JMP
+                    Operation::NOP => Operation::JMP,
+                    default => Operation::EOF
                 },
                 $ins->getArgument()
             ));

@@ -5,14 +5,14 @@ namespace Knevelina\AdventOfCode\Data\Year2020;
 use JetBrains\PhpStorm\Pure;
 
 /**
- * @property string|null byr
- * @property string|null iyr
- * @property string|null eyr
- * @property string|null hgt
- * @property string|null hcl
- * @property string|null ecl
- * @property string|null pid
- * @property string|null cid
+ * @property string|null $byr
+ * @property string|null $iyr
+ * @property string|null $eyr
+ * @property string|null $hgt
+ * @property string|null $hcl
+ * @property string|null $ecl
+ * @property string|null $pid
+ * @property string|null $cid
  */
 class Passport {
     private array $data;

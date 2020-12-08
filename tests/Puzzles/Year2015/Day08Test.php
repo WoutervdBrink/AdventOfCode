@@ -59,6 +59,9 @@ class Day08Test extends PuzzleSolverTestCase
      * @dataProvider regularStrings
      * @dataProvider stringsWithDoubleQuoteCharacters
      * @dataProvider stringsWithBackslashes
+     * @param string $codeString
+     * @param int $length
+     * @param string $encoded
      */
     function it_calculates_string_lengths_and_encodes_strings(string $codeString, int $length, string $encoded): void
     {

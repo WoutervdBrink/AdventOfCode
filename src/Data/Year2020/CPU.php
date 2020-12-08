@@ -63,7 +63,7 @@ class CPU
                 $nextPc = $this->pc + $argument;
                 break;
             default:
-                throw new RuntimeException(sprintf('Unknown instruction "%s"!', $instruction));
+                throw new RuntimeException(sprintf('Unknown instruction "%s"!', $instruction->__toString()));
         }
 
         $this->pc = $nextPc;

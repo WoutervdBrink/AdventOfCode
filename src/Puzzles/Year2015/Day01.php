@@ -2,6 +2,7 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
+use JetBrains\PhpStorm\Pure;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 
 class Day01 implements PuzzleSolver
@@ -25,7 +26,7 @@ class Day01 implements PuzzleSolver
         return $floor;
     }
 
-    public function part2(string $input): int
+    #[Pure] public function part2(string $input): int
     {
         $floor = 0;
 
@@ -41,5 +42,7 @@ class Day01 implements PuzzleSolver
                 return $i + 1;
             }
         }
+
+        return 0;
     }
 }

@@ -18,7 +18,9 @@ class Day02 implements PuzzleSolver
         foreach ($input as $measurements) {
             $measurements = explode('x', $measurements, 3);
 
-            $present = new Present($measurements[0], $measurements[1], $measurements[2]);
+            $present = new Present(intval($measurements[0]),
+                                   intval($measurements[1]),
+                                   intval($measurements[2]));
 
             $total += $present->getArea();
             $total += $present->getSmallestSide();

@@ -14,26 +14,13 @@ class InstructionTest extends TestCase
     /**
      * @test
      * @dataProvider invalidInstructions
+     * @param string $instruction
      */
     function it_rejects_invalid_instructions(string $instruction): void
     {
         $this->expectExceptionMessage('Invalid instruction format');
 
         Instruction::fromSpecification($instruction);
-    }
-    /**
-     * @dataProvider instructions
-     * @test
-     * @param string $specification
-     * @param int $operation
-     * @param int $argument
-     */
-    function it_has_getters(string $specification, int $operation, int $argument)
-    {
-        $instruction = new Instruction($operation, $argument);
-
-        $this->assertEquals($operation, $instruction->getOperation());
-        $this->assertEquals($argument, $instruction->getArgument());
     }
 
     /**

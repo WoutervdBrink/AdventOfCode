@@ -9,7 +9,7 @@ use Knevelina\AdventOfCode\InputManipulator;
 class Day08 implements PuzzleSolver
 {
 
-    #[Pure] public static function getStringLength(string $string): int
+    public static function getStringLength(string $string): int
     {
         $string = preg_replace('/\\\\(x[a-f0-9]{2}|\\\\|")/', '_', substr($string, 1, -1));
 

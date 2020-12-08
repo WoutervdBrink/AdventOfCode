@@ -3,6 +3,7 @@
 namespace Knevelina\AdventOfCode\Data\Year2015;
 
 use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Pure;
 
 #[Immutable]
 class Wire
@@ -11,7 +12,7 @@ class Wire
     {
     }
 
-    public function __toString(): string
+    #[Pure] public function __toString(): string
     {
         return $this->operator.'('.implode(', ', $this->operands).')';
     }

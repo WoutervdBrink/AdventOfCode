@@ -24,7 +24,7 @@ class Instruction
 
     public static function fromSpecification(string $specification): Instruction
     {
-        if (!preg_match('/^([a-z]+) ((\\+|\\-)\d+)$/', $specification, $matches)) {
+        if (!preg_match('/^([a-z]+) ((\\+|-)\d+)$/', $specification, $matches)) {
             throw new InvalidArgumentException(sprintf('Invalid instruction format "%s"!', $specification));
         }
 
