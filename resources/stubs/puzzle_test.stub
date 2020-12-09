@@ -4,6 +4,9 @@ namespace Knevelina\AdventOfCode\Tests\Puzzles\Year$YEAR$;
 
 use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
 
+/**
+ * @covers \Knevelina\AdventOfCode\Puzzles\Year$YEAR$\Day$DAY$
+ */
 class Day$DAY$Test extends PuzzleSolverTestCase
 {
     public function getExamples(): array
