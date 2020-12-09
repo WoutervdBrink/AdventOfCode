@@ -1,0 +1,18 @@
+<?php
+
+namespace Knevelina\AdventOfCode\Puzzles\Year$YEAR$;
+
+use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+
+class Day$DAY$ implements PuzzleSolver
+{
+    public function part1(string $input): int
+    {
+        return 0;
+    }
+
+    public function part2(string $input): int
+    {
+        return 0;
+    }
+}

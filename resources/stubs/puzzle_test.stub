@@ -1,0 +1,15 @@
+<?php
+
+namespace Knevelina\AdventOfCode\Tests\Puzzles\Year$YEAR$;
+
+use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
+
+class Day$DAY$Test extends PuzzleSolverTestCase
+{
+    public function getExamples(): array
+    {
+        return [
+
+        ];
+    }
+}
