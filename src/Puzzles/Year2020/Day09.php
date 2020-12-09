@@ -31,21 +31,21 @@ class Day09 implements PuzzleSolver
 
         $input = InputManipulator::getListOfIntegers($input);
 
-        for ($x = 0; $x < count($input); $x++) {
-            for ($y = 0; $y < count($input); $y++) {
-                if ($x === $y) {
-                    continue;
-                }
+        $sums = [];
+        $sum = 0;
 
-                $values = [];
+        foreach ($input as $x) {
+            $sum += $x;
+            $sums[] = $sum;
+        }
 
-                for ($i = $x; $i <= $y; $i++) {
-                    $values[] = $input[$i];
-                }
-
-                $sum = array_sum($values);
+        for ($x = 1; $x < count($input); $x++) {
+            for ($y = $x + 1; $y < count($input); $y++) {
+                $sum = $sums[$y] - $sums[$x - 1];
 
                 if ($sum === $invalid) {
+                    $values = array_slice($input, $x, $y - $x);
+
                     $low = min(...$values);
                     $high = max(...$values);
 
