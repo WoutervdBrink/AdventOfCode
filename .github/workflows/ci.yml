@@ -24,11 +24,13 @@ jobs:
       - name: PHPUnit tests
         uses: php-actions/phpunit@v1
         with:
+          php_version: 8.0
           args: --coverage-text
 
   analysis:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Determine Composer cache directory
         shell: bash
         run: "echo \"COMPOSER_CACHE_DIR=$(composer config cache-dir)\" >> $GITHUB_ENV"
