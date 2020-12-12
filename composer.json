@@ -19,7 +19,8 @@
         "php": "^8.0",
         "illuminate/collections": "^8.17",
         "clue/graph": "^0.9.2",
-        "graphp/graphviz": "^0.2.2"
+        "graphp/graphviz": "^0.2.2",
+      "ext-json": "*"
     },
     "autoload": {
         "psr-4": {

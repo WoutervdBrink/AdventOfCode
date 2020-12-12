@@ -16,6 +16,16 @@ class WaitingArea
     const EMPTY = 1;
     const OCCUPIED = 2;
 
+    public function getWidth(): int
+    {
+        return $this->width;
+    }
+
+    public function getHeight(): int
+    {
+        return $this->height;
+    }
+
     public function getSeat(int $row, int $col): int
     {
         return $this->seats[$row][$col] ?? static::FLOOR;
@@ -43,7 +53,9 @@ class WaitingArea
 
         for ($drow = -1; $drow <= 1; $drow++) {
             for ($dcol = -1; $dcol <= 1; $dcol++) {
-                if ($drow === 0 && $dcol === 0) continue;
+                if ($drow === 0 && $dcol === 0) {
+                    continue;
+                }
 
                 if ($this->getSeatInLineOfSight($row, $col, $drow, $dcol) === self::OCCUPIED) {
                     $neighbors++;
@@ -60,7 +72,9 @@ class WaitingArea
 
         for ($drow = -1; $drow <= 1; $drow++) {
             for ($dcol = -1; $dcol <= 1; $dcol++) {
-                if ($drow === 0 && $dcol === 0) continue;
+                if ($drow === 0 && $dcol === 0) {
+                    continue;
+                }
 
                 if ($this->getSeat($row + $drow, $col + $dcol) === self::OCCUPIED) {
                     $neighbors++;
@@ -134,7 +148,7 @@ class WaitingArea
                 $seat = $this->getSeat($row, $col);
                 $occupiedNeighbors = $this->getOccupiedNeighbors($row, $col);
 
-                $newSeat = match($seat) {
+                $newSeat = match ($seat) {
                     self::FLOOR => self::FLOOR,
                     self::EMPTY => $occupiedNeighbors === 0 ? self::OCCUPIED : self::EMPTY,
                     self::OCCUPIED => $occupiedNeighbors >= 4 ? self::EMPTY : self::OCCUPIED,
@@ -160,7 +174,7 @@ class WaitingArea
                 $seat = $this->getSeat($row, $col);
                 $occupiedNeighbors = $this->getOccupiedNeighborsInLinesOfSight($row, $col);
 
-                $newSeat = match($seat) {
+                $newSeat = match ($seat) {
                     self::FLOOR => self::FLOOR,
                     self::EMPTY => $occupiedNeighbors === 0 ? self::OCCUPIED : self::EMPTY,
                     self::OCCUPIED => $occupiedNeighbors >= 5 ? self::EMPTY : self::OCCUPIED,
@@ -214,5 +228,10 @@ class WaitingArea
                 )->join('')
             )
             ->join(PHP_EOL);
+    }
+
+    public function getSeats(): array
+    {
+        return $this->seats;
     }
 }
