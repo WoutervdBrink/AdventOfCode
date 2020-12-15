@@ -20,14 +20,14 @@ class Day15Test extends PuzzleSolverTestCase
             [6, 1, 1836],
             [7, 1, 436],
 
-//            // Slow
-//            [1, 2, 2578],
-//            [2, 2, 3544142],
-//            [3, 2, 261214],
-//            [4, 2, 6895259],
-//            [5, 2, 18],
-//            [6, 2, 362],
-//            [7, 2, 175594]
+            // Slow
+            [1, 2, 2578],
+            [2, 2, 3544142],
+            [3, 2, 261214],
+            [4, 2, 6895259],
+            [5, 2, 18],
+            [6, 2, 362],
+            [7, 2, 175594]
         ];
     }
 
@@ -36,9 +36,9 @@ class Day15Test extends PuzzleSolverTestCase
         return 410;
     }
 
-//    // Slow
-//    public function getSolutionForPart2(): int|null
-//    {
-//        return 238;
-//    }
+    // Slow
+    public function getSolutionForPart2(): int|null
+    {
+        return 238;
+    }
 }

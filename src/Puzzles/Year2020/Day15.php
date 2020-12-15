@@ -2,34 +2,33 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 
+use Ds\Vector;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Knevelina\AdventOfCode\Data\Structures\DynamicArray;
+use SplFixedArray;
 
 class Day15 implements PuzzleSolver
 {
-    private function calculate(string $input, int $n): int
+    public static function calculate(string $input, int $n): int
     {
         $input = explode(',', trim($input));
         $input = array_map(fn (string $num): int => intval($num), $input);
 
-        $nums = [];
+        $nums = new Vector(array_fill(0, $n, 0));
 
-        for ($i = 0; $i < $n; $i++) {
-            $nums[$i] = 0;
-        }
-
-        for ($i = 0; $i < count($input) - 1; $i++) {
+        $count = count($input);
+        for ($i = 0; $i < $count - 1; $i++) {
             $num = $input[$i];
             $nums[$num] = $i + 1;
         }
 
         $last = last($input);
 
-        for ($i = count($input); $i < $n; $i++) {
-            if (($l = $nums[$last]) === 0) {
-                $next = 0;
-            } else {
-                $next = $i - $l;
-            }
+        for ($i = $count; $i < $n; $i++) {
+            $next = match($l = $nums[$last]) {
+                0 => 0,
+                default => $i - $l
+            };
 
             $nums[$last] = $i;
             $last = $next;
@@ -40,11 +39,11 @@ class Day15 implements PuzzleSolver
 
     public function part1(string $input): int
     {
-        return $this->calculate($input, 2020);
+        return static::calculate($input, 2020);
     }
 
     public function part2(string $input): int
     {
-        return $this->calculate($input, 30000000);
+        return static::calculate($input, 30000000);
     }
 }
