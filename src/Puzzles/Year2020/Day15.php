@@ -10,20 +10,28 @@ class Day15 implements PuzzleSolver
     {
         $input = explode(',', trim($input));
         $input = array_map(fn (string $num): int => intval($num), $input);
+
         $nums = [];
+
+        for ($i = 0; $i < $n; $i++) {
+            $nums[$i] = 0;
+        }
+
         for ($i = 0; $i < count($input) - 1; $i++) {
             $num = $input[$i];
-            $nums[$num] = $i;
+            $nums[$num] = $i + 1;
         }
+
         $last = last($input);
 
         for ($i = count($input); $i < $n; $i++) {
-            $next = match(true) {
-                isset($nums[$last]) => $i - $nums[$last] - 1,
-                default => 0
-            };
+            if (($l = $nums[$last]) === 0) {
+                $next = 0;
+            } else {
+                $next = $i - $l;
+            }
 
-            $nums[$last] = $i - 1;
+            $nums[$last] = $i;
             $last = $next;
         }
 
