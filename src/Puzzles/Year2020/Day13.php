@@ -50,11 +50,6 @@ class Day13 implements PuzzleSolver
             $N *= $num;
         }
 
-        echo 'Input: ' . $input[1] . PHP_EOL;
-        echo 'Bus:    ' . implode(', ', array_map(fn(int $d): string => sprintf('%02d', $d), $bus)) . PHP_EOL;
-        echo 'Offset: ' . implode(', ', array_map(fn(int $d): string => sprintf('%02d', $d), $offset)) . PHP_EOL;
-        echo PHP_EOL;
-
         $total = 0;
 
         for ($i = 0; $i < count($bus); $i++) {
