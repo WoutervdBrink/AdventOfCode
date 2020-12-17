@@ -6,30 +6,15 @@ use SplFixedArray;
 
 class GameOfLife4D
 {
-    private int $minX;
-    private int $maxX;
-    private int $minY;
-    private int $maxY;
-    private int $minZ;
-    private int $maxZ;
-    private int $minW;
-    private int $maxW;
-
     private array $cubes;
     private SplFixedArray $deltas;
+    private int $activeCubes;
 
     public function __construct()
     {
         $this->cubes = [];
 
-        $this->minX = 0;
-        $this->maxX = 0;
-        $this->minY = 0;
-        $this->maxY = 0;
-        $this->minZ = 0;
-        $this->maxZ = 0;
-        $this->minW = 0;
-        $this->maxW = 0;
+        $this->activeCubes = 0;
 
         $this->deltas = new SplFixedArray(80);
 
@@ -50,38 +35,33 @@ class GameOfLife4D
         }
     }
 
-    public function getActiveCubes(): int
+    public function evolve(): GameOfLife4D
     {
-        $active = 0;
+        $new = new GameOfLife4D();
 
-        for ($x = $this->minX; $x <= $this->maxX; $x++) {
-            for ($y = $this->minY; $y <= $this->maxY; $y++) {
-                for ($z = $this->minZ; $z <= $this->maxZ; $z++) {
-                    for ($w = $this->minW; $w <= $this->maxW; $w++) {
-                        if ($this->getCube($x, $y, $z, $w)) {
-                            $active++;
-                        }
+        $minX = $maxX = $minY = $maxY = $minZ = $maxZ = $minW = $maxW = 0;
+
+        foreach ($this->cubes as $x => $xCubes) {
+            foreach ($xCubes as $y => $yCubes) {
+                foreach ($yCubes as $z => $zCubes) {
+                    foreach ($zCubes as $w => $wCube) {
+                        $minX = min($minX, $x);
+                        $maxX = max($maxX, $x);
+                        $minY = min($minY, $y);
+                        $maxY = max($maxY, $y);
+                        $minZ = min($minZ, $z);
+                        $maxZ = max($maxZ, $z);
+                        $minW = min($minW, $w);
+                        $maxW = max($maxW, $w);
                     }
                 }
             }
         }
 
-        return $active;
-    }
-
-    private function getCube(int $x, int $y, int $z, int $w): bool
-    {
-        return $this->cubes[$x][$y][$z][$w] ?? false;
-    }
-
-    public function evolve(): GameOfLife4D
-    {
-        $new = new GameOfLife4D();
-
-        for ($x = $this->minX - 1; $x <= $this->maxX + 1; $x++) {
-            for ($y = $this->minY - 1; $y <= $this->maxY + 1; $y++) {
-                for ($z = $this->minZ - 1; $z <= $this->maxZ + 1; $z++) {
-                    for ($w = $this->minW - 1; $w <= $this->maxW + 1; $w++) {
+        for ($x = $minX - 1; $x <= $maxX + 1; $x++) {
+            for ($y = $minY - 1; $y <= $maxY + 1; $y++) {
+                for ($z = $minZ - 1; $z <= $maxZ + 1; $z++) {
+                    for ($w = $minW - 1; $w <= $maxW + 1; $w++) {
                         $active = $this->getCube($x, $y, $z, $w);
                         $neighbors = $this->getActiveNeighbors($x, $y, $z, $w);
 
@@ -102,6 +82,11 @@ class GameOfLife4D
         }
 
         return $new;
+    }
+
+    private function getCube(int $x, int $y, int $z, int $w): bool
+    {
+        return $this->cubes[$x][$y][$z][$w] ?? false;
     }
 
     public function getActiveNeighbors(int $x, int $y, int $z, int $w): int
@@ -135,13 +120,15 @@ class GameOfLife4D
 
         $this->cubes[$x][$y][$z][$w] = $active;
 
-        $this->minX = min($this->minX, $x);
-        $this->maxX = max($this->maxX, $x);
-        $this->minY = min($this->minY, $y);
-        $this->maxY = max($this->maxY, $y);
-        $this->minZ = min($this->minZ, $z);
-        $this->maxZ = max($this->maxZ, $z);
-        $this->minW = min($this->minW, $w);
-        $this->maxW = max($this->maxW, $w);
+        if ($active) {
+            $this->activeCubes++;
+        }
     }
+
+    public function getActiveCubes(): int
+    {
+        return $this->activeCubes;
+    }
+
+
 }
