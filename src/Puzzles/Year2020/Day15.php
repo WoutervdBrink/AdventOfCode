@@ -2,8 +2,8 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 
-use Ds\Vector;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use SplFixedArray;
 
 class Day15 implements PuzzleSolver
 {
@@ -17,24 +17,17 @@ class Day15 implements PuzzleSolver
         $input = explode(',', trim($input));
         $input = array_map(fn(string $num): int => intval($num), $input);
 
-        $nums = new Vector(array_fill(0, $n, 0));
+        $last = last($input);
+        $c = new SplFixedArray($n);
 
-        $count = count($input);
-        for ($i = 0; $i < $count - 1; $i++) {
-            $num = $input[$i];
-            $nums[$num] = $i + 1;
+        for ($i = 0; $i < count($input); $i++) {
+            $c[$input[$i]] = $i;
         }
 
-        $last = last($input);
-
-        for ($i = $count; $i < $n; $i++) {
-            $next = match ($l = $nums[$last]) {
-                0 => 0,
-                default => $i - $l
-            };
-
-            $nums[$last] = $i;
-            $last = $next;
+        for ($i = count($input) - 1; $i < $n - 1; $i++) {
+            $temp = $i - ($c[$last] ?? $i);
+            $c[$last] = $i;
+            $last = $temp;
         }
 
         return $last;
