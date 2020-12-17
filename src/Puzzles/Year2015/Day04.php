@@ -6,14 +6,16 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 
 class Day04 implements PuzzleSolver
 {
+    const CHR_0 = "\0";
+
     public function part1(string $input): int
     {
         $key = trim($input);
 
         for ($num = 0; $num < 1e7; $num++) {
-            $hash = md5($key . $num);
+            $hash = md5($key . $num, true);
 
-            if (str_starts_with($hash, '00000')) {
+            if ($hash[0] === self::CHR_0 && $hash[1] === self::CHR_0 && (ord($hash[2]) & 0b11110000) === 0) {
                 return $num;
             }
         }
@@ -26,9 +28,9 @@ class Day04 implements PuzzleSolver
         $key = trim($input);
 
         for ($num = 0; $num < 1e7; $num++) {
-            $hash = md5($key . $num);
+            $hash = md5($key . $num, true);
 
-            if (str_starts_with($hash, '000000')) {
+            if ($hash[0] === self::CHR_0 && $hash[1] === self::CHR_0 && $hash[2] === self::CHR_0) {
                 return $num;
             }
         }
