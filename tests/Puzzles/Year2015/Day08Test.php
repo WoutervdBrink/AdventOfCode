@@ -10,7 +10,6 @@ use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
  */
 class Day08Test extends PuzzleSolverTestCase
 {
-
     public function regularStrings(): array
     {
         return [
@@ -32,7 +31,7 @@ class Day08Test extends PuzzleSolverTestCase
             ['"\\"a\\""', 3, '"\\"\\\\\\"a\\\\\\"\\""'] // "\"a\""  \"\\\"a\\\"\"
         ];
     }
-    
+
     public function stringsWithBackslashes(): array
     {
         return [
@@ -43,7 +42,7 @@ class Day08Test extends PuzzleSolverTestCase
             ['"\\\\a\\\\"', 3, '"\\"\\\\\\\\a\\\\\\\\\\""']  // "\\a\\" \"\\\\a\\\\\"
         ];
     }
-    
+
     public function stringsWithHexadecimalASCIICodes(): array
     {
         return [

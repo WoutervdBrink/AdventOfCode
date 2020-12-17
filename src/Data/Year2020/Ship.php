@@ -8,20 +8,27 @@ class Ship
     private int $y;
     private Direction $direction;
 
+    public function __construct()
+    {
+        $this->x = 0;
+        $this->y = 0;
+        $this->direction = new Direction(Direction::EAST);
+    }
+
     public function getX(): int
     {
         return $this->x;
-    }
-
-    public function getY(): int
-    {
-        return $this->y;
     }
 
     public function setX(int $x): Ship
     {
         $this->x = $x;
         return $this;
+    }
+
+    public function getY(): int
+    {
+        return $this->y;
     }
 
     public function setY(int $y): Ship
@@ -33,13 +40,6 @@ class Ship
     public function getDirection(): int
     {
         return $this->direction->getDirection();
-    }
-
-    public function __construct()
-    {
-        $this->x = 0;
-        $this->y = 0;
-        $this->direction = new Direction(Direction::EAST);
     }
 
     public function move(int $direction, int $distance): void

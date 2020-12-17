@@ -21,6 +21,20 @@ class Present
         $this->height = $height;
     }
 
+    public function getArea(): int
+    {
+        return intval(2 * array_sum($this->getSides()));
+    }
+
+    public function getSides(): array
+    {
+        return [
+            $this->getLength() * $this->getWidth(),
+            $this->getWidth() * $this->getHeight(),
+            $this->getHeight() * $this->getLength()
+        ];
+    }
+
     /**
      * @return int
      */
@@ -43,20 +57,6 @@ class Present
     public function getHeight(): int
     {
         return $this->height;
-    }
-
-    public function getSides(): array
-    {
-        return [
-            $this->getLength() * $this->getWidth(),
-            $this->getWidth() * $this->getHeight(),
-            $this->getHeight() * $this->getLength()
-        ];
-    }
-
-    public function getArea(): int
-    {
-        return intval(2 * array_sum($this->getSides()));
     }
 
     public function getSmallestSide(): int

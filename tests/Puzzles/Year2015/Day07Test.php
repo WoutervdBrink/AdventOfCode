@@ -11,7 +11,6 @@ use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
  */
 class Day07Test extends PuzzleSolverTestCase
 {
-
     public function getExamples(): array
     {
         return [

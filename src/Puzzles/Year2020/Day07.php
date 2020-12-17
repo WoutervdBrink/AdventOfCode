@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Puzzles\Year2020;
-
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\Bag;
@@ -13,20 +11,7 @@ class Day07 implements PuzzleSolver
 {
     private array $bagMap = [];
 
-    protected function getTreeForColor(string $color): Tree
-    {
-        if (!isset($this->bagMap[$color])) {
-            $this->bagMap[$color] = new Tree($color);
-        }
-
-        return $this->bagMap[$color];
-    }
-
-    /**
-     * @param string $input
-     * @return int
-     * @noinspection PhpUnusedParameterInspection
-     */
+    /** @noinspection PhpUnusedParameterInspection */
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input);
@@ -45,23 +30,30 @@ class Day07 implements PuzzleSolver
         $amount = 0;
         $cache = [];
 
-        $this->getTreeForColor('shiny gold')->walk(function (int $label, Tree $tree) use (&$cache, &$amount) {
-            if (isset($cache[$tree->getId()])) {
-                return;
+        $this->getTreeForColor('shiny gold')->walk(
+            function (int $label, Tree $tree) use (&$cache, &$amount) {
+                if (isset($cache[$tree->getId()])) {
+                    return;
+                }
+
+                $amount++;
+
+                $cache[$tree->getId()] = true;
             }
-
-            $amount++;
-
-            $cache[$tree->getId()] = true;
-        });
+        );
 
         return $amount;
     }
 
-    /**
-     * @param string $input
-     * @return int
-     */
+    protected function getTreeForColor(string $color): Tree
+    {
+        if (!isset($this->bagMap[$color])) {
+            $this->bagMap[$color] = new Tree($color);
+        }
+
+        return $this->bagMap[$color];
+    }
+
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input);

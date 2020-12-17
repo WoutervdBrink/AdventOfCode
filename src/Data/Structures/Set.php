@@ -2,19 +2,9 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures;
 
-use JetBrains\PhpStorm\Pure;
-
 class Set
 {
     private array $values;
-
-    /**
-     * @return mixed[]
-     */
-    public function getValues(): array
-    {
-        return $this->values;
-    }
 
     public function __construct(mixed ...$values)
     {
@@ -34,6 +24,14 @@ class Set
     public function calculateIntersect(Set $b): Set
     {
         return new Set(array_intersect($this->getValues(), $b->getValues()));
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function getValues(): array
+    {
+        return $this->values;
     }
 
     public function calculateUnion(Set $b): Set

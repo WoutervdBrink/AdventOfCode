@@ -34,6 +34,23 @@ class Tree
 
     /**
      * @return string
+     * @noinspection PhpUnused
+     */
+    public function __toString(): string
+    {
+        $string = $this->getId();
+        foreach ($this->getChildren() as $link) {
+            $label = $link[0];
+            $child = $link[1];
+
+            $string .= ' ' . $label . ':' . $child->__toString();
+        }
+
+        return '{' . $string . '}';
+    }
+
+    /**
+     * @return string
      */
     public function getId(): string
     {
@@ -46,23 +63,6 @@ class Tree
     public function getChildren(): array
     {
         return $this->children;
-    }
-
-    /**
-     * @return string
-     * @noinspection PhpUnused
-     */
-    public function __toString(): string
-    {
-        $string = $this->getId();
-        foreach ($this->getChildren() as $link) {
-            $label = $link[0];
-            $child = $link[1];
-
-            $string .= ' '.$label.':'.$child->__toString();
-        }
-
-        return '{'.$string.'}';
     }
 
     public function walk(callable $callback): void

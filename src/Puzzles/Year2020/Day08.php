@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Puzzles\Year2020;
-
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\CPU;
@@ -12,7 +10,6 @@ use Knevelina\AdventOfCode\Data\Year2020\Program;
 
 class Day08 implements PuzzleSolver
 {
-
     public function part1(string $input): int
     {
         $program = Program::fromSpecification($input);
@@ -36,14 +33,17 @@ class Day08 implements PuzzleSolver
 
             $clone = $program->clone();
 
-            $clone->setInstruction($add, new Instruction(
-                match ($ins->getOperation()) {
-                    Operation::JMP => Operation::NOP,
-                    Operation::NOP => Operation::JMP,
-                    default => Operation::EOF
-                },
-                $ins->getArgument()
-            ));
+            $clone->setInstruction(
+                $add,
+                new Instruction(
+                    match ($ins->getOperation()) {
+                        Operation::JMP => Operation::NOP,
+                        Operation::NOP => Operation::JMP,
+                        default => Operation::EOF
+                    },
+                    $ins->getArgument()
+                )
+            );
 
             $cpu = new CPU($clone);
 

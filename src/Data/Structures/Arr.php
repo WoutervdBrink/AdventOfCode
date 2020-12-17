@@ -17,19 +17,9 @@ class Arr implements ArrayAccess, Countable
         $this->values = array_values($values);
     }
 
-    #[Pure] public static function fromArray(array $values): Arr
-    {
-        return new Arr($values);
-    }
-
     #[Pure] public static function of(mixed ...$values): Arr
     {
         return new Arr(...$values);
-    }
-
-    #[Pure] public static function empty(): Arr
-    {
-        return new Arr();
     }
 
     public static function zip(Arr ...$arrs): Arr
@@ -58,29 +48,9 @@ class Arr implements ArrayAccess, Countable
         return Arr::fromArray($joins);
     }
 
-    public function iteratePairs(): Generator
+    #[Pure] public static function empty(): Arr
     {
-        for ($i = 0; $i < $this->count(); $i++) {
-            for ($j = $i + 1; $j < $this->count(); $j++) {
-                yield [$this->get($i), $this->get($j)];
-            }
-        }
-    }
-
-    public function iterateTriplets(): Generator
-    {
-        for ($i = 0; $i < $this->count(); $i++) {
-            for ($j = $i + 1; $j < $this->count(); $j++) {
-                for ($k = $j + 1; $k < $this->count(); $k++) {
-                    yield [$this->get($i), $this->get($j), $this->get($k)];
-                }
-            }
-        }
-    }
-
-    #[Pure] public function get(int $offset): mixed
-    {
-        return $this->has($offset) ? $this->values[$offset] : null;
+        return new Arr();
     }
 
     #[Pure] public function has($offset): bool
@@ -91,6 +61,11 @@ class Arr implements ArrayAccess, Countable
     #[Pure] public function offsetExists($offset)
     {
         return array_key_exists($this->values, $offset);
+    }
+
+    #[Pure] public static function fromArray(array $values): Arr
+    {
+        return new Arr($values);
     }
 
     public function offsetGet($offset)
@@ -108,8 +83,33 @@ class Arr implements ArrayAccess, Countable
         unset($this->values[$offset]);
     }
 
+    public function iteratePairs(): Generator
+    {
+        for ($i = 0; $i < $this->count(); $i++) {
+            for ($j = $i + 1; $j < $this->count(); $j++) {
+                yield [$this->get($i), $this->get($j)];
+            }
+        }
+    }
+
     #[Pure] public function count(): int
     {
         return count($this->values);
+    }
+
+    #[Pure] public function get(int $offset): mixed
+    {
+        return $this->has($offset) ? $this->values[$offset] : null;
+    }
+
+    public function iterateTriplets(): Generator
+    {
+        for ($i = 0; $i < $this->count(); $i++) {
+            for ($j = $i + 1; $j < $this->count(); $j++) {
+                for ($k = $j + 1; $k < $this->count(); $k++) {
+                    yield [$this->get($i), $this->get($j), $this->get($k)];
+                }
+            }
+        }
     }
 }

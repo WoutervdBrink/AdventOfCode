@@ -27,19 +27,14 @@ class Program
         return $program;
     }
 
-    #[Pure] public function getSize(): int
-    {
-        return count($this->instructions);
-    }
-
     public function addInstruction(Instruction $instruction): void
     {
         $this->instructions[] = $instruction;
     }
 
-    public function setInstruction(int $address, Instruction $instruction): void
+    #[Pure] public function getSize(): int
     {
-        $this->instructions[$address] = $instruction;
+        return count($this->instructions);
     }
 
     public function clone(): Program
@@ -51,6 +46,11 @@ class Program
         }
 
         return $clone;
+    }
+
+    public function setInstruction(int $address, Instruction $instruction): void
+    {
+        $this->instructions[$address] = $instruction;
     }
 
     #[Pure] public function getInstruction(int $address): Instruction

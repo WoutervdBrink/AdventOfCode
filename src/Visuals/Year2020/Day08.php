@@ -16,14 +16,6 @@ class Day08 implements PuzzleVisualizer
     private array $vertices;
     private Program $program;
 
-    private function getVertex(int $address): Vertex
-    {
-        if (!isset($this->vertices[$address])) {
-            $this->vertices[$address] = $this->graph->createVertex($address);
-        }
-
-        return $this->vertices[$address];
-    }
     public function visualize(string $input, string $path): void
     {
         $this->program = Program::fromSpecification($input);
@@ -62,6 +54,15 @@ class Day08 implements PuzzleVisualizer
         $viz = new GraphViz();
         $viz->setFormat('svg');
         $file = $viz->createImageFile($this->graph);
-        rename($file, $path.'.svg');
+        rename($file, $path . '.svg');
+    }
+
+    private function getVertex(int $address): Vertex
+    {
+        if (!isset($this->vertices[$address])) {
+            $this->vertices[$address] = $this->graph->createVertex($address);
+        }
+
+        return $this->vertices[$address];
     }
 }

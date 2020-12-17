@@ -44,46 +44,6 @@ class GameOfLife3D
         }
     }
 
-    private function getCube(int $x, int $y, int $z): bool
-    {
-        return $this->cubes[$x][$y][$z] ?? false;
-    }
-
-    public function setCube(int $x, int $y, int $z, bool $active): void
-    {
-        if (!isset($this->cubes[$x])) {
-            $this->cubes[$x] = [];
-        }
-
-        if (!isset($this->cubes[$x][$y])) {
-            $this->cubes[$x][$y] = [];
-        }
-
-        $this->cubes[$x][$y][$z] = $active;
-
-        $this->minX = min($this->minX, $x);
-        $this->maxX = max($this->maxX, $x);
-        $this->minY = min($this->minY, $y);
-        $this->maxY = max($this->maxY, $y);
-        $this->minZ = min($this->minZ, $z);
-        $this->maxZ = max($this->maxZ, $z);
-    }
-
-    public function getActiveNeighbors(int $x, int $y, int $z): int
-    {
-        $active = 0;
-
-        foreach ($this->deltas as $delta) {
-            list($dx, $dy, $dz) = $delta;
-
-            if ($this->getCube($x + $dx, $y + $dy, $z + $dz)) {
-                $active++;
-            }
-        }
-
-        return $active;
-    }
-
     public function getActiveCubes(): int
     {
         $active = 0;
@@ -99,6 +59,11 @@ class GameOfLife3D
         }
 
         return $active;
+    }
+
+    private function getCube(int $x, int $y, int $z): bool
+    {
+        return $this->cubes[$x][$y][$z] ?? false;
     }
 
     public function evolve(): GameOfLife3D
@@ -129,12 +94,47 @@ class GameOfLife3D
         return $new;
     }
 
+    public function getActiveNeighbors(int $x, int $y, int $z): int
+    {
+        $active = 0;
+
+        foreach ($this->deltas as $delta) {
+            list($dx, $dy, $dz) = $delta;
+
+            if ($this->getCube($x + $dx, $y + $dy, $z + $dz)) {
+                $active++;
+            }
+        }
+
+        return $active;
+    }
+
+    public function setCube(int $x, int $y, int $z, bool $active): void
+    {
+        if (!isset($this->cubes[$x])) {
+            $this->cubes[$x] = [];
+        }
+
+        if (!isset($this->cubes[$x][$y])) {
+            $this->cubes[$x][$y] = [];
+        }
+
+        $this->cubes[$x][$y][$z] = $active;
+
+        $this->minX = min($this->minX, $x);
+        $this->maxX = max($this->maxX, $x);
+        $this->minY = min($this->minY, $y);
+        $this->maxY = max($this->maxY, $y);
+        $this->minZ = min($this->minZ, $z);
+        $this->maxZ = max($this->maxZ, $z);
+    }
+
     public function __toString(): string
     {
         $out = '';
 
         for ($z = $this->minZ; $z <= $this->maxZ; $z++) {
-            $out .= sprintf('z=%d', $z).PHP_EOL;
+            $out .= sprintf('z=%d', $z) . PHP_EOL;
 
             for ($x = $this->minX; $x <= $this->maxX; $x++) {
                 for ($y = $this->minY; $y <= $this->maxY; $y++) {

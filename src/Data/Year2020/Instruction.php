@@ -14,21 +14,23 @@ class Instruction
     {
     }
 
-    #[Pure] public function __toString(): string
-    {
-        return sprintf('%s %s%d',
-            Operation::getMnemonicForOperation($this->getOperation()),
-            $this->getArgument() >= 0 ? '+' : '',
-            $this->getArgument());
-    }
-
     public static function fromSpecification(string $specification): Instruction
     {
-        if (!preg_match('/^([a-z]+) ((\\+|-)\d+)$/', $specification, $matches)) {
+        if (!preg_match('/^([a-z]+) (([+\-])\d+)$/', $specification, $matches)) {
             throw new InvalidArgumentException(sprintf('Invalid instruction format "%s"!', $specification));
         }
 
         return new Instruction(Operation::getOperationForMnemonic($matches[1]), intval($matches[2]));
+    }
+
+    #[Pure] public function __toString(): string
+    {
+        return sprintf(
+            '%s %s%d',
+            Operation::getMnemonicForOperation($this->getOperation()),
+            $this->getArgument() >= 0 ? '+' : '',
+            $this->getArgument()
+        );
     }
 
     #[Pure] public function getOperation(): int

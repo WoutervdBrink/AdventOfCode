@@ -29,7 +29,15 @@ class Seat
         $rowSpecification = str_replace(['F', 'B'], ['0', '1'], $rowSpecification);
         $colSpecification = str_replace(['L', 'R'], ['0', '1'], $colSpecification);
 
-        return new Seat((int) bindec($rowSpecification), (int) bindec($colSpecification));
+        return new Seat((int)bindec($rowSpecification), (int)bindec($colSpecification));
+    }
+
+    /**
+     * @return int
+     */
+    #[Pure] public function getId(): int
+    {
+        return 8 * $this->getRow() + $this->getColumn();
     }
 
     /**
@@ -46,13 +54,5 @@ class Seat
     public function getColumn(): int
     {
         return $this->column;
-    }
-
-    /**
-     * @return int
-     */
-    #[Pure] public function getId(): int
-    {
-        return 8 * $this->getRow() + $this->getColumn();
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
-
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2015\AdvancedLightGrid;
@@ -12,6 +10,10 @@ use RuntimeException;
 
 class Day06 implements PuzzleSolver
 {
+    public function part1(string $input): int
+    {
+        return $this->parseInput(new LightGrid(), $input)->getEnabledLights();
+    }
 
     private function parseInput(LightGrid $grid, string $input): LightGrid
     {
@@ -41,11 +43,6 @@ class Day06 implements PuzzleSolver
         }
 
         return $grid;
-    }
-
-    public function part1(string $input): int
-    {
-        return $this->parseInput(new LightGrid(), $input)->getEnabledLights();
     }
 
     public function part2(string $input): int

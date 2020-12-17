@@ -13,6 +13,21 @@ class XMAS
         $this->history = [];
     }
 
+    public function push(int $number): bool
+    {
+        if (!$this->isValid($number)) {
+            return false;
+        }
+
+        $this->history[] = $number;
+
+        if (count($this->history) > $this->preambleSize) {
+            array_shift($this->history);
+        }
+
+        return true;
+    }
+
     public function isValid(int $number): bool
     {
         if (count($this->history) < $this->preambleSize) {
@@ -28,20 +43,5 @@ class XMAS
         }
 
         return false;
-    }
-
-    public function push(int $number): bool
-    {
-        if (!$this->isValid($number)) {
-            return false;
-        }
-
-        $this->history[] = $number;
-
-        if (count($this->history) > $this->preambleSize) {
-            array_shift($this->history);
-        }
-
-        return true;
     }
 }

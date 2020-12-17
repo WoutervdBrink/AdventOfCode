@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2015;
-
 
 use InvalidArgumentException;
 use Knevelina\AdventOfCode\InputManipulator;
@@ -56,18 +54,15 @@ class WireCollection
         return $this->wires;
     }
 
-    public function getWire(string $name): ?Wire
-    {
-        return $this->wires[$name] ?? null;
-    }
-
     public function getValue(string $name): int
     {
         if (!isset($this->values[$name])) {
             $wire = $this->getWire($name);
 
             if ($wire === null) {
-                throw new InvalidArgumentException(sprintf('Trying to get the value of non-existent wire "%s"!', $name));
+                throw new InvalidArgumentException(
+                    sprintf('Trying to get the value of non-existent wire "%s"!', $name)
+                );
             }
 
             $operandValues = [];
@@ -85,6 +80,11 @@ class WireCollection
         }
 
         return $this->values[$name];
+    }
+
+    public function getWire(string $name): ?Wire
+    {
+        return $this->wires[$name] ?? null;
     }
 
     public function removeWire(string $name): void

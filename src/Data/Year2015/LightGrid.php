@@ -1,17 +1,12 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2015;
-
-
-use JetBrains\PhpStorm\Pure;
 
 class LightGrid
 {
-    private array $lights;
-
     const WIDTH = 1000;
     const HEIGHT = 1000;
+    private array $lights;
 
     public function __construct()
     {
@@ -23,6 +18,11 @@ class LightGrid
         }
     }
 
+    public function turnOn(int $fromRow, int $fromCol, int $toRow, int $toCol): void
+    {
+        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn(bool $old): bool => true);
+    }
+
     private function apply(int $fromRow, int $fromCol, int $toRow, int $toCol, callable $action): void
     {
         for ($row = $fromRow; $row <= $toRow; $row++) {
@@ -32,19 +32,14 @@ class LightGrid
         }
     }
 
-    public function turnOn(int $fromRow, int $fromCol, int $toRow, int $toCol): void
-    {
-        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (bool $old): bool => true);
-    }
-
     public function toggle($fromRow, $fromCol, $toRow, $toCol): void
     {
-        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (bool $old): bool => !$old);
+        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn(bool $old): bool => !$old);
     }
 
     public function turnOff($fromRow, $fromCol, $toRow, $toCol): void
     {
-        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (bool $old): bool => false);
+        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn(bool $old): bool => false);
     }
 
     public function getEnabledLights(): int

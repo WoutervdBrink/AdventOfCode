@@ -15,14 +15,16 @@ class WireCollectionTest extends TestCase
     /** @test */
     function it_gets_wire_values()
     {
-        $wc = new WireCollection('123 -> x
+        $wc = new WireCollection(
+            '123 -> x
 456 -> y
 x AND y -> d
 x OR y -> e
 x LSHIFT 2 -> f
 y RSHIFT 2 -> g
 NOT x -> h
-NOT y -> i');
+NOT y -> i'
+        );
 
         $this->assertEquals(72, $wc->getValue('d'));
         $this->assertEquals(507, $wc->getValue('e'));
@@ -65,10 +67,13 @@ NOT y -> i');
     {
         $wc = new WireCollection("123 -> y\nNOT y -> x");
 
-        $this->assertEquals([
-            'y' => new Wire(WireOperator::VALUE, [123]),
-            'x' => new Wire(WireOperator::NOT, ['y'])
-        ], $wc->getWires());
+        $this->assertEquals(
+            [
+                'y' => new Wire(WireOperator::VALUE, [123]),
+                'x' => new Wire(WireOperator::NOT, ['y'])
+            ],
+            $wc->getWires()
+        );
     }
 
     /** @test */

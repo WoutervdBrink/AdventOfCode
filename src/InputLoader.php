@@ -9,16 +9,6 @@ use RuntimeException;
 
 class InputLoader
 {
-    #[Pure] private static function getInputPath(int $year, int $day): string
-    {
-        return sprintf('%s/../resources/inputs/%d/day%02d.txt', __DIR__, $year, $day);
-    }
-
-    #[Pure] private static function getExamplePath(int $year, $day, int $example): string
-    {
-        return sprintf('%s/../resources/examples/%d/%02d/example%d.txt', __DIR__, $year, $day, $example);
-    }
-
     public static function getInput(int $year, $day): string
     {
         if (!file_exists($path = self::getInputPath($year, $day))) {
@@ -28,6 +18,11 @@ class InputLoader
         return file_get_contents($path);
     }
 
+    #[Pure] private static function getInputPath(int $year, int $day): string
+    {
+        return sprintf('%s/../resources/inputs/%d/day%02d.txt', __DIR__, $year, $day);
+    }
+
     public static function getExample(int $year, $day, int $example): string
     {
         if (!file_exists($path = self::getExamplePath($year, $day, $example))) {
@@ -35,5 +30,10 @@ class InputLoader
         }
 
         return file_get_contents($path);
+    }
+
+    #[Pure] private static function getExamplePath(int $year, $day, int $example): string
+    {
+        return sprintf('%s/../resources/examples/%d/%02d/example%d.txt', __DIR__, $year, $day, $example);
     }
 }

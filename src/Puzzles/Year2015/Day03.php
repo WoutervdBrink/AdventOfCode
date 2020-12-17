@@ -6,7 +6,6 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 
 class Day03 implements PuzzleSolver
 {
-
     public function part1(string $input): int
     {
         $input = str_split($input);
@@ -18,7 +17,7 @@ class Day03 implements PuzzleSolver
         $visited = ['0_0' => true];
 
         foreach ($input as $move) {
-            $x += match($move) {
+            $x += match ($move) {
                 '<' => -1,
                 '>' => 1,
                 default => 0
@@ -29,9 +28,9 @@ class Day03 implements PuzzleSolver
                 default => 0
             };
 
-            if (!isset($visited[$x.'_'.$y])) {
+            if (!isset($visited[$x . '_' . $y])) {
                 $houses++;
-                $visited[$x.'_'.$y] = true;
+                $visited[$x . '_' . $y] = true;
             }
         }
 
@@ -51,7 +50,7 @@ class Day03 implements PuzzleSolver
         $visited = ['0_0' => true];
 
         foreach ($input as $move) {
-            $x[$turn] += match($move) {
+            $x[$turn] += match ($move) {
                 '<' => -1,
                 '>' => 1,
                 default => 0

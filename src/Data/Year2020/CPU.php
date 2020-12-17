@@ -11,6 +11,14 @@ class CPU
     private Program $program;
     private bool $running;
 
+    public function __construct(Program $program)
+    {
+        $this->pc = 0;
+        $this->accumulator = 0;
+        $this->program = $program;
+        $this->running = true;
+    }
+
     /**
      * @return int
      */
@@ -27,12 +35,19 @@ class CPU
         return $this->accumulator;
     }
 
-    public function __construct(Program $program)
+    public function terminates(): bool
     {
-        $this->pc = 0;
-        $this->accumulator = 0;
-        $this->program = $program;
-        $this->running = true;
+        $cache = [];
+
+        while (!isset($cache[$this->pc])) {
+            $cache[$this->pc] = true;
+
+            if (!$this->step()) {
+                break;
+            }
+        }
+
+        return !$this->running;
     }
 
     public function step(): bool
@@ -72,20 +87,5 @@ class CPU
 //        printf("  pc=%04d a=%04d i=%s\n", $this->getPc(), $this->getAccumulator(), $instruction);
 
         return $this->running;
-    }
-
-    public function terminates(): bool
-    {
-        $cache = [];
-
-        while (!isset($cache[$this->pc])) {
-            $cache[$this->pc] = true;
-
-            if (!$this->step()) {
-                break;
-            }
-        }
-
-        return !$this->running;
     }
 }

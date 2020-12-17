@@ -8,96 +8,25 @@ use Knevelina\AdventOfCode\InputManipulator;
 
 class WaitingArea
 {
+    const FLOOR = 0;
+    const EMPTY = 1;
+    const OCCUPIED = 2;
     private array $seats;
     private int $width;
     private int $height;
 
-    const FLOOR = 0;
-    const EMPTY = 1;
-    const OCCUPIED = 2;
-
-    public function getWidth(): int
+    public function __construct(int $width, int $height)
     {
-        return $this->width;
-    }
+        $this->width = $width;
+        $this->height = $height;
 
-    public function getHeight(): int
-    {
-        return $this->height;
-    }
+        for ($row = 0; $row < $height; $row++) {
+            $this->seats[$row] = [];
 
-    public function getSeat(int $row, int $col): int
-    {
-        return $this->seats[$row][$col] ?? static::FLOOR;
-    }
-
-    public function getSeatInLineOfSight(int $row, int $col, int $drow, int $dcol): int
-    {
-        while ($row >= 0 && $row < $this->height && $col >= 0 && $col < $this->width) {
-            $row += $drow;
-            $col += $dcol;
-
-            $seat = $this->getSeat($row, $col);
-
-            if ($seat !== self::FLOOR) {
-                return $seat;
+            for ($col = 0; $col < $width; $col++) {
+                $this->seats[$row][$col] = static::FLOOR;
             }
         }
-
-        return self::FLOOR;
-    }
-
-    public function getOccupiedNeighborsInLinesOfSight(int $row, int $col): int
-    {
-        $neighbors = 0;
-
-        for ($drow = -1; $drow <= 1; $drow++) {
-            for ($dcol = -1; $dcol <= 1; $dcol++) {
-                if ($drow === 0 && $dcol === 0) {
-                    continue;
-                }
-
-                if ($this->getSeatInLineOfSight($row, $col, $drow, $dcol) === self::OCCUPIED) {
-                    $neighbors++;
-                }
-            }
-        }
-
-        return $neighbors;
-    }
-
-    public function getOccupiedNeighbors(int $row, int $col): int
-    {
-        $neighbors = 0;
-
-        for ($drow = -1; $drow <= 1; $drow++) {
-            for ($dcol = -1; $dcol <= 1; $dcol++) {
-                if ($drow === 0 && $dcol === 0) {
-                    continue;
-                }
-
-                if ($this->getSeat($row + $drow, $col + $dcol) === self::OCCUPIED) {
-                    $neighbors++;
-                }
-            }
-        }
-
-        return $neighbors;
-    }
-
-    public function getOccupiedSeats(): int
-    {
-        $sum = 0;
-
-        for ($row = 0; $row < $this->height; $row++) {
-            for ($col = 0; $col < $this->width; $col++) {
-                if ($this->getSeat($row, $col) === self::OCCUPIED) {
-                    $sum++;
-                }
-            }
-        }
-
-        return $sum;
     }
 
     public static function fromSpecification(string $specification): WaitingArea
@@ -124,18 +53,53 @@ class WaitingArea
         return $area;
     }
 
-    public function __construct(int $width, int $height)
+    public function setSeat(int $row, int $col, int $seat): void
     {
-        $this->width = $width;
-        $this->height = $height;
+        if ($col < 0 || $col >= $this->width || $row < 0 || $row >= $this->height) {
+            throw new InvalidArgumentException(sprintf('Invalid coordinates %d, %d', $col, $row));
+        }
 
-        for ($row = 0; $row < $height; $row++) {
-            $this->seats[$row] = [];
+        $this->seats[$row][$col] = $seat;
+    }
 
-            for ($col = 0; $col < $width; $col++) {
-                $this->seats[$row][$col] = static::FLOOR;
+    #[Pure] public static function charToSeat(string $char): int
+    {
+        return match ($char) {
+            '.' => self::FLOOR,
+            'L' => self::EMPTY,
+            '#' => self::OCCUPIED,
+            default => throw new InvalidArgumentException(sprintf('Invalid seat character "%s"', $char))
+        };
+    }
+
+    public function getWidth(): int
+    {
+        return $this->width;
+    }
+
+    public function getHeight(): int
+    {
+        return $this->height;
+    }
+
+    public function getOccupiedSeats(): int
+    {
+        $sum = 0;
+
+        for ($row = 0; $row < $this->height; $row++) {
+            for ($col = 0; $col < $this->width; $col++) {
+                if ($this->getSeat($row, $col) === self::OCCUPIED) {
+                    $sum++;
+                }
             }
         }
+
+        return $sum;
+    }
+
+    public function getSeat(int $row, int $col): int
+    {
+        return $this->seats[$row][$col] ?? static::FLOOR;
     }
 
     public function step(): ?WaitingArea
@@ -164,6 +128,25 @@ class WaitingArea
         return $changed ? $newArea : null;
     }
 
+    public function getOccupiedNeighbors(int $row, int $col): int
+    {
+        $neighbors = 0;
+
+        for ($drow = -1; $drow <= 1; $drow++) {
+            for ($dcol = -1; $dcol <= 1; $dcol++) {
+                if ($drow === 0 && $dcol === 0) {
+                    continue;
+                }
+
+                if ($this->getSeat($row + $drow, $col + $dcol) === self::OCCUPIED) {
+                    $neighbors++;
+                }
+            }
+        }
+
+        return $neighbors;
+    }
+
     public function stepPart2()
     {
         $newArea = new WaitingArea($this->width, $this->height);
@@ -190,33 +173,39 @@ class WaitingArea
         return $changed ? $newArea : null;
     }
 
-    public function setSeat(int $row, int $col, int $seat): void
+    public function getOccupiedNeighborsInLinesOfSight(int $row, int $col): int
     {
-        if ($col < 0 || $col >= $this->width || $row < 0 || $row >= $this->height) {
-            throw new InvalidArgumentException(sprintf('Invalid coordinates %d, %d', $col, $row));
+        $neighbors = 0;
+
+        for ($drow = -1; $drow <= 1; $drow++) {
+            for ($dcol = -1; $dcol <= 1; $dcol++) {
+                if ($drow === 0 && $dcol === 0) {
+                    continue;
+                }
+
+                if ($this->getSeatInLineOfSight($row, $col, $drow, $dcol) === self::OCCUPIED) {
+                    $neighbors++;
+                }
+            }
         }
 
-        $this->seats[$row][$col] = $seat;
+        return $neighbors;
     }
 
-    #[Pure] public static function charToSeat(string $char): int
+    public function getSeatInLineOfSight(int $row, int $col, int $drow, int $dcol): int
     {
-        return match ($char) {
-            '.' => self::FLOOR,
-            'L' => self::EMPTY,
-            '#' => self::OCCUPIED,
-            default => throw new InvalidArgumentException(sprintf('Invalid seat character "%s"', $char))
-        };
-    }
+        while ($row >= 0 && $row < $this->height && $col >= 0 && $col < $this->width) {
+            $row += $drow;
+            $col += $dcol;
 
-    #[Pure] public static function seatToChar(int $seat): string
-    {
-        return match ($seat) {
-            self::FLOOR => '.',
-            self::EMPTY => 'L',
-            self::OCCUPIED => '#',
-            default => throw new InvalidArgumentException(sprintf('Invalid seat state %d', $seat))
-        };
+            $seat = $this->getSeat($row, $col);
+
+            if ($seat !== self::FLOOR) {
+                return $seat;
+            }
+        }
+
+        return self::FLOOR;
     }
 
     public function __toString(): string
@@ -228,6 +217,16 @@ class WaitingArea
                 )->join('')
             )
             ->join(PHP_EOL);
+    }
+
+    #[Pure] public static function seatToChar(int $seat): string
+    {
+        return match ($seat) {
+            self::FLOOR => '.',
+            self::EMPTY => 'L',
+            self::OCCUPIED => '#',
+            default => throw new InvalidArgumentException(sprintf('Invalid seat state %d', $seat))
+        };
     }
 
     public function getSeats(): array

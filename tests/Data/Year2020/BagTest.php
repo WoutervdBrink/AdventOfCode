@@ -5,7 +5,6 @@ namespace Knevelina\AdventOfCode\Tests\Data\Year2020;
 
 use InvalidArgumentException;
 use Knevelina\AdventOfCode\Data\Year2020\Bag;
-use Knevelina\AdventOfCode\Data\Year2020\Program;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -54,13 +53,43 @@ class BagTest extends TestCase
     public function specifications(): array
     {
         return [
-            ['light red bags contain 1 bright white bag, 2 muted yellow bags.', 'light red', [1, 'bright white'], [2, 'muted yellow']],
-            ['dark orange bags contain 3 bright white bags, 4 muted yellow bags.', 'dark orange', [3, 'bright white'], [4, 'muted yellow']],
+            [
+                'light red bags contain 1 bright white bag, 2 muted yellow bags.',
+                'light red',
+                [1, 'bright white'],
+                [2, 'muted yellow']
+            ],
+            [
+                'dark orange bags contain 3 bright white bags, 4 muted yellow bags.',
+                'dark orange',
+                [3, 'bright white'],
+                [4, 'muted yellow']
+            ],
             ['bright white bags contain 1 shiny gold bag.', 'bright white', [1, 'shiny gold']],
-            ['muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.', 'muted yellow', [2, 'shiny gold'], [9, 'faded blue']],
-            ['shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.', 'shiny gold', [1, 'dark olive'], [2, 'vibrant plum']],
-            ['dark olive bags contain 3 faded blue bags, 4 dotted black bags.', 'dark olive', [3, 'faded blue'], [4, 'dotted black']],
-            ['vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.', 'vibrant plum', [5, 'faded blue'], [6, 'dotted black']],
+            [
+                'muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.',
+                'muted yellow',
+                [2, 'shiny gold'],
+                [9, 'faded blue']
+            ],
+            [
+                'shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.',
+                'shiny gold',
+                [1, 'dark olive'],
+                [2, 'vibrant plum']
+            ],
+            [
+                'dark olive bags contain 3 faded blue bags, 4 dotted black bags.',
+                'dark olive',
+                [3, 'faded blue'],
+                [4, 'dotted black']
+            ],
+            [
+                'vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.',
+                'vibrant plum',
+                [5, 'faded blue'],
+                [6, 'dotted black']
+            ],
             ['faded blue bags contain no other bags.', 'faded blue'],
             ['dotted black bags contain no other bags.', 'dotted black']
         ];
@@ -84,7 +113,11 @@ class BagTest extends TestCase
             $color = $acceptedColor[1];
             $actual = $bag->accepts($color);
 
-            $this->assertEquals($amount, $actual, sprintf('The bag does not accept %d %s bag(s): it accepts %d', $amount, $color, $actual));
+            $this->assertEquals(
+                $amount,
+                $actual,
+                sprintf('The bag does not accept %d %s bag(s): it accepts %d', $amount, $color, $actual)
+            );
         }
 
         $this->assertEquals($bag->acceptsAnything(), count($acceptedColors) > 0);

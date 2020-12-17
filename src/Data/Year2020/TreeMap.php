@@ -6,7 +6,8 @@ namespace Knevelina\AdventOfCode\Data\Year2020;
 
 use JetBrains\PhpStorm\Pure;
 
-class TreeMap {
+class TreeMap
+{
     private array $map;
     private int $size;
 
@@ -20,7 +21,9 @@ class TreeMap {
         foreach ($lines as $line) {
             $line = trim($line);
 
-            if (strlen($line) === 0) continue;
+            if (strlen($line) === 0) {
+                continue;
+            }
 
             $mapLine = [];
 
@@ -31,16 +34,6 @@ class TreeMap {
             $this->map[] = $mapLine;
             $this->size = max($this->size, strlen($line));
         }
-    }
-
-    #[Pure] public function getHeight(): int
-    {
-        return count($this->map);
-    }
-
-    public function get(int $x, int $y): string
-    {
-        return $this->map[$y][$x % $this->size] ?? ' ';
     }
 
     public function traverse(int $dx, int $dy): int
@@ -58,5 +51,15 @@ class TreeMap {
         } while ($y < $this->getHeight());
 
         return $trees;
+    }
+
+    public function get(int $x, int $y): string
+    {
+        return $this->map[$y][$x % $this->size] ?? ' ';
+    }
+
+    #[Pure] public function getHeight(): int
+    {
+        return count($this->map);
     }
 }

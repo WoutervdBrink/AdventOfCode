@@ -1,7 +1,8 @@
 <?php
 
-namespace Knevelina\AdventOfCode\Data\Year2020;
+namespace Knevelina\AdventOfCode\Tests\Data\Year2020;
 
+use Knevelina\AdventOfCode\Data\Year2020\WaitingArea;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,7 +28,8 @@ class WaitingAreaTest extends TestCase
     public function areas(): array
     {
         return [
-            ['.......#.
+            [
+                '.......#.
 ...#.....
 .#.......
 .........
@@ -35,18 +37,33 @@ class WaitingAreaTest extends TestCase
 ....#....
 .........
 #........
-...#.....', 4, 3, 8],
-            ['.............
+...#.....',
+                4,
+                3,
+                8
+            ],
+            [
+                '.............
 .L.L.#.#.#.#.
-.............', 1, 1, 0],
-            ['.##.##.
+.............',
+                1,
+                1,
+                0
+            ],
+            [
+                '.##.##.
 #.#.#.#
 ##...##
 ...L...
 ##...##
 #.#.#.#
-.##.##.', 3, 3, 0],
-            ['#.##.##.##
+.##.##.',
+                3,
+                3,
+                0
+            ],
+            [
+                '#.##.##.##
 #######.##
 #.#.#..#..
 ####.##.##
@@ -55,7 +72,11 @@ class WaitingAreaTest extends TestCase
 ..#.#.....
 ##########
 #.######.#
-#.#####.##', 0, 2, 5]
+#.#####.##',
+                0,
+                2,
+                5
+            ]
         ];
     }
 }

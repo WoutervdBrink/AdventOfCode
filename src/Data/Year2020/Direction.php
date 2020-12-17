@@ -14,11 +14,6 @@ class Direction
 
     private int $direction;
 
-    public function getDirection(): int
-    {
-        return $this->direction;
-    }
-
     public function __construct(int $direction)
     {
         $this->direction = $direction;
@@ -35,6 +30,16 @@ class Direction
         };
     }
 
+    public function getDirection(): int
+    {
+        return $this->direction;
+    }
+
+    #[Pure] public function getHorizontalMovement(int $distance): int
+    {
+        return self::getHorizontalMovementForDirection($this->direction, $distance);
+    }
+
     #[Pure] public static function getHorizontalMovementForDirection(int $direction, int $distance): int
     {
         return match ($direction) {
@@ -44,6 +49,11 @@ class Direction
         };
     }
 
+    #[Pure] public function getVerticalMovement(int $distance): int
+    {
+        return self::getVerticalMovementForDirection($this->direction, $distance);
+    }
+
     #[Pure] public static function getVerticalMovementForDirection(int $direction, int $distance): int
     {
         return match ($direction) {
@@ -51,16 +61,6 @@ class Direction
             self::SOUTH => $distance,
             default => 0
         };
-    }
-
-    #[Pure] public function getHorizontalMovement(int $distance): int
-    {
-        return self::getHorizontalMovementForDirection($this->direction, $distance);
-    }
-
-    #[Pure] public function getVerticalMovement(int $distance): int
-    {
-        return self::getVerticalMovementForDirection($this->direction, $distance);
     }
 
     public function turn(int $degrees): void

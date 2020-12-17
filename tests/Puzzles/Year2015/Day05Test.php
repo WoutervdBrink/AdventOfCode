@@ -10,7 +10,6 @@ use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
  */
 class Day05Test extends PuzzleSolverTestCase
 {
-
     public function getExamples(): array
     {
         return [

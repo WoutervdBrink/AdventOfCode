@@ -20,12 +20,12 @@ class Day11 implements PuzzleVisualizer
         }
 
         $iterations = collect($iterations)
-            ->map(fn (WaitingArea $area): array => $area->getSeats());
+            ->map(fn(WaitingArea $area): array => $area->getSeats());
 
-        $data = 'window.areaWidth = '.$area->getWidth().';'.PHP_EOL;
-        $data .= 'window.areaHeight = '.$area->getHeight().';'.PHP_EOL;
-        $data .= 'window.iterations = '.json_encode($iterations, JSON_PRETTY_PRINT).';';
+        $data = 'window.areaWidth = ' . $area->getWidth() . ';' . PHP_EOL;
+        $data .= 'window.areaHeight = ' . $area->getHeight() . ';' . PHP_EOL;
+        $data .= 'window.iterations = ' . json_encode($iterations, JSON_PRETTY_PRINT) . ';';
 
-        file_put_contents($path.'.js', $data);
+        file_put_contents($path . '.js', $data);
     }
 }

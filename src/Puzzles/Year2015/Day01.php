@@ -2,12 +2,10 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
-use JetBrains\PhpStorm\Pure;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 
 class Day01 implements PuzzleSolver
 {
-
     public function part1(string $input): int
     {
         $input = str_split(trim($input));
@@ -18,7 +16,9 @@ class Day01 implements PuzzleSolver
         while ($input[$floor] === '(') {
             $floor++;
 
-            if ($floor >= count($input)) break;
+            if ($floor >= count($input)) {
+                break;
+            }
         }
 
         $floor -= (count($input) - $floor);
@@ -26,7 +26,7 @@ class Day01 implements PuzzleSolver
         return $floor;
     }
 
-    #[Pure] public function part2(string $input): int
+    public function part2(string $input): int
     {
         $floor = 0;
 

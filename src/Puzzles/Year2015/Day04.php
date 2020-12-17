@@ -6,13 +6,12 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 
 class Day04 implements PuzzleSolver
 {
-
     public function part1(string $input): int
     {
         $key = trim($input);
 
         for ($num = 0; $num < 1e7; $num++) {
-            $hash = md5($key.$num);
+            $hash = md5($key . $num);
 
             if (str_starts_with($hash, '00000')) {
                 return $num;
@@ -27,7 +26,7 @@ class Day04 implements PuzzleSolver
         $key = trim($input);
 
         for ($num = 0; $num < 1e7; $num++) {
-            $hash = md5($key.$num);
+            $hash = md5($key . $num);
 
             if (str_starts_with($hash, '000000')) {
                 return $num;

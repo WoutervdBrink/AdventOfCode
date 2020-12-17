@@ -14,7 +14,7 @@ class Wire
 
     #[Pure] public function __toString(): string
     {
-        return $this->operator.'('.implode(', ', $this->operands).')';
+        return $this->operator . '(' . implode(', ', $this->operands) . ')';
     }
 
     public function getOperator(): int

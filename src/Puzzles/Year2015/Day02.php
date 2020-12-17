@@ -8,7 +8,6 @@ use Knevelina\AdventOfCode\InputManipulator;
 
 class Day02 implements PuzzleSolver
 {
-
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input);
@@ -18,9 +17,11 @@ class Day02 implements PuzzleSolver
         foreach ($input as $measurements) {
             $measurements = explode('x', $measurements, 3);
 
-            $present = new Present(intval($measurements[0]),
-                                   intval($measurements[1]),
-                                   intval($measurements[2]));
+            $present = new Present(
+                intval($measurements[0]),
+                intval($measurements[1]),
+                intval($measurements[2])
+            );
 
             $total += $present->getArea();
             $total += $present->getSmallestSide();
@@ -38,7 +39,7 @@ class Day02 implements PuzzleSolver
         foreach ($input as $measurements) {
             $measurements = explode('x', $measurements, 3);
 
-            $measurements = array_map(fn ($ms) => intval($ms), $measurements);
+            $measurements = array_map(fn($ms) => intval($ms), $measurements);
 
             $present = new Present($measurements[0], $measurements[1], $measurements[2]);
 

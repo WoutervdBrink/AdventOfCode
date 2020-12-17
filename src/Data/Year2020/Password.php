@@ -14,13 +14,6 @@ class Password
     private string $letter;
     private string $password;
 
-    public static function fromSpecification(string $specification): Password
-    {
-        preg_match('/^([0-9]+)-([0-9]+) ([a-z]): ([a-z]+)$/', $specification, $match);
-
-        return new static(intval($match[1]), intval($match[2]), $match[3], $match[4]);
-    }
-
     /**
      * Create a new password.
      *
@@ -35,6 +28,13 @@ class Password
         $this->max = $max;
         $this->letter = $letter;
         $this->password = $password;
+    }
+
+    public static function fromSpecification(string $specification): Password
+    {
+        preg_match('/^([0-9]+)-([0-9]+) ([a-z]): ([a-z]+)$/', $specification, $match);
+
+        return new static(intval($match[1]), intval($match[2]), $match[3], $match[4]);
     }
 
     /**
@@ -74,7 +74,8 @@ class Password
     {
         return
             strlen($this->password) -
-            strlen(str_replace($this->letter, '', $this->password)
+            strlen(
+                str_replace($this->letter, '', $this->password)
             );
     }
 }

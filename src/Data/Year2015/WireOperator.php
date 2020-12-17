@@ -15,9 +15,9 @@ class WireOperator
 
     #[Pure] public static function getOperatorForName(string $name): int
     {
-        return match($name) {
-            'AND' => self::AND,
-            'OR' => self::OR,
+        return match ($name) {
+            'AND' => self:: AND,
+            'OR' => self:: OR,
             'LSHIFT' => self::LSHIFT,
             'RSHIFT' => self::RSHIFT,
             'NOT' => self::NOT,
@@ -28,13 +28,13 @@ class WireOperator
     #[Pure] public static function apply(int $operation, int $operand0, int $operand1 = 0): int
     {
         return match ($operation) {
-            self::VALUE => $operand0,
-            self::AND => $operand0 & $operand1,
-            self::OR => $operand0 | $operand1,
-            self::LSHIFT => $operand0 << $operand1,
-            self::RSHIFT => $operand0 >> $operand1,
-            self::NOT => ~$operand0,
-            default => 0
-        } & 65535;
+                self::VALUE => $operand0,
+                self:: AND => $operand0 & $operand1,
+                self:: OR => $operand0 | $operand1,
+                self::LSHIFT => $operand0 << $operand1,
+                self::RSHIFT => $operand0 >> $operand1,
+                self::NOT => ~$operand0,
+                default => 0
+            } & 65535;
     }
 }

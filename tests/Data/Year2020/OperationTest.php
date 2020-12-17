@@ -44,7 +44,7 @@ class OperationTest extends TestCase
     {
         $this->assertEquals($expected, Operation::getMnemonicForOperation($operation));
     }
-    
+
     /** @test */
     function it_rejects_unknown_mnemonics(): void
     {

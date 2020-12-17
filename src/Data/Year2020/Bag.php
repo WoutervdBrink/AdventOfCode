@@ -25,53 +25,6 @@ class Bag
     }
 
     /**
-     * @return array
-     */
-    #[Pure] public function getAcceptableColors(): array
-    {
-        return $this->acceptableColors;
-    }
-
-    /**
-     * Accept a new color.
-     *
-     * @param string $color
-     * @param int $amount
-     */
-    public function accept(string $color, int $amount): void
-    {
-        $this->acceptableColors[$color] = $amount;
-    }
-
-    /**
-     * Check if the bag accepts a certain color.
-     *
-     * If so, the amount of accepted bags is returned. Otherwise, 0 is returned.
-     *
-     * @param string $color
-     * @return int
-     */
-    #[Pure] public function accepts(string $color): int
-    {
-        return $this->acceptableColors[$color] ?? 0;
-    }
-
-    /**
-     * Get the color of this bag.
-     *
-     * @return string
-     */
-    public function getColor(): string
-    {
-        return $this->color;
-    }
-
-    #[Pure] public function acceptsAnything(): bool
-    {
-        return count($this->acceptableColors) > 0;
-    }
-
-    /**
      * Construct a new bag from the string specification of a bag.
      *
      * @param string $specification
@@ -96,16 +49,68 @@ class Bag
         return $bag;
     }
 
+    /**
+     * Accept a new color.
+     *
+     * @param string $color
+     * @param int $amount
+     */
+    public function accept(string $color, int $amount): void
+    {
+        $this->acceptableColors[$color] = $amount;
+    }
+
+    /**
+     * @return array
+     */
+    #[Pure] public function getAcceptableColors(): array
+    {
+        return $this->acceptableColors;
+    }
+
+    /**
+     * Check if the bag accepts a certain color.
+     *
+     * If so, the amount of accepted bags is returned. Otherwise, 0 is returned.
+     *
+     * @param string $color
+     * @return int
+     */
+    #[Pure] public function accepts(string $color): int
+    {
+        return $this->acceptableColors[$color] ?? 0;
+    }
+
+    #[Pure] public function acceptsAnything(): bool
+    {
+        return count($this->acceptableColors) > 0;
+    }
+
     public function __toString(): string
     {
-        return sprintf('%s bags contain %s.',
+        return sprintf(
+            '%s bags contain %s.',
             $this->getColor(),
             count($this->acceptableColors) > 0
-                ? implode(', ', array_map(
-                    fn (string $color, int $amount) => sprintf('%d %s bag%s', $amount, $color, $amount === 1 ? '' : 's'),
-                    array_keys($this->acceptableColors), $this->acceptableColors
-                ))
+                ? implode(
+                ', ',
+                array_map(
+                    fn(string $color, int $amount) => sprintf('%d %s bag%s', $amount, $color, $amount === 1 ? '' : 's'),
+                    array_keys($this->acceptableColors),
+                    $this->acceptableColors
+                )
+            )
                 : 'no other bags'
         );
+    }
+
+    /**
+     * Get the color of this bag.
+     *
+     * @return string
+     */
+    public function getColor(): string
+    {
+        return $this->color;
     }
 }

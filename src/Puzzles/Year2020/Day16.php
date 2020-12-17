@@ -32,13 +32,9 @@ class Day16 implements PuzzleSolver
 
         $own = array_shift($all);
 
-        $valid = array_filter($all, fn (array $ticket): bool => $tickets->isValid($ticket));
+        $valid = array_filter($all, fn(array $ticket): bool => $tickets->isValid($ticket));
 
         $fields = $tickets->getFields();
-        $amountOfFields = count($fields);
-
-        $min = array_fill(0, $amountOfFields, PHP_INT_MAX);
-        $max = array_fill(0, $amountOfFields, 0);
 
         $candidates = [];
 
@@ -70,7 +66,7 @@ class Day16 implements PuzzleSolver
 
             foreach ($fixed as $field => $position) {
                 foreach ($candidates as $candidateField => $range) {
-                    $candidates[$candidateField] = array_filter($range, fn (int $pos): bool => $pos !== $position);
+                    $candidates[$candidateField] = array_filter($range, fn(int $pos): bool => $pos !== $position);
                 }
             }
         }

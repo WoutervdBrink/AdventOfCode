@@ -23,34 +23,6 @@ class Tickets
     private array $validationCache;
 
     /**
-     * @param string $field
-     * @return array{field: string, ranges: array{array{int, int}, array{int, int}}}
-     */
-    private static function parseField(string $field): array
-    {
-        if (!preg_match('/^([a-z ]+): (\d+)-(\d+) or (\d+)-(\d+)$/', $field, $matches)) {
-            throw new InvalidArgumentException(sprintf('Invalid field specification "%s"', $field));
-        }
-
-        return [
-            'field' => $matches[1],
-            'ranges' => [
-                [intval($matches[2]), intval($matches[3])],
-                [intval($matches[4]), intval($matches[5])]
-            ]
-        ];
-    }
-
-    /**
-     * @param string $line
-     * @return int[]
-     */
-    private static function parseTicket(string $line): array
-    {
-        return array_map(fn(string $val): int => intval($val), explode(',', $line));
-    }
-
-    /**
      * @param array<array{field: string, ranges: array{array{int, int}, array{int, int}}}> $fields
      * @param int[][] $tickets
      */
@@ -100,6 +72,34 @@ class Tickets
     }
 
     /**
+     * @param string $field
+     * @return array{field: string, ranges: array{array{int, int}, array{int, int}}}
+     */
+    private static function parseField(string $field): array
+    {
+        if (!preg_match('/^([a-z ]+): (\d+)-(\d+) or (\d+)-(\d+)$/', $field, $matches)) {
+            throw new InvalidArgumentException(sprintf('Invalid field specification "%s"', $field));
+        }
+
+        return [
+            'field' => $matches[1],
+            'ranges' => [
+                [intval($matches[2]), intval($matches[3])],
+                [intval($matches[4]), intval($matches[5])]
+            ]
+        ];
+    }
+
+    /**
+     * @param string $line
+     * @return int[]
+     */
+    private static function parseTicket(string $line): array
+    {
+        return array_map(fn(string $val): int => intval($val), explode(',', $line));
+    }
+
+    /**
      * @return array<array{field: string, ranges: array{array{int, int}, array{int, int}}}> $fields
      */
     public function getFields(): array
@@ -113,6 +113,21 @@ class Tickets
     public function getTickets(): array
     {
         return $this->tickets;
+    }
+
+    /**
+     * @param array<int> $ticket
+     * @return bool
+     */
+    public function isValid(array $ticket): bool
+    {
+        foreach ($ticket as $value) {
+            if (!$this->validates($value)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function validates(int $value): bool
@@ -129,21 +144,6 @@ class Tickets
         }
 
         return $this->validationCache[$value];
-    }
-
-    /**
-     * @param array<int> $ticket
-     * @return bool
-     */
-    public function isValid(array $ticket): bool
-    {
-        foreach ($ticket as $value) {
-            if (!$this->validates($value)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public function passesField(array $field, int $value): bool
