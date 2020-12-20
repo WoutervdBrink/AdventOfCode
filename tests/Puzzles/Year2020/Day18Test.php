@@ -27,4 +27,14 @@ class Day18Test extends PuzzleSolverTestCase
             [6, 2, 23340]
         ];
     }
+
+    public function getSolutionForPart1(): int
+    {
+        return 14208061823964;
+    }
+
+    public function getSolutionForPart2(): int
+    {
+        return 320536571743074;
+    }
 }
