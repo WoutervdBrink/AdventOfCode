@@ -61,8 +61,6 @@ class Day19 implements PuzzleSolver
 
     public function part2(string $input): int
     {
-        ini_set("pcre.backtrack_limit", "100000000");
-        ini_set("pcre.recursion_limit", "100000000");
         $input = explode("\n\n", $input, 2);
 
         $rules = $input[0];
