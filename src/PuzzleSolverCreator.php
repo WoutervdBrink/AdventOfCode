@@ -17,17 +17,29 @@ class PuzzleSolverCreator
             throw new InvalidArgumentException(sprintf("Invalid day %d!", $day));
         }
 
-        if (!file_exists($path = static::getPuzzleSolverPath($year, $day))) {
-            file_put_contents($path, static::getPuzzleSolver($year, $day));
-
+        if (static::putFile(static::getPuzzleSolverPath($year, $day), self::getPuzzleSolver($year, $day))) {
             printf("Created puzzle solver for %04d day %02d.\n", $year, $day);
         }
 
-        if (!file_exists($path = static::getPuzzleTestPath($year, $day))) {
-            file_put_contents($path, static::getPuzzleTest($year, $day));
-
+        if (static::putFile(static::getPuzzleTestPath($year, $day), static::getPuzzleTest($year, $day))) {
             printf("Created test for %04d day %02d.\n", $year, $day);
         }
+    }
+
+    private static function putFile(string $path, string $contents): bool
+    {
+        $dir = dirname($path);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0770, true);
+        }
+
+        if (!file_exists($path)) {
+            file_put_contents($path, $contents);
+            return true;
+        }
+
+        return false;
     }
 
     #[Pure] private static function getPuzzleSolverPath(int $year, int $day): string
