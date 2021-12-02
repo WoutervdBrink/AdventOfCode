@@ -34,6 +34,6 @@ class PuzzleInputRetriever
             ['cookies' => $jar]
         );
 
-        return $response->getBody();
+        return trim($response->getBody());
     }
 }
