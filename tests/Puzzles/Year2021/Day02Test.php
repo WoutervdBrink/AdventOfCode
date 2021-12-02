@@ -16,4 +16,14 @@ class Day02Test extends PuzzleSolverTestCase
             [1, 2, 900]
         ];
     }
+
+    public function getSolutionForPart1(): int|null
+    {
+        return 1989014;
+    }
+
+    public function getSolutionForPart2(): int|null
+    {
+        return 2006917119;
+    }
 }
