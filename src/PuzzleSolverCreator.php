@@ -4,9 +4,12 @@ namespace Knevelina\AdventOfCode;
 
 use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
+use Knevelina\AdventOfCode\Traits\PutsFiles;
 
 class PuzzleSolverCreator
 {
+    use PutsFiles;
+
     public static function createPuzzle(int $year, int $day): void
     {
         if ($year < 2015) {
@@ -24,22 +27,6 @@ class PuzzleSolverCreator
         if (static::putFile(static::getPuzzleTestPath($year, $day), static::getPuzzleTest($year, $day))) {
             printf("Created test for %04d day %02d.\n", $year, $day);
         }
-    }
-
-    private static function putFile(string $path, string $contents): bool
-    {
-        $dir = dirname($path);
-
-        if (!is_dir($dir)) {
-            mkdir($dir, 0770, true);
-        }
-
-        if (!file_exists($path)) {
-            file_put_contents($path, $contents);
-            return true;
-        }
-
-        return false;
     }
 
     #[Pure] private static function getPuzzleSolverPath(int $year, int $day): string
