@@ -8,7 +8,8 @@ class Set
 
     public function __construct(mixed ...$values)
     {
-        $this->values = array_unique($values);
+        sort($values);
+        $this->values = array_values(array_unique($values));
     }
 
     public static function fromArray(array $values): Set
@@ -44,5 +45,27 @@ class Set
         $bValues = $b->getValues();
 
         return new Set(array_filter($this->getValues(), fn($value): bool => !in_array($value, $bValues)));
+    }
+
+    private static function permute(array $elements = []): \Generator
+    {
+        if (count($elements) <= 1) {
+            yield $elements;
+        } else {
+            foreach (self::permute(array_slice($elements, 1)) as $permutation) {
+                foreach (range(0, count($elements) - 1) as $i) {
+                    yield array_merge(
+                        array_slice($permutation, 0, $i),
+                        [$elements[0]],
+                        array_slice($permutation, $i)
+                    );
+                }
+            }
+        }
+    }
+
+    public function permutations(): \Generator
+    {
+        return self::permute($this->values);
     }
 }
