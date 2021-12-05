@@ -17,9 +17,9 @@ class PuzzleSolverExecutor
      * @param int $day
      * @param int $part
      * @param string|null $input
-     * @return int
+     * @return string|int
      */
-    public static function execute(int $year, int $day, int $part, ?string $input = null): int
+    public static function execute(int $year, int $day, int $part, ?string $input = null): string|int
     {
         if (is_null($input)) {
             $input = InputLoader::getInput($year, $day);

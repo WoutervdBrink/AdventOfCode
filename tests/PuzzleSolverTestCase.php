@@ -22,9 +22,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      *
      * Override this method to enable regression tests.
      *
-     * @return int|null
+     * @return string|int|null
      */
-    public function getSolutionForPart1(): int|null {
+    public function getSolutionForPart1(): string|int|null {
         return null;
     }
 
@@ -33,9 +33,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      *
      * Override this method to enable regression tests.
      *
-     * @return int|null
+     * @return string|int|null
      */
-    public function getSolutionForPart2(): int|null {
+    public function getSolutionForPart2(): string|int|null {
         return null;
     }
 
@@ -61,9 +61,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      * @test
      * @param int $example
      * @param int $part
-     * @param int $expected
+     * @param string|int $expected
      */
-    function it_solves_an_example(int $example, int $part, int $expected): void
+    function it_solves_an_example(int $example, int $part, string|int $expected): void
     {
         $input = InputLoader::getExample($this->year, $this->day, $example);
 
