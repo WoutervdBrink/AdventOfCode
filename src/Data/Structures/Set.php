@@ -2,6 +2,8 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures;
 
+use Generator;
+
 class Set
 {
     private array $values;
@@ -28,7 +30,7 @@ class Set
     }
 
     /**
-     * @return mixed[]
+     * @return array
      */
     public function getValues(): array
     {
@@ -47,7 +49,7 @@ class Set
         return new Set(array_filter($this->getValues(), fn($value): bool => !in_array($value, $bValues)));
     }
 
-    private static function permute(array $elements = []): \Generator
+    private static function permute(array $elements = []): Generator
     {
         if (count($elements) <= 1) {
             yield $elements;
@@ -64,7 +66,7 @@ class Set
         }
     }
 
-    public function permutations(): \Generator
+    public function permutations(): Generator
     {
         return self::permute($this->values);
     }

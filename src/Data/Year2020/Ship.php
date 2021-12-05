@@ -2,13 +2,15 @@
 
 namespace Knevelina\AdventOfCode\Data\Year2020;
 
+use JetBrains\PhpStorm\Pure;
+
 class Ship
 {
     private int $x;
     private int $y;
     private Direction $direction;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->x = 0;
         $this->y = 0;
@@ -37,7 +39,7 @@ class Ship
         return $this;
     }
 
-    public function getDirection(): int
+    #[Pure] public function getDirection(): int
     {
         return $this->direction->getDirection();
     }

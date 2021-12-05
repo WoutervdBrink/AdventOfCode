@@ -14,16 +14,15 @@ class Day08 implements PuzzleVisualizer
 {
     private Graph $graph;
     private array $vertices;
-    private Program $program;
 
     public function visualize(string $input, string $path): void
     {
-        $this->program = Program::fromSpecification($input);
+        $program = Program::fromSpecification($input);
         $this->graph = new Graph();
         $this->vertices = [];
 
-        for ($address = 0; $address < $this->program->getSize(); $address++) {
-            $ins = $this->program->getInstruction($address);
+        for ($address = 0; $address < $program->getSize(); $address++) {
+            $ins = $program->getInstruction($address);
             $vertex = $this->getVertex($address);
 
             $target = match ($ins->getOperation()) {
@@ -32,12 +31,12 @@ class Day08 implements PuzzleVisualizer
                 default => $address + 1
             };
 
-            if ($target >= 0 && $target < $this->program->getSize()) {
+            if ($target >= 0 && $target < $program->getSize()) {
                 $vertex->createEdgeTo($this->getVertex($target));
             }
         }
 
-        $cpu = new CPU($this->program);
+        $cpu = new CPU($program);
 
         $cache = [];
 
@@ -49,7 +48,7 @@ class Day08 implements PuzzleVisualizer
             }
         }
 
-        $this->getVertex($this->program->getSize() - 1)->setAttribute('graphviz.color', 'red');
+        $this->getVertex($program->getSize() - 1)->setAttribute('graphviz.color', 'red');
 
         $viz = new GraphViz();
         $viz->setFormat('svg');

@@ -86,11 +86,6 @@ class Bingo
         return $this->marked[self::encodeCoordinate($x, $y)];
     }
 
-    public function getMarkedNumbers(): array
-    {
-        return array_filter($this->values, fn(int $index): bool => $this->marked[$index], ARRAY_FILTER_USE_KEY);
-    }
-
     public function getUnmarkedNumbers(): array
     {
         return array_filter($this->values, fn(int $index): bool => !$this->marked[$index], ARRAY_FILTER_USE_KEY);

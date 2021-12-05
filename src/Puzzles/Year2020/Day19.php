@@ -82,7 +82,7 @@ class Day19 implements PuzzleSolver
         $sum = 0;
 
         foreach ($strings as $string) {
-            if (preg_match($regex, $string,)) {
+            if (preg_match($regex, $string)) {
                 $sum++;
             }
         }

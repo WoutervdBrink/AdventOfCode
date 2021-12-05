@@ -3,6 +3,7 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 
 use InvalidArgumentException;
+use JetBrains\PhpStorm\Pure;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
 
@@ -54,7 +55,7 @@ class Day14 implements PuzzleSolver
         );
     }
 
-    protected static function applyMask(string $mask, int $value): int
+    #[Pure] protected static function applyMask(string $mask, int $value): int
     {
         $masked = 0;
         $bits = self::intToBits($value);
@@ -101,7 +102,7 @@ class Day14 implements PuzzleSolver
         return (int)array_sum($mem);
     }
 
-    private static function getAddresses(string $mask, int $address): array
+    #[Pure] private static function getAddresses(string $mask, int $address): array
     {
         $addresses = [''];
 

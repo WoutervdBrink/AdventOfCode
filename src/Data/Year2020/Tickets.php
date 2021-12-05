@@ -3,6 +3,7 @@
 namespace Knevelina\AdventOfCode\Data\Year2020;
 
 use InvalidArgumentException;
+use JetBrains\PhpStorm\ArrayShape;
 use Knevelina\AdventOfCode\InputManipulator;
 
 class Tickets
@@ -53,7 +54,7 @@ class Tickets
                 continue;
             }
 
-            if (substr($line, 0, 4) === 'your' || substr($line, 0, 6) === 'nearby') {
+            if (str_starts_with($line, 'your') || str_starts_with($line, 'nearby')) {
                 continue;
             }
 
@@ -75,7 +76,7 @@ class Tickets
      * @param string $field
      * @return array{field: string, ranges: array{array{int, int}, array{int, int}}}
      */
-    private static function parseField(string $field): array
+    #[ArrayShape(['field' => "mixed", 'ranges' => "array[]"])] private static function parseField(string $field): array
     {
         if (!preg_match('/^([a-z ]+): (\d+)-(\d+) or (\d+)-(\d+)$/', $field, $matches)) {
             throw new InvalidArgumentException(sprintf('Invalid field specification "%s"', $field));

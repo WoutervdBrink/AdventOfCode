@@ -2,6 +2,8 @@
 
 namespace Knevelina\AdventOfCode\Data\Year2015;
 
+use JetBrains\PhpStorm\Pure;
+
 class Present
 {
     private int $length;
@@ -26,7 +28,7 @@ class Present
         return intval(2 * array_sum($this->getSides()));
     }
 
-    public function getSides(): array
+    #[Pure] public function getSides(): array
     {
         return [
             $this->getLength() * $this->getWidth(),

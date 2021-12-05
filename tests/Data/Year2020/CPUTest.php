@@ -55,7 +55,7 @@ class CPUTest extends TestCase
     function it_rejects_invalid_instructions(): void
     {
         $invalid = new Program();
-        $invalid->addInstruction(new Instruction(1e9, 0));
+        $invalid->addInstruction(new Instruction(1000, 0));
 
         $cpu = new CPU($invalid);
 

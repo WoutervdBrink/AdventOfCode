@@ -2,6 +2,7 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
+use InvalidArgumentException;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Set;
 use Knevelina\AdventOfCode\InputManipulator;
@@ -18,7 +19,7 @@ class Day09 implements PuzzleSolver
 
         foreach ($input as $route) {
             if (!preg_match('/^([a-zA-Z]+) to ([a-zA-Z]+) = (\d+)$/', $route, $matches)) {
-                throw new \InvalidArgumentException(sprintf('Invalid route definition "%s"', $route));
+                throw new InvalidArgumentException(sprintf('Invalid route definition "%s"', $route));
             }
 
             $from = $matches[1];

@@ -4,10 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use RuntimeException;
 
 class Day03 implements PuzzleSolver
 {
-    public function part1(string $input): int
+    public function part1(string $input): float
     {
         $input = InputManipulator::splitLines($input);
         $counter = array_fill(0, strlen($input[0]), 0);
@@ -75,7 +76,7 @@ class Day03 implements PuzzleSolver
     private static function findZeroAndOneCandidates(array $lines, int $index): array
     {
         if ($index >= strlen($lines[0])) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'Could not find zero and one candidates: index %d exceeds line length %d',
                     $index,

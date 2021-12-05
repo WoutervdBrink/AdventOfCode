@@ -22,6 +22,9 @@ class PuzzleInputRetriever
         return sprintf('%s/../resources/inputs/%d/day%02d.txt', __DIR__, $year, $day);
     }
 
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     private static function getPuzzleInput(int $year, int $day): string
     {
         $jar = CookieJar::fromArray(['session' => $_ENV['SESSION_COOKIE'] ?? ''], 'adventofcode.com');
