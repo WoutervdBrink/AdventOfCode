@@ -9,7 +9,7 @@ use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
  */
 class Day09Test extends PuzzleSolverTestCase
 {
-    public function it_solves_an_example(int $example, int $part, int $expected): void
+    public function it_solves_an_example(int $example, int $part, string|int $expected): void
     {
         // Has no examples...
         $this->assertTrue(true);
