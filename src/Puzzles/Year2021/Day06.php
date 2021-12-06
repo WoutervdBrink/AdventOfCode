@@ -23,7 +23,7 @@ class Day06 implements PuzzleSolver
         return $newFish;
     }
 
-    public static function simulateEverything(array $fish, int $steps): float
+    public static function simulateEverything(array $fish, int $steps): int
     {
         $map = array_fill(0, 9, 0);
 
