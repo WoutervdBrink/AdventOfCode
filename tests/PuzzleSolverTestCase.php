@@ -22,9 +22,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      *
      * Override this method to enable regression tests.
      *
-     * @return string|int|null
+     * @return string|int|float|null
      */
-    public function getSolutionForPart1(): string|int|null {
+    public function getSolutionForPart1(): string|int|float|null {
         return null;
     }
 
@@ -33,9 +33,9 @@ abstract class PuzzleSolverTestCase extends TestCase
      *
      * Override this method to enable regression tests.
      *
-     * @return string|int|null
+     * @return string|int|float|null
      */
-    public function getSolutionForPart2(): string|int|null {
+    public function getSolutionForPart2(): string|int|float|null {
         return null;
     }
 
