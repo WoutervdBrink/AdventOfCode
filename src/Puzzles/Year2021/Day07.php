@@ -10,13 +10,57 @@ class Day07 implements PuzzleSolver
     public function part1(string $input): float
     {
         $input = InputManipulator::splitLines($input, ',', 'intval');
+
         sort($input);
-        return array_sum(array_map(fn (float $fuel): float => abs($fuel - (count($input) % 2 ? (($input[floor(count($input) / 2)] + $input[floor(count($input) / 2) + 1])) : $input[count($input) / 2])), $input));
+
+        $c = intval(floor(count($input) / 2));
+
+        $median = count($input) % 2
+            ? ($input[$c] + $input[$c + 1])
+            : $input[count($input) / 2];
+
+        return array_sum(
+            array_map(
+                fn(float $fuel): float => abs(
+                    $fuel - $median
+                ),
+                $input
+            )
+        );
     }
 
     public function part2(string $input): float
     {
         $input = InputManipulator::splitLines($input, ',', 'intval');
-        return min(array_sum(array_map(fn (float $fuel): float => (($n = (abs($fuel - (floor(array_sum($input) / count($input)))))) * ($n + 1)) / 2, $input)), array_sum(array_map(fn (float $fuel): float => (($n = (abs($fuel - (floor(array_sum($input) / count($input))) - 1))) * ($n + 1)) / 2, $input)));
+
+        $mean = floor(array_sum($input) / count($input));
+
+        return min(
+            array_sum(
+                array_map(
+                    fn(float $fuel): float => self::plusFactorial(
+                        abs(
+                            $fuel - $mean
+                        )
+                    ),
+                    $input
+                )
+            ),
+            array_sum(
+                array_map(
+                    fn(float $fuel): float => self::plusFactorial(
+                        abs(
+                            $fuel - $mean - 1
+                        )
+                    ),
+                    $input
+                )
+            )
+        );
+    }
+
+    protected static function plusFactorial(float $n): float
+    {
+        return ($n * ($n + 1)) / 2;
     }
 }
