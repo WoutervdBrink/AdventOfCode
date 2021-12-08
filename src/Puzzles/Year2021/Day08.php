@@ -9,17 +9,6 @@ use RuntimeException;
 
 class Day08 implements PuzzleSolver
 {
-    const HASH_TO_DIGIT = [
-        74 => 0,
-        58 => 1,
-        73 => 3,
-        76 => 4,
-        54 => 6,
-        63 => 7,
-        83 => 8,
-        82 => 9
-    ];
-
     public static function processLine(string $line): array
     {
         $line = explode(' | ', $line, 2);
