@@ -22,7 +22,7 @@ class Day10 implements PuzzleSolver
                 } else {
                     $open = $q->pop();
 
-                    $close = match($open) {
+                    $close = match ($open) {
                         '(' => ')',
                         '[' => ']',
                         '{' => '}',
@@ -55,14 +55,15 @@ class Day10 implements PuzzleSolver
         foreach ($input as $line) {
             $q = new Queue();
 
+            $illegal = false;
+
             foreach ($line as $char) {
-                $illegal = false;
                 if (in_array($char, ['(', '[', '{', '<'])) {
                     $q->push($char);
                 } else {
                     $open = $q->pop();
 
-                    $close = match($open) {
+                    $close = match ($open) {
                         '(' => ')',
                         '[' => ']',
                         '{' => '}',
@@ -71,13 +72,6 @@ class Day10 implements PuzzleSolver
                     };
 
                     if ($char !== $close) {
-                        $score += match ($char) {
-                            ')' => 3,
-                            ']' => 57,
-                            '}' => 1197,
-                            '>' => 25137,
-                            default => 0
-                        };
                         $illegal = true;
                         break;
                     }
@@ -89,7 +83,7 @@ class Day10 implements PuzzleSolver
 
                 while ($char = $q->pop()) {
                     $score *= 5;
-                    $score += match($char) {
+                    $score += match ($char) {
                         '(' => 1,
                         '[' => 2,
                         '{' => 3,
