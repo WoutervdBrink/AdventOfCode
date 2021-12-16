@@ -2,7 +2,7 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures;
 
-class Queue
+class Stack
 {
     private array $values = [];
 

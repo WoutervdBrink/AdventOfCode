@@ -3,7 +3,7 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
-use Knevelina\AdventOfCode\Data\Structures\Queue;
+use Knevelina\AdventOfCode\Data\Structures\Stack;
 use Knevelina\AdventOfCode\InputManipulator;
 
 class Day10 implements PuzzleSolver
@@ -14,13 +14,13 @@ class Day10 implements PuzzleSolver
         $score = 0;
 
         foreach ($input as $line) {
-            $q = new Queue();
+            $stack = new Stack();
 
             foreach ($line as $char) {
                 if (in_array($char, ['(', '[', '{', '<'])) {
-                    $q->push($char);
+                    $stack->push($char);
                 } else {
-                    $open = $q->pop();
+                    $open = $stack->pop();
 
                     $close = match ($open) {
                         '(' => ')',
@@ -53,15 +53,15 @@ class Day10 implements PuzzleSolver
         $scores = [];
 
         foreach ($input as $line) {
-            $q = new Queue();
+            $stack = new Stack();
 
             $illegal = false;
 
             foreach ($line as $char) {
                 if (in_array($char, ['(', '[', '{', '<'])) {
-                    $q->push($char);
+                    $stack->push($char);
                 } else {
-                    $open = $q->pop();
+                    $open = $stack->pop();
 
                     $close = match ($open) {
                         '(' => ')',
@@ -81,7 +81,7 @@ class Day10 implements PuzzleSolver
             if (!$illegal) {
                 $score = 0;
 
-                while ($char = $q->pop()) {
+                while ($char = $stack->pop()) {
                     $score *= 5;
                     $score += match ($char) {
                         '(' => 1,
