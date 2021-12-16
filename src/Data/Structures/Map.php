@@ -52,20 +52,33 @@ class Map
         return new static($rows);
     }
 
-    #[Pure] public function getValue(int $x, int $y): ?int
+    public function setValue(int $x, int $y, int $value): void
     {
         $index = $this->encodeCoordinates($x, $y);
 
         if (is_null($index)) {
-            return null;
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Coordinates %d, %d out of bounds (map size %d by %d)',
+                    $x,
+                    $y,
+                    $this->getWidth(),
+                    $this->getHeight()
+                )
+            );
         }
 
-        return $this->values[$index];
+        $this->values[$index] = $value;
     }
 
-    #[Pure] private function encodeCoordinates(int $x, int $y): ?int
+    #[Pure] public function isWithinBounds(int $x, int $y): bool
     {
-        if ($x < 0 || $x >= $this->getWidth() || $y < 0 || $y >= $this->getHeight()) {
+        return !($x < 0 || $x >= $this->getWidth() || $y < 0 || $y >= $this->getHeight());
+    }
+
+    #[Pure] protected function encodeCoordinates(int $x, int $y): ?int
+    {
+        if (!$this->isWithinBounds($x, $y)) {
             return null;
         }
 
@@ -105,5 +118,40 @@ class Map
             ],
             fn(?int $value): bool => !is_null($value)
         );
+    }
+
+    #[Pure] public function getValue(int $x, int $y): ?int
+    {
+        $index = $this->encodeCoordinates($x, $y);
+
+        if (is_null($index)) {
+            return null;
+        }
+
+        return $this->values[$index];
+    }
+
+    public function clone(): static
+    {
+        return new static(
+            array_map(
+                fn(int $y): array => array_slice($this->values, $y * $this->getWidth(), $this->getWidth()),
+                range(0, $this->getHeight() - 1)
+            )
+        );
+    }
+
+    public function __toString(): string
+    {
+        $str = '';
+
+        for ($y = 0; $y < $this->getHeight(); $y++) {
+            for ($x = 0; $x < $this->getWidth(); $x++) {
+                $str .= $this->getValue($x, $y);
+            }
+            $str .= PHP_EOL;
+        }
+
+        return $str;
     }
 }
