@@ -52,6 +52,17 @@ class Map
         return new static($rows);
     }
 
+    public static function emptyFromDimensions(int $width, int $height): static
+    {
+        return new static(
+            array_fill(
+                0,
+                $height,
+                array_fill(0, $width, 0),
+            )
+        );
+    }
+
     public function setValue(int $x, int $y, int $value): void
     {
         $index = $this->encodeCoordinates($x, $y);
@@ -71,11 +82,6 @@ class Map
         $this->values[$index] = $value;
     }
 
-    #[Pure] public function isWithinBounds(int $x, int $y): bool
-    {
-        return !($x < 0 || $x >= $this->getWidth() || $y < 0 || $y >= $this->getHeight());
-    }
-
     #[Pure] protected function encodeCoordinates(int $x, int $y): ?int
     {
         if (!$this->isWithinBounds($x, $y)) {
@@ -83,6 +89,11 @@ class Map
         }
 
         return $y * $this->getWidth() + $x;
+    }
+
+    #[Pure] public function isWithinBounds(int $x, int $y): bool
+    {
+        return !($x < 0 || $x >= $this->getWidth() || $y < 0 || $y >= $this->getHeight());
     }
 
     /**
