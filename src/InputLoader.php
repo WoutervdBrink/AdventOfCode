@@ -26,7 +26,7 @@ class InputLoader
     public static function getExample(int $year, $day, int $example): string
     {
         if (!file_exists($path = self::getExamplePath($year, $day, $example))) {
-            throw new RuntimeException(sprintf('Input for example %d of day %d does not exist!', $day, $example));
+            throw new RuntimeException(sprintf('Input for example %d of day %d does not exist!', $example, $day));
         }
 
         return file_get_contents($path);
