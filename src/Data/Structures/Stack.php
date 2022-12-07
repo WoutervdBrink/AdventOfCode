@@ -20,4 +20,11 @@ class Stack
     {
         return array_pop($this->values);
     }
+
+    public function peek(): mixed
+    {
+        return ($length = $this->getLength())
+            ? $this->values[$length - 1]
+            : throw new \OutOfBoundsException('Stack is empty');
+    }
 }
