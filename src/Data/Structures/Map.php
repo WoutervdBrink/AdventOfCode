@@ -63,7 +63,7 @@ class Map
         );
     }
 
-    public function setValue(int $x, int $y, int $value): void
+    public function setValue(int $x, int $y, mixed $value): void
     {
         $index = $this->encodeCoordinates($x, $y);
 
@@ -131,7 +131,7 @@ class Map
         );
     }
 
-    #[Pure] public function getValue(int $x, int $y): ?int
+    #[Pure] public function getValue(int $x, int $y): mixed
     {
         $index = $this->encodeCoordinates($x, $y);
 
@@ -140,6 +140,52 @@ class Map
         }
 
         return $this->values[$index];
+    }
+
+    public function getValues(): array
+    {
+        return $this->values;
+    }
+
+    public function getRowsAndColumns(): array
+    {
+        return array_merge($this->getRows(), $this->getColumns());
+    }
+
+    public function getRows(): array
+    {
+        $rows = [];
+        for ($y = 0; $y < $this->getHeight(); $y++) {
+            $rows[] = $this->getRow($y);
+        }
+        return $rows;
+    }
+
+    public function getRow(int $y): array
+    {
+        $row = [];
+        for ($x = 0; $x < $this->getWidth(); $x++) {
+            $row[] = $this->getValue($x, $y);
+        }
+        return $row;
+    }
+
+    public function getColumns(): array
+    {
+        $cols = [];
+        for ($x = 0; $x < $this->getWidth(); $x++) {
+            $cols[] = $this->getColumn($x);
+        }
+        return $cols;
+    }
+
+    public function getColumn(int $x): array
+    {
+        $column = [];
+        for ($y = 0; $y < $this->getHeight(); $y++) {
+            $column[] = $this->getValue($x, $y);
+        }
+        return $column;
     }
 
     public function clone(): static
