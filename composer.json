@@ -28,6 +28,9 @@
         "psr-4": {
             "Knevelina\\AdventOfCode\\": "src/",
             "Knevelina\\AdventOfCode\\Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "src/Util/loader.php"
+        ]
     }
 }
