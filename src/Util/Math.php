@@ -1,6 +1,6 @@
 <?php
 
-namespace Knevelina\Util\Math;
+namespace Knevelina\AdventOfCode\Util\Math;
 
 function sign(int|float $x): int
 {

@@ -7,7 +7,7 @@ use Knevelina\AdventOfCode\Data\Structures\Direction;
 use Knevelina\AdventOfCode\Data\Structures\SizedDirection;
 use Knevelina\AdventOfCode\InputManipulator;
 
-use function Knevelina\Util\Math\sign;
+use function Knevelina\AdventOfCode\Util\Math\sign;
 
 class Day09 implements PuzzleSolver
 {
