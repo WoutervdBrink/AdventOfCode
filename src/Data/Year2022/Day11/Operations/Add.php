@@ -10,4 +10,9 @@ class Add extends Operation
     {
         return $this->argument + $item;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('old + %d', $this->argument);
+    }
 }

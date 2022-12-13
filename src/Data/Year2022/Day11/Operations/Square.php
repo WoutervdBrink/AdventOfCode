@@ -15,4 +15,9 @@ class Square extends Operation
     {
         return $item * $item;
     }
+
+    public function __toString(): string
+    {
+        return 'old * old';
+    }
 }

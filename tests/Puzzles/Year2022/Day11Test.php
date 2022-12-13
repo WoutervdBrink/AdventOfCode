@@ -13,6 +13,17 @@ class Day11Test extends PuzzleSolverTestCase
     {
         return [
             [1, 1, 10605],
+            [1, 2, 2713310158],
         ];
+    }
+
+    public function getSolutionForPart1(): int
+    {
+        return 118674;
+    }
+
+    public function getSolutionForPart2(): int
+    {
+        return 32333418600;
     }
 }

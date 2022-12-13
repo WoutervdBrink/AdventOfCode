@@ -2,7 +2,9 @@
 
 namespace Knevelina\AdventOfCode\Data\Year2022\Day11;
 
-abstract class Operation
+use Stringable;
+
+abstract class Operation implements Stringable
 {
     public function __construct(protected readonly int $argument)
     {
