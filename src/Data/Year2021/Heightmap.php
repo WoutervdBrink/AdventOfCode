@@ -2,10 +2,10 @@
 
 namespace Knevelina\AdventOfCode\Data\Year2021;
 
-use Knevelina\AdventOfCode\Data\Structures\Map;
+use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Structures\Point;
 
-class Heightmap extends Map
+class Heightmap extends Grid
 {
     public function getBasin(int $x, int $y): array
     {
@@ -51,7 +51,7 @@ class Heightmap extends Map
 
         for ($y = 0; $y < $this->getHeight(); $y++) {
             for ($x = 0; $x < $this->getWidth(); $x++) {
-                $neighbors = $this->getNeighbors($x, $y, false);
+                $neighbors = $this->getNeighborValues($x, $y, false);
                 $value = $this->getValue($x, $y);
 
                 if (min($neighbors) > $value) {

@@ -1,15 +1,26 @@
 <?php
 
-namespace Knevelina\AdventOfCode\Data\Structures;
+namespace Knevelina\AdventOfCode\Data\Structures\Grid;
 
 use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use Knevelina\AdventOfCode\InputManipulator;
 
-class Map
+class Grid
 {
-    private array $values;
+    /**
+     * @var array<Entry> The grid's entries. Stored as a flat array, row by row.
+     */
+    private array $entries;
+
+    /**
+     * @var int The width of the grid.
+     */
     private int $width;
+
+    /**
+     * @var int The height of the grid.
+     */
     private int $height;
 
     /**
@@ -26,7 +37,7 @@ class Map
 
         $width = count($rows[0]);
 
-        $values = [];
+        $entries = [];
 
         foreach ($rows as $y => $row) {
             if (count($row) !== $width) {
@@ -34,12 +45,15 @@ class Map
                     sprintf('Invalid row width at row %d: expected %d cells, but got %d cells', $y, $width, count($row))
                 );
             }
-            $values = array_merge($values, $row);
+
+            foreach ($row as $x => $value) {
+                $entries[] = new Entry($this, $x, $y, $value);
+            }
         }
 
         $this->width = $width;
         $this->height = $height;
-        $this->values = $values;
+        $this->entries = $entries;
     }
 
     public static function fromInput(string $input): static
@@ -79,7 +93,7 @@ class Map
             );
         }
 
-        $this->values[$index] = $value;
+        $this->entries[$index]->setValue($value);
     }
 
     #[Pure] protected function encodeCoordinates(int $x, int $y): ?int
@@ -117,21 +131,26 @@ class Map
         return array_filter(
             [
                 ...($includeDiagonals ? [
-                    $this->getValue($x - 1, $y - 1),
-                    $this->getValue($x - 1, $y + 1),
-                    $this->getValue($x + 1, $y - 1),
-                    $this->getValue($x + 1, $y + 1)
+                    $this->get($x - 1, $y - 1),
+                    $this->get($x - 1, $y + 1),
+                    $this->get($x + 1, $y - 1),
+                    $this->get($x + 1, $y + 1)
                 ] : []),
-                $this->getValue($x, $y - 1),
-                $this->getValue($x, $y + 1),
-                $this->getValue($x - 1, $y),
-                $this->getValue($x + 1, $y),
+                $this->get($x, $y - 1),
+                $this->get($x, $y + 1),
+                $this->get($x - 1, $y),
+                $this->get($x + 1, $y),
             ],
-            fn(?int $value): bool => !is_null($value)
+            fn(?Entry $value): bool => !is_null($value)
         );
     }
 
-    #[Pure] public function getValue(int $x, int $y): mixed
+    public function getNeighborValues(int $x, int $y, bool $includeDiagonals = true): array
+    {
+        return array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->getNeighbors($x, $y, $includeDiagonals));
+    }
+
+    #[Pure] public function get(int $x, int $y): ?Entry
     {
         $index = $this->encodeCoordinates($x, $y);
 
@@ -139,29 +158,42 @@ class Map
             return null;
         }
 
-        return $this->values[$index];
+        return $this->entries[$index];
+    }
+
+    #[Pure] public function getValue(int $x, int $y): mixed
+    {
+        return $this->get($x, $y)->getValue();
     }
 
     public function getValues(): array
     {
-        return $this->values;
+        return array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->entries);
     }
 
-    public function getRowsAndColumns(): array
+    /**
+     * @return array
+     */
+    public function getEntries(): array
     {
-        return array_merge($this->getRows(), $this->getColumns());
+        return $this->entries;
     }
 
-    public function getRows(): array
+    public function getRowAndColumnValues(): array
+    {
+        return array_merge($this->getAllRowValues(), $this->getAllColumnValues());
+    }
+
+    public function getAllRowValues(): array
     {
         $rows = [];
         for ($y = 0; $y < $this->getHeight(); $y++) {
-            $rows[] = $this->getRow($y);
+            $rows[] = $this->getRowValues($y);
         }
         return $rows;
     }
 
-    public function getRow(int $y): array
+    public function getRowValues(int $y): array
     {
         $row = [];
         for ($x = 0; $x < $this->getWidth(); $x++) {
@@ -170,16 +202,16 @@ class Map
         return $row;
     }
 
-    public function getColumns(): array
+    public function getAllColumnValues(): array
     {
         $cols = [];
         for ($x = 0; $x < $this->getWidth(); $x++) {
-            $cols[] = $this->getColumn($x);
+            $cols[] = $this->getColumnValues($x);
         }
         return $cols;
     }
 
-    public function getColumn(int $x): array
+    public function getColumnValues(int $x): array
     {
         $column = [];
         for ($y = 0; $y < $this->getHeight(); $y++) {
@@ -192,7 +224,7 @@ class Map
     {
         return new static(
             array_map(
-                fn(int $y): array => array_slice($this->values, $y * $this->getWidth(), $this->getWidth()),
+                fn(int $y): array => array_slice($this->entries, $y * $this->getWidth(), $this->getWidth()),
                 range(0, $this->getHeight() - 1)
             )
         );

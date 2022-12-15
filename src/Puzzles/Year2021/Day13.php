@@ -3,7 +3,7 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
-use Knevelina\AdventOfCode\Data\Structures\Map;
+use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\InputManipulator;
 
 class Day13 implements PuzzleSolver
@@ -21,7 +21,7 @@ class Day13 implements PuzzleSolver
         return $sum;
     }
 
-    private function solve(string $input, int $part): Map
+    private function solve(string $input, int $part): Grid
     {
         list($dots, $instructions) = explode("\n\n", $input, 2);
 
@@ -41,7 +41,7 @@ class Day13 implements PuzzleSolver
         $width++;
         $height++;
 
-        $map = Map::emptyFromDimensions($width, $height);
+        $map = Grid::emptyFromDimensions($width, $height);
 
         foreach ($dots as $dot) {
             list ($x, $y) = $dot;
@@ -60,7 +60,7 @@ class Day13 implements PuzzleSolver
             $value = intval($matches[2]);
             $newWidth = $direction === 'x' ? $value : $width;
             $newHeight = $direction === 'y' ? $value : $height;
-            $next = Map::emptyFromDimensions($newWidth, $newHeight);
+            $next = Grid::emptyFromDimensions($newWidth, $newHeight);
 
             for ($x = 0; $x < $width; $x++) {
                 for ($y = 0; $y < $height; $y++) {

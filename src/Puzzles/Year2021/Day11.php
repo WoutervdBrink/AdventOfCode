@@ -3,13 +3,13 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
-use Knevelina\AdventOfCode\Data\Year2021\OctopusMap;
+use Knevelina\AdventOfCode\Data\Year2021\OctopusGrid;
 
 class Day11 implements PuzzleSolver
 {
     public function part1(string $input): int
     {
-        $map = OctopusMap::fromInput($input);
+        $map = OctopusGrid::fromInput($input);
         $flashes = 0;
 
         for ($step = 0; $step < 100; $step++) {
@@ -21,7 +21,7 @@ class Day11 implements PuzzleSolver
 
     public function part2(string $input): int
     {
-        $map = OctopusMap::fromInput($input);
+        $map = OctopusGrid::fromInput($input);
 
         $steps = 0;
 

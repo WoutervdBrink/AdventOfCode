@@ -2,9 +2,9 @@
 
 namespace Knevelina\AdventOfCode\Data\Year2021;
 
-use Knevelina\AdventOfCode\Data\Structures\Map;
+use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 
-class OctopusMap extends Map
+class OctopusGrid extends Grid
 {
     public function iterate(): int
     {

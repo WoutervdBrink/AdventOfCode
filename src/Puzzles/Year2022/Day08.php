@@ -3,7 +3,7 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
-use Knevelina\AdventOfCode\Data\Structures\Map;
+use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Year2022\Day08\Tree;
 use Knevelina\AdventOfCode\InputManipulator;
 
@@ -13,7 +13,7 @@ class Day08 implements PuzzleSolver
     {
         $treeMap = self::parseInput($input);
 
-        foreach ($treeMap->getRowsAndColumns() as $treeLine) {
+        foreach ($treeMap->getRowAndColumnValues() as $treeLine) {
             self::analyzeTreeLine($treeLine);
             self::analyzeTreeLine(array_reverse($treeLine));
         }
@@ -21,7 +21,7 @@ class Day08 implements PuzzleSolver
         return count(array_filter($treeMap->getValues(), fn(Tree $tree): bool => $tree->isVisible()));
     }
 
-    private static function parseInput(string $input): Map
+    private static function parseInput(string $input): Grid
     {
         /** @var array<array<Tree>> $trees */
         $trees = InputManipulator::splitLines($input, manipulator: fn(string $line): array => array_map(
@@ -29,7 +29,7 @@ class Day08 implements PuzzleSolver
             str_split($line)
         ));
 
-        return new Map($trees);
+        return new Grid($trees);
     }
 
     private static function analyzeTreeLine(array $treeLine): void
@@ -51,7 +51,7 @@ class Day08 implements PuzzleSolver
     {
         $treeMap = self::parseInput($input);
 
-        foreach ($treeMap->getRowsAndColumns() as $treeLine) {
+        foreach ($treeMap->getRowAndColumnValues() as $treeLine) {
             self::calculateScenicScores($treeLine);
             self::calculateScenicScores(array_reverse($treeLine));
         }
