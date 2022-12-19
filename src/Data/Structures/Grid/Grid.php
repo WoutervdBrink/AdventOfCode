@@ -163,7 +163,7 @@ class Grid
 
     #[Pure] public function getValue(int $x, int $y): mixed
     {
-        return $this->get($x, $y)->getValue();
+        return $this->get($x, $y)?->getValue();
     }
 
     public function getValues(): array
