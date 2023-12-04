@@ -56,11 +56,11 @@ class Grid
         $this->entries = $entries;
     }
 
-    public static function fromInput(string $input): static
+    public static function fromInput(string $input, ?callable $manipulator): static
     {
         $rows = InputManipulator::splitLines(
             $input,
-            manipulator: fn(string $line): array => array_map('intval', str_split($line))
+            manipulator: fn(string $line): array => array_map($manipulator ?? 'intval', str_split($line))
         );
 
         return new static($rows);
@@ -150,6 +150,32 @@ class Grid
         return array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->getNeighbors($x, $y, $includeDiagonals));
     }
 
+    public function getSlice(int $x1, int $y1, int $x2, int $y2): array
+    {
+        if ($x1 > $x2 || $y1 > $y2) {
+            throw new InvalidArgumentException(sprintf('Invalid coordinates (%d, %d) -- (%d, %d)', $x1, $y1, $x2, $y2));
+        }
+
+        $entries = [];
+
+        for ($x = $x1; $x <= $x2; $x++) {
+            for ($y = $y1; $y <= $y2; $y++) {
+                $entry = $this->get($x, $y);
+
+                if (!is_null($entry)) {
+                    $entries[] = $entry;
+                }
+            }
+        }
+
+        return $entries;
+    }
+
+    public function getSliceValues(int $x1, int $y1, int $x2, int $y2): array
+    {
+        return array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->getSlice($x1, $y1, $x2, $y2));
+    }
+
     #[Pure] public function get(int $x, int $y): ?Entry
     {
         $index = $this->encodeCoordinates($x, $y);
@@ -161,9 +187,9 @@ class Grid
         return $this->entries[$index];
     }
 
-    #[Pure] public function getValue(int $x, int $y): mixed
+    #[Pure] public function getValue(int $x, int $y, mixed $default = null): mixed
     {
-        return $this->get($x, $y)?->getValue();
+        return $this->get($x, $y)?->getValue() ?? $default;
     }
 
     public function getValues(): array
