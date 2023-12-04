@@ -3,23 +3,47 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2023;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
-use Knevelina\AdventOfCode\Data\Year2023\Day04\Card;
 use Knevelina\AdventOfCode\InputManipulator;
 
 class Day04 implements PuzzleSolver
 {
     public function part1(string $input): float
     {
-        return array_sum(array_map(fn(Card $card): float => $card->getScore(), self::parse($input)));
+        $score = 0;
+
+        foreach (self::parse($input) as $card) {
+            if ($card > 0) {
+                $score += pow(2, $card - 1);
+            }
+        }
+
+        return $score;
     }
 
     /**
      * @param string $input
-     * @return array<Card>
+     * @return array<int>
      */
     private static function parse(string $input): array
     {
-        return InputManipulator::splitLines($input, manipulator: fn(string $line): Card => Card::fromInput($line));
+        return InputManipulator::splitLines($input, manipulator: function (string $line): int {
+            preg_match_all('/(\d+)/', $line, $matches);
+
+            array_shift($matches[1]);
+
+            $seen = [];
+            $score = 0;
+
+            foreach ($matches[1] as $match) {
+                if (isset($seen[$match])) {
+                    $score++;
+                }
+
+                $seen[$match] = true;
+            }
+
+            return $score;
+        });
     }
 
     public function part2(string $input): int
@@ -29,10 +53,10 @@ class Day04 implements PuzzleSolver
 
         /**
          * @var int $id
-         * @var Card $card
+         * @var int $card
          */
         foreach ($cards as $id => $card) {
-            for ($i = 0; $i < $card->getMatches(); $i++) {
+            for ($i = 0; $i < $card; $i++) {
                 $copyId = $id + $i + 1;
 
                 if ($copyId >= count($cards)) break;
