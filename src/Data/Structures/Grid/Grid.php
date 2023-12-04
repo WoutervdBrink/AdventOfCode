@@ -56,7 +56,7 @@ class Grid
         $this->entries = $entries;
     }
 
-    public static function fromInput(string $input, ?callable $manipulator): static
+    public static function fromInput(string $input, ?callable $manipulator = null): static
     {
         $rows = InputManipulator::splitLines(
             $input,
