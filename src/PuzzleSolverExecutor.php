@@ -19,7 +19,7 @@ class PuzzleSolverExecutor
      * @param string|null $input
      * @return string|int
      */
-    public static function execute(int $year, int $day, int $part, ?string $input = null): string|int
+    public static function execute(int $year, int $day, int $part, ?string $input = null, bool $reportTiming = false): string|int
     {
         if (is_null($input)) {
             $input = InputLoader::getInput($year, $day);
@@ -37,7 +37,15 @@ class PuzzleSolverExecutor
 
         $method = sprintf('part%d', $part);
 
-        return $solver->{$method}($input);
+        $time = -hrtime(true);
+        $result = $solver->{$method}($input);
+        $time += hrtime(true);
+
+        if ($reportTiming) {
+            printf('Elapsed time: %.3f µs%s', $time / 1e3, PHP_EOL);
+        }
+
+        return $result;
     }
 
     public static function visualize(int $year, int $day): void

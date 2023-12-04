@@ -15,12 +15,12 @@ try {
     $part = max(0, min(2, intval($argv[3] ?? 0)));
 
     if ($part === 1 || $part === 0) {
-        echo PuzzleSolverExecutor::execute($year, $day, 1);
+        echo PuzzleSolverExecutor::execute($year, $day, 1, reportTiming: true);
         echo PHP_EOL;
     }
 
     if ($part === 2 || $part === 0) {
-        echo PuzzleSolverExecutor::execute($year, $day, 2);
+        echo PuzzleSolverExecutor::execute($year, $day, 2, reportTiming: true);
         echo PHP_EOL;
     }
 } catch (RuntimeException $e) {
