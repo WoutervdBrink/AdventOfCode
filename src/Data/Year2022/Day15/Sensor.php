@@ -4,6 +4,8 @@ namespace Knevelina\AdventOfCode\Data\Year2022\Day15;
 
 final class Sensor
 {
+    public readonly int $distance;
+
     private function __construct(
         public readonly int $x,
         public readonly int $y,
@@ -11,6 +13,7 @@ final class Sensor
         public readonly int $beaconY,
     )
     {
+        $this->distance = $this->getDistanceTo($this->beaconX, $this->beaconY);
     }
 
     public static function fromSpecification(string $line): Sensor
@@ -26,4 +29,10 @@ final class Sensor
 
         return new Sensor($x, $y, $beaconX, $beaconY);
     }
+
+    public function getDistanceTo(int $x, int $y): int
+    {
+        return abs($this->x - $x) + abs($this->y - $y);
+    }
+
 }

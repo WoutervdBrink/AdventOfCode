@@ -13,7 +13,6 @@ class Day15Test extends PuzzleSolverTestCase
     {
         return [
             [1, 1, 26],
-            // Uncomment for part 2
             // [1, 2, 56000011],
         ];
     }
