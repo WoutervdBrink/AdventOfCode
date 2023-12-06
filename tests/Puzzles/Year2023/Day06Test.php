@@ -16,4 +16,14 @@ class Day06Test extends PuzzleSolverTestCase
             [1, 2, 71503],
         ];
     }
+
+    public function getSolutionForPart1(): int
+    {
+        return 741000;
+    }
+
+    public function getSolutionForPart2(): int
+    {
+        return 38220708;
+    }
 }
