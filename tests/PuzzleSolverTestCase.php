@@ -4,6 +4,7 @@
 namespace Knevelina\AdventOfCode\Tests;
 
 
+use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputLoader;
 use Knevelina\AdventOfCode\PuzzleSolverExecutor;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +15,8 @@ abstract class PuzzleSolverTestCase extends TestCase
 {
     private int $year;
     private int $day;
+
+    private PuzzleSolver $solver;
 
     public abstract function getExamples(): array;
 
@@ -54,6 +57,8 @@ abstract class PuzzleSolverTestCase extends TestCase
         }
 
         $this->year = intval($matches[1]);
+
+        $this->solver = PuzzleSolverExecutor::getSolver($this->year, $this->day);
     }
 
     /**
@@ -66,8 +71,9 @@ abstract class PuzzleSolverTestCase extends TestCase
     function it_solves_an_example(int $example, int $part, string|int $expected): void
     {
         $input = InputLoader::getExample($this->year, $this->day, $example);
+        $result = $part === 1 ? $this->solver->part1($input) : $this->solver->part2($input);
 
-        $this->assertEquals($expected, PuzzleSolverExecutor::execute($this->year, $this->day, $part, $input));
+        $this->assertEquals($expected, $result);
     }
 
     /** @test */
@@ -75,13 +81,14 @@ abstract class PuzzleSolverTestCase extends TestCase
     {
         $part1 = $this->getSolutionForPart1();
         $part2 = $this->getSolutionForPart2();
+        $input = InputLoader::getInput($this->year, $this->day);
 
         if (!is_null($part1)) {
-            self::assertEquals($part1, PuzzleSolverExecutor::execute($this->year, $this->day, 1));
+            self::assertEquals($part1, $this->solver->part1($input));
         }
 
         if (!is_null($part2)) {
-            self::assertEquals($part2, PuzzleSolverExecutor::execute($this->year, $this->day, 2));
+            self::assertEquals($part2, $this->solver->part2($input));
         }
 
         if (is_null($part1) && is_null($part2)) {

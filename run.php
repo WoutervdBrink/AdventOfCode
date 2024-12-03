@@ -1,5 +1,6 @@
 <?php
 
+use Knevelina\AdventOfCode\InputLoader;
 use Knevelina\AdventOfCode\PuzzleSolverExecutor;
 
 require_once __DIR__.'/vendor/autoload.php';
@@ -10,17 +11,20 @@ if ($argc < 3) {
 }
 
 try {
-    $year = $argv[1];
-    $day = $argv[2];
+    $year = intval($argv[1]);
+    $day = intval($argv[2]);
     $part = max(0, min(2, intval($argv[3] ?? 0)));
 
+    $solver = PuzzleSolverExecutor::getSolver($year, $day);
+    $input = InputLoader::getInput($year, $day);
+
     if ($part === 1 || $part === 0) {
-        echo PuzzleSolverExecutor::execute($year, $day, 1, reportTiming: true);
+        echo PuzzleSolverExecutor::execute($solver, 1, $input, reportTiming: true);
         echo PHP_EOL;
     }
 
     if ($part === 2 || $part === 0) {
-        echo PuzzleSolverExecutor::execute($year, $day, 2, reportTiming: true);
+        echo PuzzleSolverExecutor::execute($solver, 2, $input, reportTiming: true);
         echo PHP_EOL;
     }
 } catch (RuntimeException $e) {

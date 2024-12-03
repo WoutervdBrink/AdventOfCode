@@ -10,31 +10,33 @@ use RuntimeException;
 
 class PuzzleSolverExecutor
 {
+    public static function getSolver(int $year, int $day): PuzzleSolver
+    {
+        $class = sprintf('Knevelina\\AdventOfCode\\Puzzles\\Year%04d\\Day%02d', $year, $day);
+
+        if (!class_exists($class)) {
+            throw new RuntimeException(sprintf('No implementation exists for %d day %d!', $year, $day));
+        }
+
+        if (!class_implements($class, PuzzleSolver::class)) {
+            throw new RuntimeException(sprintf('The implementation for %d day %d is not an AbstractPuzzleSolver!', $year, $day));
+        }
+
+        return new $class();
+    }
+
     /**
      * Execute the puzzle solver for a certain day and part.
      *
      * @param int $year
      * @param int $day
      * @param int $part
-     * @param string|null $input
+     * @param string $input
+     * @param bool $reportTiming
      * @return string|int
      */
-    public static function execute(int $year, int $day, int $part, ?string $input = null, bool $reportTiming = false): string|int
+    public static function execute(PuzzleSolver $solver, int $part, string $input, bool $reportTiming = false): string|int
     {
-        if (is_null($input)) {
-            $input = InputLoader::getInput($year, $day);
-        }
-
-        $class = sprintf('Knevelina\\AdventOfCode\\Puzzles\\Year%04d\\Day%02d', $year, $day);
-
-        if (!class_exists($class)) {
-            echo $class;
-            throw new RuntimeException(sprintf('No implementation exists for day %d!', $day));
-        }
-
-        /** @var PuzzleSolver $solver */
-        $solver = new $class();
-
         $method = sprintf('part%d', $part);
 
         $time = -hrtime(true);

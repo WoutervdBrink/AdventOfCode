@@ -1,20 +1,24 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" forceCoversAnnotation="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage>
-    <include>
-      <directory suffix=".php">./src</directory>
-    </include>
-    <exclude>
-      <directory>./src/Contracts</directory>
-      <directory>./src/Visuals</directory>
-    </exclude>
-  </coverage>
-  <testsuites>
-    <testsuite name="Data">
-      <directory suffix="Test.php">tests/Data</directory>
-    </testsuite>
-    <testsuite name="Puzzles">
-      <directory suffix="Test.php">tests/Puzzles</directory>
-    </testsuite>
-  </testsuites>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         colors="true"
+         forceCoversAnnotation="true"
+>
+    <coverage>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+        <exclude>
+            <directory>./src/Contracts</directory>
+            <directory>./src/Visuals</directory>
+        </exclude>
+    </coverage>
+    <testsuites>
+        <testsuite name="Data">
+            <directory>tests/Data</directory>
+        </testsuite>
+        <testsuite name="Puzzles">
+            <directory>tests/Puzzles</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

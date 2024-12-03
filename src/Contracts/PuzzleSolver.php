@@ -5,8 +5,6 @@ namespace Knevelina\AdventOfCode\Contracts;
 
 /**
  * Solves an Advent of Code puzzle for one specific day.
- *
- * @package Knevelina\AdventOfCode
  */
 interface PuzzleSolver
 {

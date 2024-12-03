@@ -2,16 +2,17 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 
-use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Knevelina\AdventOfCode\CombinedPuzzleOutput;
+use Knevelina\AdventOfCode\Contracts\CombinedPuzzleSolver;
 use Knevelina\AdventOfCode\Util\StringConsumer;
 
-class Day03 implements PuzzleSolver
+class Day03 extends CombinedPuzzleSolver
 {
     /**
      * @param string $input
      * @return list<int>
      */
-    private static function solve(string $input): array
+    protected function solve(string $input): CombinedPuzzleOutput
     {
         $consumer = new StringConsumer($input);
         $factor = 1;
@@ -55,16 +56,6 @@ class Day03 implements PuzzleSolver
             $part2 += $num1 * $num2 * $factor;
         }
 
-        return [$part1, $part2];
-    }
-
-    public function part1(string $input): int
-    {
-        return self::solve($input)[0];
-    }
-
-    public function part2(string $input): int
-    {
-        return self::solve($input)[1];
+        return CombinedPuzzleOutput::of($part1, $part2);
     }
 }
