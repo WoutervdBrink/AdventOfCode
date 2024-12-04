@@ -55,7 +55,7 @@ class Day04 implements PuzzleSolver
     {
         $grid = Grid::fromInput($input, manipulator: fn (string $char): string => preg_replace('/[^MAS]/', '.', $char));
 
-        /** @var list<Point> $as */
+        /** @var list<Entry> $as */
         $as = array_filter($grid->getEntries(), fn (Entry $entry): bool => $entry->getValue() === 'A');
 
         $count = 0;
