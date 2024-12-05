@@ -16,6 +16,8 @@ class Day04Test extends PuzzleSolverTestCase
             [2, 1, 18],
             [3, 2, 1],
             [2, 2, 9],
+            [4, 1, 2358],
+            [4, 2, 1737],
         ];
     }
 

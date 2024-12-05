@@ -20,10 +20,10 @@ class Day04 implements PuzzleSolver
             }
         }
 
-        $grid = Grid::fromInput($input, manipulator: fn (string $char): string => preg_replace('/[^XMAS]/', '.', $char));
+        $grid = Grid::fromInput($input, manipulator: fn(string $char): string => preg_replace('/[^XMAS]/', '.', $char));
 
         /** @var list<Entry> $xs */
-        $xs = array_filter($grid->getEntries(), fn (Entry $entry): bool => $entry->getValue() === 'X');
+        $xs = array_filter($grid->getEntries(), fn(Entry $entry): bool => $entry->getValue() === 'X');
 
         $count = 0;
 
@@ -53,10 +53,10 @@ class Day04 implements PuzzleSolver
 
     public function part2(string $input): int
     {
-        $grid = Grid::fromInput($input, manipulator: fn (string $char): string => preg_replace('/[^MAS]/', '.', $char));
+        $grid = Grid::fromInput($input, manipulator: fn(string $char): string => preg_replace('/[^MAS]/', '.', $char));
 
         /** @var list<Entry> $as */
-        $as = array_filter($grid->getEntries(), fn (Entry $entry): bool => $entry->getValue() === 'A');
+        $as = array_filter($grid->getEntries(), fn(Entry $entry): bool => $entry->getValue() === 'A');
 
         $count = 0;
 
