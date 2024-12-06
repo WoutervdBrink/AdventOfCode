@@ -79,6 +79,9 @@ class Grid
 
     public function setValue(int $x, int $y, mixed $value): void
     {
+        if ($value instanceof Entry) {
+            echo 'ERROR ERROR';
+        }
         $index = $this->encodeCoordinates($x, $y);
 
         if (is_null($index)) {
@@ -219,6 +222,32 @@ class Grid
         return $rows;
     }
 
+    /**
+     * @param int $y
+     * @return list<Entry>
+     */
+    public function getRow(int $y): array
+    {
+        $row = [];
+        for ($x = 0; $x < $this->getWidth(); $x++) {
+            $row[] = $this->entries[$this->encodeCoordinates($x, $y)];
+        }
+        return $row;
+    }
+
+    /**
+     * @param int $x
+     * @return list<Entry>
+     */
+    public function getColumn(int $x): array
+    {
+        $col = [];
+        for ($y = 0; $y < $this->getHeight(); $y++) {
+            $col[] = $this->entries[$this->encodeCoordinates($x, $y)];
+        }
+        return $col;
+    }
+
     public function getRowValues(int $y): array
     {
         $row = [];
@@ -250,7 +279,7 @@ class Grid
     {
         return new static(
             array_map(
-                fn(int $y): array => array_slice($this->entries, $y * $this->getWidth(), $this->getWidth()),
+                fn(int $y): array => array_slice(array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->entries), $y * $this->getWidth(), $this->getWidth()),
                 range(0, $this->getHeight() - 1)
             )
         );

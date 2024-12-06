@@ -14,9 +14,29 @@ class Direction
 
     private int $direction;
 
-    public function __construct(int $direction)
+    private function __construct(int $direction)
     {
         $this->direction = $direction;
+    }
+
+    public static function north(): self
+    {
+        return new self(self::NORTH);
+    }
+
+    public static function east(): self
+    {
+        return new self(self::EAST);
+    }
+
+    public static function south(): self
+    {
+        return new self(self::SOUTH);
+    }
+
+    public static function west(): self
+    {
+        return new self(self::WEST);
     }
 
     #[Pure] public static function getDirectionForMnemonic(string $mnemonic): int
@@ -35,12 +55,12 @@ class Direction
         return $this->direction;
     }
 
-    #[Pure] public function getHorizontalMovement(int $distance): int
+    #[Pure] public function getHorizontalMovement(int $distance = 1): int
     {
         return self::getHorizontalMovementForDirection($this->direction, $distance);
     }
 
-    #[Pure] public static function getHorizontalMovementForDirection(int $direction, int $distance): int
+    #[Pure] public static function getHorizontalMovementForDirection(int $direction, int $distance = 1): int
     {
         return match ($direction) {
             self::EAST => $distance,
@@ -49,12 +69,12 @@ class Direction
         };
     }
 
-    #[Pure] public function getVerticalMovement(int $distance): int
+    #[Pure] public function getVerticalMovement(int $distance = 1): int
     {
-        return self::getVerticalMovementForDirection($this->direction, $distance);
+        return self::getVerticalMovementForDirection($this->direction, $distance = 1);
     }
 
-    #[Pure] public static function getVerticalMovementForDirection(int $direction, int $distance): int
+    #[Pure] public static function getVerticalMovementForDirection(int $direction, int $distance = 1): int
     {
         return match ($direction) {
             self::NORTH => -$distance,

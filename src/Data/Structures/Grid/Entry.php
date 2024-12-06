@@ -60,4 +60,9 @@ class Entry
     {
         return $this->grid->getNeighbors($this->x, $this->y, $includeDiagonals);
     }
+
+    public function __toString(): string
+    {
+        return '[' . $this->x . ',' . $this->y . ' == ' . $this->value . ']';
+    }
 }
