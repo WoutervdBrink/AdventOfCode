@@ -8,69 +8,38 @@ use Knevelina\AdventOfCode\InputManipulator;
 
 class Day07 extends CombinedPuzzleSolver
 {
-    private static function testCalculation(int $target, int $cursor, array $operands, bool $withConcat = false): int
+    private static function digits(int $n): int
     {
-        if (count($operands) === 0) {
-            return $cursor === $target
-                ? $target
-                : 0;
+        return intval(log10($n)) + 1;
+    }
+
+    private static function endsWith(int $a, int $b): bool
+    {
+        return ($a - $b) % pow(10, self::digits($b)) === 0;
+    }
+
+    private static function isPossible(int $target, array $operands, bool $checkConcat = false): bool
+    {
+        if (count($operands) === 1) {
+            return $operands[0] === $target;
         }
 
-        if ($cursor === 0) {
-            $cursor = array_shift($operands);
+        $tail = array_pop($operands);
+
+        if ($target % $tail === 0 && self::isPossible(intdiv($target, $tail), $operands, $checkConcat)) {
+            return true;
         }
 
-        $operand = array_shift($operands);
-
-//        echo '    Trying if ' . $target . ' = ' . $cursor . ' + ' . $operand . ' ... ' . implode( ' ', $operands ) . PHP_EOL;
-        if (self::testCalculation($target, $cursor + $operand, $operands, $withConcat) > 0) {
-            return $target;
-        }
-
-//        echo '    Trying if ' . $target . ' = ' . $cursor . ' * ' . $operand . ' ... ' . implode( ' ', $operands ) . PHP_EOL;
-        if (self::testCalculation($target, $cursor * $operand, $operands, $withConcat) > 0) {
-            return $target;
-        }
-
-        if ($withConcat) {
-//            echo '    Trying if ' . $target . ' = ' . $cursor . ' || ' . $operand . ' ... ' . implode( ' ', $operands ) . PHP_EOL;
-            if (self::testCalculation($target, intval($cursor . $operand), $operands, true) > 0) {
-                return $target;
+        if ($checkConcat) {
+            if (
+                self::endsWith($target, $tail) &&
+                self::isPossible(intdiv($target, (int) pow(10, self::digits($tail))), $operands, $checkConcat)
+            ) {
+                return true;
             }
         }
 
-        return 0;
-    }
-
-    public function part1(string $input): int
-    {
-        $equations = self::parse($input);
-
-        $sum = 0;
-
-        foreach ($equations as $equation) {
-            $target = $equation->value;
-            $sum += self::testCalculation($target, 0, [...$equation->operands]);
-        }
-
-        return $sum;
-    }
-
-    public function part2(string $input): int
-    {
-        $equations = self::parse($input);
-
-        $sum = 0;
-
-        foreach ($equations as $equation) {
-            $target = $equation->value;
-
-            if ($res = self::testCalculation($target, 0, [...$equation->operands], true)) {
-                $sum += $res;
-            }
-        }
-
-        return $sum;
+        return ($next = $target - $tail) > 0 && self::isPossible($next, $operands, $checkConcat);
     }
 
     /**
@@ -99,11 +68,11 @@ class Day07 extends CombinedPuzzleSolver
 
         foreach ($equations as $equation) {
             $target = $equation->value;
-            $part1 += ($val = self::testCalculation($target, 0, [...$equation->operands]));
-            if ($val === 0) {
-                $part2 += self::testCalculation($target, 0, [...$equation->operands], true);
-            } else {
-                $part2 += $val;
+            if (self::isPossible($target, $equation->operands)) {
+                $part1 += $target;
+                $part2 += $target;
+            } else if (self::isPossible($target, $equation->operands, true)) {
+                $part2 += $target;
             }
         }
 
