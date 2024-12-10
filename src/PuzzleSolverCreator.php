@@ -27,6 +27,10 @@ class PuzzleSolverCreator
         if (static::putFile(static::getPuzzleTestPath($year, $day), static::getPuzzleTest($year, $day))) {
             printf("Created test for %04d day %02d.\n", $year, $day);
         }
+
+        if (static::putFile(static::getExamplePath($year, $day), '')) {
+            printf("Created example for %04d day %02d.\n", $year, $day);
+        }
     }
 
     #[Pure] private static function getPuzzleSolverPath(int $year, int $day): string
@@ -58,6 +62,11 @@ class PuzzleSolverCreator
     private static function transformStub(string &$stub, string $key, string $value): void
     {
         $stub = str_replace('$' . strtoupper($key) . '$', $value, $stub);
+    }
+
+    #[Pure] private static function getExamplePath(int $year, int $day): string
+    {
+        return sprintf("%s/../resources/examples/%04d/%02d/example1.txt", __DIR__, $year, $day);
     }
 
     #[Pure] private static function getPuzzleTestPath(int $year, int $day): string
