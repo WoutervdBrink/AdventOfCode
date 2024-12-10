@@ -14,6 +14,8 @@ class Day10Test extends PuzzleSolverTestCase
         return [
             [1, 1, 36],
             [1, 2, 81],
+            [2, 1, 464],
+            [2, 2, 16451],
         ];
     }
 
