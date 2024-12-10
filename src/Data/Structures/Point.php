@@ -2,12 +2,13 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures;
 
+use Ds\Hashable;
 use JetBrains\PhpStorm\Pure;
 
 /**
  * Point helper class; provides several support function for polar coordinates.
  */
-class Point
+class Point implements Hashable
 {
     public function __construct(private int $x, private int $y)
     {
@@ -70,5 +71,10 @@ class Point
     #[Pure] public function hash(): string
     {
         return sprintf('%d_%d', $this->getX(), $this->getY());
+    }
+
+    public function equals(mixed $obj): bool
+    {
+        return $obj instanceof Point && $this->is($obj);
     }
 }

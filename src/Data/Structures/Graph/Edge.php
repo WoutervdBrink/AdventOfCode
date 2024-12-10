@@ -13,18 +13,40 @@ use InvalidArgumentException;
  */
 class Edge
 {
+    public readonly Graph $graph;
+
     /**
      * Construct a new edge.
      *
-     * @param Vertex $from The source vertex.
-     * @param Vertex $to The target vertex.
-     * @param int $weight The weight associated with this edge.
+     * The provided vertices must belong to the same graph.
+     *
+     * @param Vertex $from The source vertex of this edge.
+     * @param Vertex $to The target vertex of this edge.
+     * @param int $weight The initial weight of this edge.
+     * @throws InvalidArgumentException if the edges do not belong to the same graph.
      */
     public function __construct(
-        private readonly Vertex $from,
-        private readonly Vertex $to,
-        private int $weight = 1
-    ) {
+        /**
+         * @var Vertex The source vertex of this edge.
+         */
+        public readonly Vertex $from,
+
+        /**
+         * @var Vertex The target vertex of this edge.
+         */
+        public readonly Vertex $to,
+
+        /**
+         * @var int The weight of this edge.
+         */
+        public int             $weight,
+    )
+    {
+        if (($graph = $from->graph) !== $to->graph) {
+            throw new InvalidArgumentException('Edge vertices must belong to the same graph');
+        }
+
+        $this->graph = $graph;
     }
 
     /**
@@ -33,8 +55,9 @@ class Edge
      * If the given edge is the source, the target is given, and vice versa. If the vertex is not part of the edge, an
      * exception is thrown.
      *
-     * @param Vertex $v
-     * @return Vertex
+     * @param Vertex $v The vertex for which to find the other end.
+     * @return Vertex The other end of the edge. Guaranteed not to be equal to <code>$v</code>.
+     * @throws InvalidArgumentException if the specified vertex is not part of this edge.
      */
     public function getOtherEnd(Vertex $v): Vertex
     {
@@ -52,57 +75,15 @@ class Edge
     /**
      * Query whether the edge contains this vertex as its source or target.
      *
-     * @param Vertex $v
-     * @return bool
+     * @param Vertex $v The vertex to query.
+     * @return bool <code>true</code> when this edge has the specified vertex as either its source or its target;
+     * <code>false</code> otherwise.
      */
     public function isIncidentWith(Vertex $v): bool
     {
         return $this->from === $v || $this->to === $v;
     }
 
-    /**
-     * Get the source vertex of the edge.
-     *
-     * @return Vertex
-     */
-    public function getFrom(): Vertex
-    {
-        return $this->from;
-    }
-
-    /**
-     * Get the target vertex of the edge.
-     *
-     * @return Vertex
-     */
-    public function getTo(): Vertex
-    {
-        return $this->to;
-    }
-
-    /**
-     * Get the weight of the edge. This is 1 by default.
-     *
-     * @return int
-     */
-    public function getWeight(): int
-    {
-        return $this->weight;
-    }
-
-    /**
-     * Set the weight of the edge.
-     *
-     * @param int $weight
-     */
-    public function setWeight(int $weight): void
-    {
-        $this->weight = $weight;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function __debugInfo(): ?array
     {
         return [

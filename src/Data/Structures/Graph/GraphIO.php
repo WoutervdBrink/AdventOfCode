@@ -29,7 +29,7 @@ class GraphIO
         $vertices = $graph->getVertices();
 
         foreach ($vertices as $i => $v) {
-            fwrite($fp, sprintf('  %d [penwidth=3, label="%s"]%s', $i, $v->getLabel(), PHP_EOL));
+            fwrite($fp, sprintf('  %d [penwidth=3, label="%s\\nValue: %s"]%s', $i, $v->label, $v->value, PHP_EOL));
         }
 
         fwrite($fp, PHP_EOL);
@@ -38,15 +38,15 @@ class GraphIO
             $u = 0;
             $v = 0;
             foreach ($vertices as $i => $vertex) {
-                if ($vertex === $edge->getFrom()) {
+                if ($vertex === $edge->from) {
                     $u = $i;
                 }
-                if ($vertex === $edge->getTo()) {
+                if ($vertex === $edge->to) {
                     $v = $i;
                 }
             }
 
-            fwrite($fp, sprintf('  %d -> %d [penwidth=2, label=%d]%s', $u, $v, $edge->getWeight(), PHP_EOL));
+            fwrite($fp, sprintf('  %d -> %d [penwidth=2, label=%d]%s', $u, $v, $edge->weight, PHP_EOL));
         }
 
         fwrite($fp, '}');

@@ -22,67 +22,32 @@ class Vertex
     /**
      * @var Graph The graph to which this vertex belongs.
      */
-    private readonly Graph $graph;
-
-    /** @var array<Edge> */
-    private array $edges;
+    public readonly Graph $graph;
 
     /**
      * @var string The label of this vertex. Does not have to be unique among the graph.
      */
-    private string $label;
+    public readonly string $label;
 
     /**
      * @var mixed The value associated with this vertex.
      */
-    private mixed $value;
+    public mixed $value;
 
     /**
      * Construct a new graph vertex.
      *
      * @param Graph $graph The graph to which the vertex belongs.
-     * @param string|null $label The label of the vertex. Does not have to be unique among the graph.
+     * @param string $label The label of the vertex. Does not have to be unique among the graph.
      * @param mixed|null $value The value associated with the vertex.
      */
-    public function __construct(Graph $graph, ?string $label = null, mixed $value = null)
+    public function __construct(Graph $graph, string $label, mixed $value = null)
     {
         $this->graph = $graph;
 
-        $this->edges = [];
+        $this->label = $label;
 
-        $this->label = $label ?? $graph->getNextLabel();
-    }
-
-    /**
-     * Add an edge from this vertex to another vertex, and from that vertex back to this one, i.e. an undirected edge.
-     *
-     * @param Vertex $other
-     * @param int $weight
-     * \     * @return void
-     */
-    public function addUndirectedEdgeWith(Vertex $other, int $weight = 1): void
-    {
-        $this->addIncidence(new Edge($this, $other, $weight));
-        $this->addIncidence(new Edge($other, $this, $weight));
-    }
-
-    /**
-     * Associate an edge with this vertex. The edge's source has to be this vertex.
-     *
-     * @param Edge $e
-     * @return void
-     */
-    public function addIncidence(Edge $e): void
-    {
-        if ($e->getFrom() !== $this) {
-            throw new InvalidArgumentException('The given edge does not have this vertex as its source.');
-        }
-
-        if (in_array($e, $this->edges, true)) {
-            return;
-        }
-
-        $this->edges[] = $e;
+        $this->value = $value;
     }
 
     /**
@@ -94,47 +59,7 @@ class Vertex
      */
     public function addEdgeTo(Vertex $other, int $weight = 1): void
     {
-        $this->addIncidence(new Edge($this, $other, $weight));
-    }
-
-    /**
-     * Get the graph to which this vertex belongs.
-     *
-     * @return Graph
-     */
-    public function getGraph(): Graph
-    {
-        return $this->graph;
-    }
-
-    /**
-     * Get the label of this vertex.
-     *
-     * @return string
-     */
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
-    /**
-     * Get the value associated with this vertex.
-     *
-     * @return mixed
-     */
-    public function getValue(): mixed
-    {
-        return $this->value;
-    }
-
-    /**
-     * Set the value associated with this vertex.
-     *
-     * @param mixed $value
-     */
-    public function setValue(mixed $value): void
-    {
-        $this->value = $value;
+        $this->graph->addEdge($this, $other, $weight);
     }
 
     /**
@@ -146,13 +71,7 @@ class Vertex
      */
     public function isAdjacentTo(Vertex $other): bool
     {
-        foreach ($this->edges as $edge) {
-            if ($edge->getTo() === $other) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->graph->hasEdge($this, $other);
     }
 
     /**
@@ -163,7 +82,7 @@ class Vertex
      */
     public function getNeighbors(): array
     {
-        return array_map(fn(Edge $edge): Vertex => $edge->getTo(), $this->edges);
+        return $this->graph->getNeighbors($this);
     }
 
     public function __debugInfo(): ?array

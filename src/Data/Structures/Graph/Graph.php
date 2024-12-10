@@ -3,24 +3,27 @@
 namespace Knevelina\AdventOfCode\Data\Structures\Graph;
 
 use ArrayIterator;
+use Ds\Vector;
+use Ds\Map;
+use Ds\Set;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
 
 /**
- * A directed non-simple graph. The graph contains vertices connected by edges.
+ * A directed weighted graph. The graph contains vertices connected by edges.
  */
 class Graph implements IteratorAggregate
 {
     /**
-     * @var array The vertices belonging to this graph.
+     * @var Set<Vertex> The vertices belonging to this graph.
      */
-    private array $vertices;
+    private Set $vertices;
 
     /**
-     * @var array The edges between the vertices in this graph.
+     * @var Map<Vertex, Map<Vertex, Edge>> The edges between the vertices in this graph.
      */
-    private array $edges;
+    private Map $edges;
 
     /**
      * @var int The label to be used when automatically generating one.
@@ -32,110 +35,86 @@ class Graph implements IteratorAggregate
      */
     public function __construct()
     {
-        $this->vertices = [];
+        $this->vertices = new Set();
 
-        $this->edges = [];
+        $this->edges = new Map();
 
         $this->nextLabel = 0;
-    }
-
-    /**
-     * Query whether two vertices are adjacent, meaning there exists an edge from one to the other or vice versa.
-     * Directionality of the edge is not considered.
-     *
-     * @param Vertex $u
-     * @param Vertex $v
-     * @return bool
-     */
-    public function isAdjacent(Vertex $u, Vertex $v): bool
-    {
-        return $u->isAdjacentTo($v) || $v->isAdjacentTo($u);
     }
 
     /**
      * Create a vertex and add it to this graph.
      *
      * @param string|null $label The label of the vertex. Does not have to be unique among the graph.
-     * @param mixed|null $value The value associated with the vertex.
-     * @return void
+     * @param mixed $value The value associated with the vertex.
+     * @return Vertex The newly created vertex.
      */
-    public function createVertex(?string $label = null, mixed $value = null): void
+    public function createVertex(?string $label = null, mixed $value = null): Vertex
     {
-        $this->addVertex(new Vertex($this, $label, $value));
+        $vertex = new Vertex($this, $label ?? (string)$this->nextLabel++, $value);
+        $this->vertices->add($vertex);
+        return $vertex;
     }
 
     /**
-     * Add a vertex to this graph. The vertex has to belong to this graph.
+     * Add an edge to this graph.
      *
-     * @param Vertex $v
+     * If the edge already exists, its weight is updated to the supplied weight.
+     *
+     * @param Vertex $from The source vector for this edge.
+     * @param Vertex $to The target vector for this edge.
+     * @param int $weight The weight of the edge.
      * @return void
      */
-    public function addVertex(Vertex $v): void
+    public function addEdge(Vertex $from, Vertex $to, int $weight = 1): void
     {
-        if (in_array($v, $this->vertices, true)) {
-            return;
+        if ($this->edges->hasKey($from)) {
+            if ($this->edges->get($from)->hasKey($to)) {
+                $this->edges->get($from)->get($to)->weight = $weight;
+                return;
+            }
+        } else {
+            $this->edges->put($from, new Map());
         }
 
-        if ($v->getGraph() !== $this) {
-            throw new InvalidArgumentException('A vertex must belong to the graph it is added to');
-        }
-
-        $this->vertices[] = $v;
-    }
-
-    /**
-     * Add an edge to this graph. The edge's vertices will be added to this graph, if required.
-     *
-     * @param Edge $e
-     * @return void
-     */
-    public function addEdge(Edge $e): void
-    {
-        $this->addVertex($from = $e->getFrom());
-        $this->addVertex($to = $e->getTo());
-
-        $from->addIncidence($e);
-        $to->addIncidence($e);
-
-        if (in_array($e, $this->edges, true)) {
-            return;
-        }
-
-        $this->edges[] = $e;
+        $edge = new Edge($from, $to, $weight);
+        $this->edges->get($from)->put($to, $edge);
     }
 
     /**
      * Get the vertices in this graph.
      *
-     * @return array<Vertex>
+     * @return list<Vertex>
      */
     public function getVertices(): array
     {
-        return $this->vertices;
+        return $this->vertices->toArray();
     }
 
     /**
      * Get the edges in this graph.
      *
-     * @return array<Edge>
+     * @return list<Edge>
      */
     public function getEdges(): array
     {
-        return $this->edges;
+        $edges = [];
+
+        foreach ($this->edges->values() as $map) {
+            $edges = array_merge($edges, $map->values()->toArray());
+        }
+
+        return $edges;
     }
 
-    /**
-     * Get the next label to be used for an automatically generated vertex label.
-     *
-     * This method is not pure and will mutate the next label. It is meant for internal use only, but as PHP does not
-     * have package-level visibility, it is declared with public visibility.
-     *
-     * @return string
-     * @internal
-     */
-    public function getNextLabel(): string
+    public function hasEdge(Vertex $from, Vertex $to): bool
     {
-        return (string)$this->nextLabel++;
+        if (!$this->edges->hasKey($from)) {
+            return false;
+        }
+
+        return $this->edges->get($from)
+            ->hasKey($to);
     }
 
     /**
@@ -143,13 +122,33 @@ class Graph implements IteratorAggregate
      */
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->vertices);
+        return $this->vertices->getIterator();
     }
 
     public function __debugInfo(): ?array
     {
         return [
-            'vertices' => $this->vertices
+            'vertices' => $this->vertices,
+            'edges' => $this->edges,
         ];
+    }
+
+    /**
+     * Get all neighbors of a vertex.
+     *
+     * A neighbor is any vertex v for which there exists an edge (u -> v) with u the specified vertex.
+     *
+     * @param Vertex $from The vertex to query.
+     * @return list<Vertex> All vertices which have an edge from the specified vertex to themselves.
+     */
+    public function getNeighbors(Vertex $from): array
+    {
+        if (!$this->edges->hasKey($from)) {
+            return [];
+        }
+
+        return $this->edges->get($from)->values()
+            ->map(fn (Edge $edge): Vertex => $edge->to)
+            ->toArray();
     }
 }

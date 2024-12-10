@@ -129,9 +129,15 @@ class Grid
         return $this->height;
     }
 
+    /**
+     * @param int $x
+     * @param int $y
+     * @param bool $includeDiagonals
+     * @return list<Entry>
+     */
     public function getNeighbors(int $x, int $y, bool $includeDiagonals = true): array
     {
-        return array_filter(
+        return array_values(array_filter(
             [
                 ...($includeDiagonals ? [
                     $this->get($x - 1, $y - 1),
@@ -145,7 +151,7 @@ class Grid
                 $this->get($x + 1, $y),
             ],
             fn(?Entry $value): bool => !is_null($value)
-        );
+        ));
     }
 
     public function getNeighborValues(int $x, int $y, bool $includeDiagonals = true): array
