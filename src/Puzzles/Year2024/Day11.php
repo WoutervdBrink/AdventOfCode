@@ -4,27 +4,27 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 
 use Ds\Map;
 use Ds\Queue;
+use Knevelina\AdventOfCode\CombinedPuzzleOutput;
+use Knevelina\AdventOfCode\Contracts\CombinedPuzzleSolver;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
 
-class Day11 implements PuzzleSolver
+class Day11 extends CombinedPuzzleSolver
 {
-    private static function simulate(string $input, int $iterations): int
+    protected function solve(string $input): CombinedPuzzleOutput
     {
         $input = InputManipulator::splitLines($input, delimiter: ' ', manipulator: 'intval');
 
         /** @var Map<int, int> $map */
         $map = new Map(array_count_values($input));
 
-        for ($i = 0; $i < $iterations; $i++) {
+        $part1 = 0;
+
+        for ($i = 0; $i < 75; $i++) {
             /** @var Map<int, int> $next */
             $next = new Map();
             foreach ($map->keys() as $stone) {
                 $count = $map->get($stone);
-
-                if ($count === 0) {
-                    continue;
-                }
 
                 $digits = floor(log10($stone) + 1);
 
@@ -44,19 +44,14 @@ class Day11 implements PuzzleSolver
                     $next->put($stone * 2024, $next->get($stone * 2024, 0) + $count);
                 }
             }
+
             $map = $next;
+
+            if ($i === 24) {
+                $part1 = $map->sum();
+            }
         }
 
-        return (int) $map->sum();
-    }
-
-    public function part1(string $input): int
-    {
-        return self::simulate($input, 25);
-    }
-
-    public function part2(string $input): int
-    {
-        return self::simulate($input, 75);
+        return CombinedPuzzleOutput::of($part1, $map->sum());
     }
 }
