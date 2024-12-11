@@ -3,10 +3,8 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 
 use Ds\Map;
-use Ds\Queue;
 use Knevelina\AdventOfCode\CombinedPuzzleOutput;
 use Knevelina\AdventOfCode\Contracts\CombinedPuzzleSolver;
-use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
 
 class Day11 extends CombinedPuzzleSolver
@@ -34,8 +32,8 @@ class Day11 extends CombinedPuzzleSolver
                 } else if ($digits % 2 === 0) {
                     // Every even digit becomes two stones: one left, one right
                     $newDigits = $digits / 2;
-                    $left = intdiv($stone, (int) pow(10, $newDigits));
-                    $right = $stone - (int) ($left * pow(10, $newDigits));
+                    $left = intdiv($stone, (int)pow(10, $newDigits));
+                    $right = $stone - (int)($left * pow(10, $newDigits));
 
                     $next->put($left, $next->get($left, 0) + $count);
                     $next->put($right, $next->get($right, 0) + $count);
