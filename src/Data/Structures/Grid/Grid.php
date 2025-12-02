@@ -3,7 +3,11 @@
 namespace Knevelina\AdventOfCode\Data\Structures\Grid;
 
 use InvalidArgumentException;
+use Ds\Map;
 use JetBrains\PhpStorm\Pure;
+use Knevelina\AdventOfCode\Data\Structures\Graph\Graph;
+use Knevelina\AdventOfCode\Data\Structures\Graph\Vertex;
+use Knevelina\AdventOfCode\Data\Structures\Point;
 use Knevelina\AdventOfCode\InputManipulator;
 
 class Grid
@@ -54,6 +58,28 @@ class Grid
         $this->width = $width;
         $this->height = $height;
         $this->entries = $entries;
+    }
+
+    /**
+     * @return Map<Point, Vertex>
+     */
+    public function toGraph(): Map
+    {
+        /** @var Map<Point, Vertex> $verticeMap */
+        $verticeMap = new Map();
+
+        $graph = new Graph();
+
+        foreach ($this->getEntries() as $entry) {
+            $x = $entry->getX();
+            $y = $entry->getY();
+            $value = $entry->getValue();
+            $point = new Point($x, $y);
+            $vertex = $graph->createVertex($point->getX() . '_' . $point->getY(), $value);
+            $verticeMap->put($point, $vertex);
+        }
+
+        return $verticeMap;
     }
 
     public static function fromInput(string $input, ?callable $manipulator = null): static
@@ -207,7 +233,7 @@ class Grid
     }
 
     /**
-     * @return array
+     * @return list<Entry>
      */
     public function getEntries(): array
     {

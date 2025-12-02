@@ -78,11 +78,21 @@ class Vertex
      * Get the neighbors of this vertex. Here, a neighbor is any vertex this vertex has an edge to. Consequently,
      * vertices which have an edge pointing towards this vertex will not be included in the result.
      *
-     * @return array
+     * @return list<Vertex>
      */
     public function getNeighbors(): array
     {
         return $this->graph->getNeighbors($this);
+    }
+
+    /**
+     * Get the amount of neighbors this vertex has. Here, a neighbor is any vertex this vertex has an edge to.
+     * Consequently, vertices which have an edge pointing towards this vertex will not be included in the result.
+     * @return int The amount of neighbors of this vertex.
+     */
+    public function getIncidenceFrom(): int
+    {
+        return $this->graph->getIncidenceFrom($this);
     }
 
     public function __debugInfo(): ?array

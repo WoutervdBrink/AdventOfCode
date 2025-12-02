@@ -151,4 +151,13 @@ class Graph implements IteratorAggregate
             ->map(fn (Edge $edge): Vertex => $edge->to)
             ->toArray();
     }
+
+    public function getIncidenceFrom(Vertex $vertex): int
+    {
+        if (!$this->edges->hasKey($vertex)) {
+            return 0;
+        }
+
+        return $this->edges->get($vertex)->count();
+    }
 }

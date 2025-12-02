@@ -2,6 +2,8 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures\Grid;
 
+use Knevelina\AdventOfCode\Data\Structures\Point;
+
 class Entry
 {
     public function __construct(
@@ -10,6 +12,11 @@ class Entry
         private readonly int $y,
         private mixed $value
     ) {
+    }
+
+    public function toPoint(): Point
+    {
+        return new Point($this->x, $this->y);
     }
 
     /**
