@@ -29,6 +29,8 @@ class Grid
 
     /**
      * Construct a new map.
+     *
+     * @param  mixed[][]  $rows
      */
     final public function __construct(array $rows)
     {
@@ -38,18 +40,18 @@ class Grid
             throw new InvalidArgumentException('The supplied height map is empty.');
         }
 
-        $width = count($rows[0]);
+        $width = max(array_map('count', $rows));
 
         $entries = [];
 
-        foreach ($rows as $y => $row) {
-            if (count($row) !== $width) {
-                throw new InvalidArgumentException(
-                    sprintf('Invalid row width at row %d: expected %d cells, but got %d cells', $y, $width, count($row))
-                );
+        for ($y = 0; $y < $height; $y++) {
+            if ($y === $height - 1 && count($rows[$y]) === 0) {
+                $height--;
+                break;
             }
 
-            foreach ($row as $x => $value) {
+            for ($x = 0; $x < $width; $x++) {
+                $value = $rows[$y][$x] ?? null;
                 $entries[] = new Entry($this, $x, $y, $value);
             }
         }
