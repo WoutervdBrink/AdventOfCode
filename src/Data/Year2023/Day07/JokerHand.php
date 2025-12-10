@@ -3,11 +3,9 @@
 namespace Knevelina\AdventOfCode\Data\Year2023\Day07;
 
 use RuntimeException;
-use WeakMap;
 
 class JokerHand extends Hand
 {
-
     protected static function parseCards(string $cards): array
     {
         return parent::parseCards(str_replace('J', '*', $cards));
@@ -27,7 +25,7 @@ class JokerHand extends Hand
             $cardMap[$card->value] = ($cardMap[$card->value] ?? 0) + 1;
         }
 
-        if (!isset($cardMap['*'])) {
+        if (! isset($cardMap['*'])) {
             return Hand::determineType($cards);
         }
 
@@ -44,6 +42,7 @@ class JokerHand extends Hand
 
                 return $card;
             }, $cards);
+
             return Hand::determineType($cards);
         }
 
@@ -57,6 +56,7 @@ class JokerHand extends Hand
             [1, 1, 1, 1, 1] => Type::HIGH_CARD,
             default => throw new RuntimeException(sprintf('Invalid sorted card arrangement %s', implode(', ', $cardMap))),
         };
+
         return $type;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2020;
 
 use JetBrains\PhpStorm\Immutable;
@@ -10,19 +9,17 @@ use JetBrains\PhpStorm\Pure;
 class Password
 {
     private int $min;
+
     private int $max;
+
     private string $letter;
+
     private string $password;
 
     /**
      * Create a new password.
-     *
-     * @param int $min
-     * @param int $max
-     * @param string $letter
-     * @param string $password
      */
-    public final function __construct(int $min, int $max, string $letter, string $password)
+    final public function __construct(int $min, int $max, string $letter, string $password)
     {
         $this->min = $min;
         $this->max = $max;
@@ -37,35 +34,23 @@ class Password
         return new static(intval($match[1]), intval($match[2]), $match[3], $match[4]);
     }
 
-    /**
-     * @return int
-     */
     public function getMin(): int
     {
         return $this->min;
     }
 
-    /**
-     * @return int
-     */
     public function getMax(): int
     {
         return $this->max;
     }
 
-    /**
-     * @return string
-     */
     public function getLetter(): string
     {
         return $this->letter;
     }
 
-    /**
-     * @param int $position
-     * @return string
-     */
-    #[Pure] public function getCharacterAt(int $position): string
+    #[Pure]
+    public function getCharacterAt(int $position): string
     {
         return substr($this->password, $position - 1, 1);
     }

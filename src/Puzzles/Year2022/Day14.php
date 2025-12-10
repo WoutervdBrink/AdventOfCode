@@ -3,9 +3,9 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
-use Knevelina\AdventOfCode\Data\Structures\Grid\Entry;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 use function Knevelina\AdventOfCode\Util\Math\sign;
 
@@ -25,19 +25,20 @@ class Day14 implements PuzzleSolver
             /** @var array<object> $coords */
             $coords = array_map(function (string $coord): object {
                 $coord = explode(',', $coord, 2);
-                return (object)[
+
+                return (object) [
                     'x' => intval($coord[0]),
                     'y' => intval($coord[1]),
                 ];
             }, explode(' -> ', $obstacle));
 
             $pos = array_shift($coords);
-            $positions[] = clone($pos);
+            $positions[] = clone $pos;
 
             $minX = min($minX, $pos->x);
-                        $minY = min($minY, $pos->y);
-                        $maxX = max($maxX, $pos->x);
-                        $maxY = max($maxY, $pos->y);
+            $minY = min($minY, $pos->y);
+            $maxX = max($maxX, $pos->x);
+            $maxY = max($maxY, $pos->y);
 
             foreach ($coords as $coord) {
                 $dx = abs($coord->x - $pos->x);
@@ -52,7 +53,7 @@ class Day14 implements PuzzleSolver
                 if ($dx > 0) {
                     for ($i = 0; $i < $dx; $i++) {
                         $pos->x += $sx;
-                        $positions[] = clone($pos);
+                        $positions[] = clone $pos;
                         $minX = min($minX, $pos->x);
                         $minY = min($minY, $pos->y);
                         $maxX = max($maxX, $pos->x);
@@ -61,7 +62,7 @@ class Day14 implements PuzzleSolver
                 } elseif ($dy > 0) {
                     for ($i = 0; $i < $dy; $i++) {
                         $pos->y += $sy;
-                        $positions[] = clone($pos);
+                        $positions[] = clone $pos;
                         $minX = min($minX, $pos->x);
                         $minY = min($minY, $pos->y);
                         $maxX = max($maxX, $pos->x);
@@ -77,9 +78,10 @@ class Day14 implements PuzzleSolver
             $grid->setValue($position->x, $position->y, 1);
         }
 
-        return (object)compact('grid', 'minX', 'minY', 'maxX', 'maxY');
+        return (object) compact('grid', 'minX', 'minY', 'maxX', 'maxY');
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         $input = self::parseInput($input);
@@ -90,7 +92,7 @@ class Day14 implements PuzzleSolver
         $grains = 0;
 
         while (true) {
-            $sand = (object)['x' => 500, 'y' => 0];
+            $sand = (object) ['x' => 500, 'y' => 0];
 
             while (true) {
                 if ($sand->y > $input->maxY) {
@@ -99,14 +101,17 @@ class Day14 implements PuzzleSolver
 
                 if ($grid->getValue($sand->x, $sand->y + 1) !== 1) {
                     $sand->y += 1;
+
                     continue;
                 } elseif ($grid->getValue($sand->x - 1, $sand->y + 1) !== 1) {
                     $sand->x -= 1;
                     $sand->y += 1;
+
                     continue;
                 } elseif ($grid->getValue($sand->x + 1, $sand->y + 1) !== 1) {
                     $sand->x += 1;
                     $sand->y += 1;
+
                     continue;
                 }
 
@@ -117,6 +122,7 @@ class Day14 implements PuzzleSolver
         }
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = self::parseInput($input);
@@ -127,7 +133,7 @@ class Day14 implements PuzzleSolver
         $grains = 0;
 
         while ($grid->getValue(500, 0) !== 1) {
-            $sand = (object)['x' => 500, 'y' => 0];
+            $sand = (object) ['x' => 500, 'y' => 0];
 
             while (true) {
                 if ($sand->y > $input->maxY) {
@@ -136,14 +142,17 @@ class Day14 implements PuzzleSolver
 
                 if ($grid->getValue($sand->x, $sand->y + 1) !== 1) {
                     $sand->y += 1;
+
                     continue;
                 } elseif ($grid->getValue($sand->x - 1, $sand->y + 1) !== 1) {
                     $sand->x -= 1;
                     $sand->y += 1;
+
                     continue;
                 } elseif ($grid->getValue($sand->x + 1, $sand->y + 1) !== 1) {
                     $sand->x += 1;
                     $sand->y += 1;
+
                     continue;
                 }
 

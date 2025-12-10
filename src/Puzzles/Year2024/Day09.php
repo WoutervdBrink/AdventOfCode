@@ -4,9 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 
 use Ds\Vector;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Override;
 
 class Day09 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = str_split($input);
@@ -17,9 +19,9 @@ class Day09 implements PuzzleSolver
             $size = intval($input[$i]);
             $free = intval($input[$i + 1] ?? 0);
 
-            $disk[] = (object)['id' => $fileId++, 'size' => $size];
+            $disk[] = (object) ['id' => $fileId++, 'size' => $size];
             if ($free > 0) {
-                $disk[] = (object)['id' => -1, 'size' => $free];
+                $disk[] = (object) ['id' => -1, 'size' => $free];
             }
         }
 
@@ -29,11 +31,13 @@ class Day09 implements PuzzleSolver
         while ($from > 0 && $to < $from) {
             if ($disk[$from]->id === -1) {
                 $from--;
+
                 continue;
             }
 
             if ($disk[$to]->id !== -1) {
                 $to++;
+
                 continue;
             }
 
@@ -42,17 +46,19 @@ class Day09 implements PuzzleSolver
 
             if ($needed === 0) {
                 $from--;
+
                 continue;
             }
 
             if ($available === 0) {
                 $to++;
+
                 continue;
             }
 
             $disk[$to]->size -= $available;
             $disk[$from]->size -= $available;
-            array_splice($disk, $to, 0, [(object)['id' => $disk[$from]->id, 'size' => $available]]);
+            array_splice($disk, $to, 0, [(object) ['id' => $disk[$from]->id, 'size' => $available]]);
             $to++;
             $from++;
         }
@@ -74,11 +80,12 @@ class Day09 implements PuzzleSolver
         return $part1;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = str_split($input);
 
-        $disk = new Vector();
+        $disk = new Vector;
         $diskSize = array_sum($input);
         $disk->insert(0, ...array_fill(0, $diskSize, -1));
 
@@ -98,7 +105,7 @@ class Day09 implements PuzzleSolver
             $fileId++;
         }
 
-//        echo implode('', array_map(fn (int $val): string => $val === -1 ? '.' : strval($val), $disk->toArray())) . PHP_EOL;
+        //        echo implode('', array_map(fn (int $val): string => $val === -1 ? '.' : strval($val), $disk->toArray())) . PHP_EOL;
 
         for ($from = $diskSize - 1; $from > 0; $from--) {
             $fileId = $disk->get($from);
@@ -117,6 +124,7 @@ class Day09 implements PuzzleSolver
                 for ($offset = 0; $offset < $size; $offset++) {
                     if ($disk->get($to + $offset) !== -1) {
                         $to += $offset;
+
                         continue 2;
                     }
                 }

@@ -7,13 +7,13 @@ use Stringable;
 class Monkey implements Stringable
 {
     private int $inspectedItems = 0;
+
     private bool $reducesWorry = false;
+
     private int $grandModulus = 0;
 
     /**
-     * @param int $modulus
-     * @param Operation $operation
-     * @param array<int> $items
+     * @param  array<int>  $items
      */
     public function __construct(
         private readonly int $modulus,
@@ -21,8 +21,7 @@ class Monkey implements Stringable
         private readonly int $trueMonkey,
         private readonly int $falseMonkey,
         private array $items = [],
-    ) {
-    }
+    ) {}
 
     public function setGrandModulus(int $grandModulus): void
     {
@@ -64,11 +63,11 @@ class Monkey implements Stringable
 
             $item = $item % $this->grandModulus;
 
-            $thrownItems[] = (object)[
+            $thrownItems[] = (object) [
                 'monkey' => $item % $this->modulus === 0
                     ? $this->trueMonkey
                     : $this->falseMonkey,
-                'item' => $item
+                'item' => $item,
             ];
         }
 
@@ -84,12 +83,12 @@ class Monkey implements Stringable
 
     public function __toString()
     {
-        $str = 'Monkey' . PHP_EOL;
-        $str .= '  Items: ' . implode(', ', $this->items) . PHP_EOL;
-        $str .= '  Operation: ' . $this->operation . PHP_EOL;
-        $str .= '  Test: divisible by ' . $this->modulus . PHP_EOL;
-        $str .= '    If true: throw to monkey ' . $this->trueMonkey . PHP_EOL;
-        $str .= '    If false: throw to monkey ' . $this->falseMonkey . PHP_EOL;
+        $str = 'Monkey'.PHP_EOL;
+        $str .= '  Items: '.implode(', ', $this->items).PHP_EOL;
+        $str .= '  Operation: '.$this->operation.PHP_EOL;
+        $str .= '  Test: divisible by '.$this->modulus.PHP_EOL;
+        $str .= '    If true: throw to monkey '.$this->trueMonkey.PHP_EOL;
+        $str .= '    If false: throw to monkey '.$this->falseMonkey.PHP_EOL;
 
         return $str;
     }

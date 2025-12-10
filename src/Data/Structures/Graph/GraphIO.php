@@ -12,9 +12,8 @@ class GraphIO
     /**
      * Render a graph as a DOT file.
      *
-     * @param string $path Path to store the DOT file. The file will be overwritten if it exists.
-     * @param Graph $graph The graph to write.
-     * @return void
+     * @param  string  $path  Path to store the DOT file. The file will be overwritten if it exists.
+     * @param  Graph  $graph  The graph to write.
      */
     public static function writeDot(string $path, Graph $graph): void
     {
@@ -24,7 +23,7 @@ class GraphIO
             throw new RuntimeException(sprintf('Could not open file "%s" for writing', $path));
         }
 
-        fwrite($fp, 'digraph G {' . PHP_EOL);
+        fwrite($fp, 'digraph G {'.PHP_EOL);
 
         $vertices = $graph->getVertices();
 

@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Set;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day13 implements PuzzleSolver
@@ -12,7 +13,7 @@ class Day13 implements PuzzleSolver
     private static function parseInput($input): array
     {
         return InputManipulator::splitLines($input, manipulator: function (string $line): object {
-            if (!preg_match(
+            if (! preg_match(
                 '/([A-Za-z]+) would (gain|lose) (\d+) happiness units by sitting next to ([A-Za-z]+)./',
                 $line,
                 $matches
@@ -20,10 +21,10 @@ class Day13 implements PuzzleSolver
                 throw new RuntimeException(sprintf('Invalid arrangement specification "%s"', $line));
             }
 
-            return (object)[
+            return (object) [
                 'person' => $matches[1],
                 'points' => ($matches[2] === 'gain' ? 1 : -1) * intval($matches[3]),
-                'other' => $matches[4]
+                'other' => $matches[4],
             ];
         });
     }
@@ -34,7 +35,7 @@ class Day13 implements PuzzleSolver
 
         foreach ($input as $spec) {
             $person = $spec->person;
-            if (!isset($people[$person])) {
+            if (! isset($people[$person])) {
                 $people[$person] = [];
             }
             $people[$person][$spec->other] = $spec->points;
@@ -68,32 +69,34 @@ class Day13 implements PuzzleSolver
         return $maxHappiness;
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         $input = self::parseInput($input);
 
-        $names = new Set(...array_map(fn(object $spec): string => $spec->person, $input));
+        $names = new Set(...array_map(fn (object $spec): string => $spec->person, $input));
 
         return self::calculate($names, $input);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = self::parseInput($input);
 
-        $names = new Set('me', ...array_map(fn(object $spec): string => $spec->person, $input));
+        $names = new Set('me', ...array_map(fn (object $spec): string => $spec->person, $input));
 
         foreach ($names->getValues() as $name) {
-            $input[] = (object)[
+            $input[] = (object) [
                 'person' => 'me',
                 'points' => 0,
-                'other' => $name
+                'other' => $name,
             ];
 
-            $input[] = (object)[
+            $input[] = (object) [
                 'person' => $name,
                 'points' => 0,
-                'other' => 'me'
+                'other' => 'me',
             ];
         }
 

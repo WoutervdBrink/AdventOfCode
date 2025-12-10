@@ -22,11 +22,10 @@ enum Move: int
 
     /**
      * Get the move's 'natural prey' - the move that is beatable by this move.
-     * @return Move
      */
     public function getPrey(): Move
     {
-        return match($this) {
+        return match ($this) {
             self::ROCK => self::SCISSORS,
             self::PAPER => self::ROCK,
             self::SCISSORS => self::PAPER,
@@ -35,11 +34,10 @@ enum Move: int
 
     /**
      * Get the move's 'natural predator' - the move that beats this move.
-     * @return Move
      */
     public function getPredator(): Move
     {
-        return match($this) {
+        return match ($this) {
             self::ROCK => self::PAPER,
             self::PAPER => self::SCISSORS,
             self::SCISSORS => self::ROCK,

@@ -4,24 +4,28 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day02 implements PuzzleSolver
 {
     private static function parseInstruction(string $line): object
     {
-        list($direction, $distance) = explode(' ', $line, 2);
+        [$direction, $distance] = explode(' ', $line, 2);
 
-        return (object)[
+        return (object) [
             'direction' => $direction,
-            'distance' => intval($distance)
+            'distance' => intval($distance),
         ];
     }
+
     private static function parseInstructions(string $input): array
     {
         $input = InputManipulator::splitLines($input);
 
         return array_map([static::class, 'parseInstruction'], $input);
     }
+
+    #[Override]
     public function part1(string $input): int
     {
         $instructions = self::parseInstructions($input);
@@ -30,12 +34,12 @@ class Day02 implements PuzzleSolver
         $depth = 0;
 
         foreach ($instructions as $instruction) {
-            $horizontal += match($instruction->direction) {
+            $horizontal += match ($instruction->direction) {
                 'forward' => $instruction->distance,
                 default => 0
             };
 
-            $depth += match($instruction->direction) {
+            $depth += match ($instruction->direction) {
                 'down' => $instruction->distance,
                 'up' => -$instruction->distance,
                 default => 0
@@ -45,6 +49,7 @@ class Day02 implements PuzzleSolver
         return $horizontal * $depth;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $instructions = self::parseInstructions($input);

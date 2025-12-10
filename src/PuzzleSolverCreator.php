@@ -13,11 +13,11 @@ class PuzzleSolverCreator
     public static function createPuzzle(int $year, int $day): void
     {
         if ($year < 2015) {
-            throw new InvalidArgumentException(sprintf("Invalid year %d!", $year));
+            throw new InvalidArgumentException(sprintf('Invalid year %d!', $year));
         }
 
         if ($day < 1 || $day > 25) {
-            throw new InvalidArgumentException(sprintf("Invalid day %d!", $day));
+            throw new InvalidArgumentException(sprintf('Invalid day %d!', $day));
         }
 
         if (static::putFile(static::getPuzzleSolverPath($year, $day), self::getPuzzleSolver($year, $day))) {
@@ -33,7 +33,8 @@ class PuzzleSolverCreator
         }
     }
 
-    #[Pure] private static function getPuzzleSolverPath(int $year, int $day): string
+    #[Pure]
+    private static function getPuzzleSolverPath(int $year, int $day): string
     {
         return sprintf('%s/Puzzles/Year%04d/Day%02d.php', __DIR__, $year, $day);
     }
@@ -52,7 +53,7 @@ class PuzzleSolverCreator
     {
         $path = sprintf('%s/../resources/stubs/%s.stub', __DIR__, $stub);
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             throw new InvalidArgumentException(sprintf('Stub "%s" does not exist! %s', $stub, $path));
         }
 
@@ -61,15 +62,17 @@ class PuzzleSolverCreator
 
     private static function transformStub(string &$stub, string $key, string $value): void
     {
-        $stub = str_replace('$' . strtoupper($key) . '$', $value, $stub);
+        $stub = str_replace('$'.strtoupper($key).'$', $value, $stub);
     }
 
-    #[Pure] private static function getExamplePath(int $year, int $day): string
+    #[Pure]
+    private static function getExamplePath(int $year, int $day): string
     {
-        return sprintf("%s/../resources/examples/%04d/%02d/example1.txt", __DIR__, $year, $day);
+        return sprintf('%s/../resources/examples/%04d/%02d/example1.txt', __DIR__, $year, $day);
     }
 
-    #[Pure] private static function getPuzzleTestPath(int $year, int $day): string
+    #[Pure]
+    private static function getPuzzleTestPath(int $year, int $day): string
     {
         return sprintf('%s/../tests/Puzzles/Year%04d/Day%02dTest.php', __DIR__, $year, $day);
     }

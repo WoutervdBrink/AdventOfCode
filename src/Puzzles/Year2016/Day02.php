@@ -4,6 +4,8 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
+use RuntimeException;
 
 class Day02 implements PuzzleSolver
 {
@@ -22,11 +24,7 @@ class Day02 implements PuzzleSolver
     ];
 
     /**
-     * @param string $input
-     * @param array<array<string|null>> $keypad
-     * @param int $x
-     * @param int $y
-     * @return string
+     * @param  array<array<string|null>>  $keypad
      */
     private static function solve(string $input, array $keypad, int $x, int $y): string
     {
@@ -40,14 +38,14 @@ class Day02 implements PuzzleSolver
                     'L' => -1,
                     'R' => 1,
                     'U', 'D' => 0,
-                    default => throw new \RuntimeException(sprintf('Invalid move "%s"', $move))
+                    default => throw new RuntimeException(sprintf('Invalid move "%s"', $move))
                 };
 
                 $nextY = $y + match ($move) {
                     'U' => -1,
                     'D' => 1,
                     'L', 'R' => 0,
-                    default => throw new \RuntimeException(sprintf('Invalid move "%s"', $move))
+                    default => throw new RuntimeException(sprintf('Invalid move "%s"', $move))
                 };
 
                 if (isset($keypad[$nextY][$nextX])) {
@@ -62,11 +60,13 @@ class Day02 implements PuzzleSolver
         return $code;
     }
 
+    #[Override]
     public function part1(string $input): string
     {
         return self::solve($input, self::KEYPAD_PART1, 1, 1);
     }
 
+    #[Override]
     public function part2(string $input): string
     {
         return self::solve($input, self::KEYPAD_PART2, 0, 2);

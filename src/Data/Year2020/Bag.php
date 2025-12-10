@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2020;
-
 
 use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
@@ -15,8 +13,6 @@ class Bag
 
     /**
      * Construct a new bag.
-     *
-     * @param string $color
      */
     public function __construct(string $color)
     {
@@ -26,13 +22,10 @@ class Bag
 
     /**
      * Construct a new bag from the string specification of a bag.
-     *
-     * @param string $specification
-     * @return Bag
      */
     public static function fromSpecification(string $specification): Bag
     {
-        if (!preg_match('/^([a-z ]+) bags contain/', $specification, $matches)) {
+        if (! preg_match('/^([a-z ]+) bags contain/', $specification, $matches)) {
             throw new InvalidArgumentException('Specification is missing the bag color!');
         }
 
@@ -51,19 +44,14 @@ class Bag
 
     /**
      * Accept a new color.
-     *
-     * @param string $color
-     * @param int $amount
      */
     public function accept(string $color, int $amount): void
     {
         $this->acceptableColors[$color] = $amount;
     }
 
-    /**
-     * @return array
-     */
-    #[Pure] public function getAcceptableColors(): array
+    #[Pure]
+    public function getAcceptableColors(): array
     {
         return $this->acceptableColors;
     }
@@ -72,16 +60,15 @@ class Bag
      * Check if the bag accepts a certain color.
      *
      * If so, the amount of accepted bags is returned. Otherwise, 0 is returned.
-     *
-     * @param string $color
-     * @return int
      */
-    #[Pure] public function accepts(string $color): int
+    #[Pure]
+    public function accepts(string $color): int
     {
         return $this->acceptableColors[$color] ?? 0;
     }
 
-    #[Pure] public function acceptsAnything(): bool
+    #[Pure]
+    public function acceptsAnything(): bool
     {
         return count($this->acceptableColors) > 0;
     }
@@ -93,21 +80,19 @@ class Bag
             $this->getColor(),
             count($this->acceptableColors) > 0
                 ? implode(
-                ', ',
-                array_map(
-                    fn(string $color, int $amount) => sprintf('%d %s bag%s', $amount, $color, $amount === 1 ? '' : 's'),
-                    array_keys($this->acceptableColors),
-                    $this->acceptableColors
+                    ', ',
+                    array_map(
+                        fn (string $color, int $amount) => sprintf('%d %s bag%s', $amount, $color, $amount === 1 ? '' : 's'),
+                        array_keys($this->acceptableColors),
+                        $this->acceptableColors
+                    )
                 )
-            )
                 : 'no other bags'
         );
     }
 
     /**
      * Get the color of this bag.
-     *
-     * @return string
      */
     public function getColor(): string
     {

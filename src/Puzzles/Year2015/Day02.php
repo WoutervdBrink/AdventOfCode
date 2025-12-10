@@ -5,9 +5,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2015\Present;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day02 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input);
@@ -30,6 +32,7 @@ class Day02 implements PuzzleSolver
         return $total;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input);
@@ -39,7 +42,7 @@ class Day02 implements PuzzleSolver
         foreach ($input as $measurements) {
             $measurements = explode('x', $measurements, 3);
 
-            $measurements = array_map(fn($ms) => intval($ms), $measurements);
+            $measurements = array_map(fn ($ms) => intval($ms), $measurements);
 
             $present = new Present($measurements[0], $measurements[1], $measurements[2]);
 

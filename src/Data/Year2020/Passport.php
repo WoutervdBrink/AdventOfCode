@@ -18,17 +18,13 @@ class Passport
 {
     private array $data;
 
-    /**
-     * @param string $specification
-     * @return Passport
-     */
     public static function fromSpecification(string $specification): Passport
     {
         $specification = str_replace("\n", ' ', $specification);
 
         $specification = explode(' ', $specification);
 
-        $passport = new Passport();
+        $passport = new Passport;
 
         foreach ($specification as $data) {
             $data = explode(':', trim($data), 2);
@@ -40,30 +36,19 @@ class Passport
         return $passport;
     }
 
-    /**
-     * @param string $name
-     * @return string|null
-     */
-    public function __get(string $name): string|null
+    public function __get(string $name): ?string
     {
         return $this->data[$name] ?? null;
     }
 
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
     public function __set(string $name, mixed $value)
     {
         $this->data[$name] = $value;
     }
 
-    /**
-     * @return bool
-     */
     public function isValid(): bool
     {
-        if (!$this->hasAllFields()) {
+        if (! $this->hasAllFields()) {
             return false;
         }
 
@@ -96,26 +81,24 @@ class Passport
             return false;
         }
 
-        if (!preg_match('/^#[0-9a-f]{6}$/', $this->hcl)) {
+        if (! preg_match('/^#[0-9a-f]{6}$/', $this->hcl)) {
             return false;
         }
-        if (!in_array($this->ecl, ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'])) {
+        if (! in_array($this->ecl, ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'])) {
             return false;
         }
-        if (!preg_match('/^[0-9]{9}$/', $this->pid)) {
+        if (! preg_match('/^[0-9]{9}$/', $this->pid)) {
             return false;
         }
 
         return true;
     }
 
-    /**
-     * @return bool
-     */
-    #[Pure] public function hasAllFields(): bool
+    #[Pure]
+    public function hasAllFields(): bool
     {
         foreach (['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'] as $key) {
-            if (!$this->has($key)) {
+            if (! $this->has($key)) {
                 return false;
             }
         }
@@ -123,12 +106,9 @@ class Passport
         return true;
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    #[Pure] public function has(string $name): bool
+    #[Pure]
+    public function has(string $name): bool
     {
-        return isset($this->data[$name]) && !is_null($this->data[$name]);
+        return isset($this->data[$name]) && ! is_null($this->data[$name]);
     }
 }

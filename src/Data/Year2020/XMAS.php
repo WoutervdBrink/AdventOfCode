@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Data\Year2020;
 class XMAS
 {
     private int $preambleSize;
+
     private array $history;
 
     public function __construct(int $preambleSize)
@@ -15,7 +16,7 @@ class XMAS
 
     public function push(int $number): bool
     {
-        if (!$this->isValid($number)) {
+        if (! $this->isValid($number)) {
             return false;
         }
 

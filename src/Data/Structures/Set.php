@@ -29,9 +29,6 @@ class Set
         return new Set(array_intersect($this->getValues(), $b->getValues()));
     }
 
-    /**
-     * @return array
-     */
     public function getValues(): array
     {
         return $this->values;
@@ -46,7 +43,7 @@ class Set
     {
         $bValues = $b->getValues();
 
-        return new Set(array_filter($this->getValues(), fn($value): bool => !in_array($value, $bValues)));
+        return new Set(array_filter($this->getValues(), fn ($value): bool => ! in_array($value, $bValues)));
     }
 
     private static function permute(array $elements = []): Generator

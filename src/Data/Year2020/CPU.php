@@ -7,8 +7,11 @@ use RuntimeException;
 class CPU
 {
     private int $pc;
+
     private int $accumulator;
+
     private Program $program;
+
     private bool $running;
 
     public function __construct(Program $program)
@@ -19,17 +22,11 @@ class CPU
         $this->running = true;
     }
 
-    /**
-     * @return int
-     */
     public function getPc(): int
     {
         return $this->pc;
     }
 
-    /**
-     * @return int
-     */
     public function getAccumulator(): int
     {
         return $this->accumulator;
@@ -39,20 +36,20 @@ class CPU
     {
         $cache = [];
 
-        while (!isset($cache[$this->pc])) {
+        while (! isset($cache[$this->pc])) {
             $cache[$this->pc] = true;
 
-            if (!$this->step()) {
+            if (! $this->step()) {
                 break;
             }
         }
 
-        return !$this->running;
+        return ! $this->running;
     }
 
     public function step(): bool
     {
-        if (!$this->running) {
+        if (! $this->running) {
             return false;
         }
 
@@ -63,7 +60,7 @@ class CPU
 
         $argument = $instruction->getArgument();
 
-//        printf("> pc=%04d a=%04d i=%s\n", $this->getPc(), $this->getAccumulator(), $instruction);
+        //        printf("> pc=%04d a=%04d i=%s\n", $this->getPc(), $this->getAccumulator(), $instruction);
 
         switch ($instruction->getOperation()) {
             case Operation::EOF:
@@ -84,7 +81,7 @@ class CPU
         $this->pc = $nextPc;
         $this->accumulator = $nextAccumulator;
 
-//        printf("  pc=%04d a=%04d i=%s\n", $this->getPc(), $this->getAccumulator(), $instruction);
+        //        printf("  pc=%04d a=%04d i=%s\n", $this->getPc(), $this->getAccumulator(), $instruction);
 
         return $this->running;
     }

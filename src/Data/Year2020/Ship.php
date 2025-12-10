@@ -7,14 +7,17 @@ use JetBrains\PhpStorm\Pure;
 class Ship
 {
     private int $x;
+
     private int $y;
+
     private Direction $direction;
 
-    #[Pure] public function __construct()
+    #[Pure]
+    public function __construct()
     {
         $this->x = 0;
         $this->y = 0;
-        $this->direction = new Direction(Direction::EAST);
+        $this->direction = Direction::east();
     }
 
     public function getX(): int
@@ -25,6 +28,7 @@ class Ship
     public function setX(int $x): Ship
     {
         $this->x = $x;
+
         return $this;
     }
 
@@ -36,10 +40,12 @@ class Ship
     public function setY(int $y): Ship
     {
         $this->y = $y;
+
         return $this;
     }
 
-    #[Pure] public function getDirection(): int
+    #[Pure]
+    public function getDirection(): int
     {
         return $this->direction->getDirection();
     }

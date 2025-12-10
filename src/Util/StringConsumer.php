@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Util;
 class StringConsumer
 {
     private readonly string $input;
+
     private int $cursor;
 
     public function __construct(string $input)
@@ -32,6 +33,7 @@ class StringConsumer
     {
         $result = substr($this->input, $this->cursor, $length);
         $this->cursor += $length;
+
         return $result;
     }
 
@@ -39,8 +41,10 @@ class StringConsumer
     {
         if ($this->peek($len = strlen($needle)) === $needle) {
             $this->cursor += $len;
+
             return true;
         }
+
         return false;
     }
 }

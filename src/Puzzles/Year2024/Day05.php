@@ -5,9 +5,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 use Knevelina\AdventOfCode\CombinedPuzzleOutput;
 use Knevelina\AdventOfCode\Contracts\CombinedPuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day05 extends CombinedPuzzleSolver
 {
+    #[Override]
     protected function solve(string $input): CombinedPuzzleOutput
     {
         $input = self::parse($input);
@@ -32,12 +34,12 @@ class Day05 extends CombinedPuzzleSolver
                         $fixed = true;
                     }
                 }
-            } while (!$valid);
+            } while (! $valid);
 
             if ($fixed) {
-                $part2 += $update[(int)floor(count($update) / 2)];
+                $part2 += $update[(int) floor(count($update) / 2)];
             } else {
-                $part1 += $update[(int)floor(count($update) / 2)];
+                $part1 += $update[(int) floor(count($update) / 2)];
             }
         }
 
@@ -45,7 +47,6 @@ class Day05 extends CombinedPuzzleSolver
     }
 
     /**
-     * @param string $input
      * @return object{rules: array<int, list<int>>, updates: list<list<int>>}
      */
     private static function parse(string $input): object
@@ -62,7 +63,7 @@ class Day05 extends CombinedPuzzleSolver
             $first = intval($first);
             $second = intval($second);
 
-            if (!isset($rules[$first])) {
+            if (! isset($rules[$first])) {
                 $rules[$first] = [];
             }
 
@@ -72,9 +73,9 @@ class Day05 extends CombinedPuzzleSolver
         /** @var list<list<int>> $updates */
         $updates = InputManipulator::splitLines(
             $input[1],
-            manipulator: fn(string $update): array => array_map('intval', explode(',', $update)),
+            manipulator: fn (string $update): array => array_map('intval', explode(',', $update)),
         );
 
-        return (object)compact('rules', 'updates');
+        return (object) compact('rules', 'updates');
     }
 }

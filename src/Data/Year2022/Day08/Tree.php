@@ -5,11 +5,10 @@ namespace Knevelina\AdventOfCode\Data\Year2022\Day08;
 class Tree
 {
     private bool $visible = false;
+
     private int $score = 1;
 
-    public function __construct(private int $value)
-    {
-    }
+    public function __construct(private int $value) {}
 
     public function pushScore(int $score): void
     {

@@ -6,9 +6,11 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2023\Day07\Hand;
 use Knevelina\AdventOfCode\Data\Year2023\Day07\JokerHand;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day07 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $hands = InputManipulator::splitLines($input, manipulator: Hand::fromDescription(...));
@@ -24,6 +26,7 @@ class Day07 implements PuzzleSolver
         return $winnings;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $hands = InputManipulator::splitLines($input, manipulator: JokerHand::fromDescription(...));

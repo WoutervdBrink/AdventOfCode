@@ -6,9 +6,11 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Entry;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Structures\Point;
+use Override;
 
 class Day04 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         /** @var list<Point> $vectors */
@@ -20,10 +22,10 @@ class Day04 implements PuzzleSolver
             }
         }
 
-        $grid = Grid::fromInput($input, manipulator: fn(string $char): string => preg_replace('/[^XMAS]/', '.', $char));
+        $grid = Grid::fromInput($input, manipulator: fn (string $char): string => preg_replace('/[^XMAS]/', '.', $char));
 
         /** @var list<Entry> $xs */
-        $xs = array_filter($grid->getEntries(), fn(Entry $entry): bool => $entry->getValue() === 'X');
+        $xs = array_filter($grid->getEntries(), fn (Entry $entry): bool => $entry->getValue() === 'X');
 
         $count = 0;
 
@@ -51,12 +53,13 @@ class Day04 implements PuzzleSolver
         return $count;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
-        $grid = Grid::fromInput($input, manipulator: fn(string $char): string => preg_replace('/[^MAS]/', '.', $char));
+        $grid = Grid::fromInput($input, manipulator: fn (string $char): string => preg_replace('/[^MAS]/', '.', $char));
 
         /** @var list<Entry> $as */
-        $as = array_filter($grid->getEntries(), fn(Entry $entry): bool => $entry->getValue() === 'A');
+        $as = array_filter($grid->getEntries(), fn (Entry $entry): bool => $entry->getValue() === 'A');
 
         $count = 0;
 

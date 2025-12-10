@@ -28,12 +28,11 @@ class RangeTest extends TestCase
     }
 
     /**
-     * @param Range[] $ranges
-     * @return void
+     * @param  Range[]  $ranges
      */
     #[Test]
     #[DataProvider('ranges')]
-    public function it_merges_overlapping_ranges(Range... $ranges): void
+    public function it_merges_overlapping_ranges(Range ...$ranges): void
     {
         $merged = Range::merge(...$ranges);
 

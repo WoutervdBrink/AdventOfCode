@@ -16,7 +16,7 @@ class Program
 
     public static function fromSpecification(string $specification): Program
     {
-        $program = new Program();
+        $program = new Program;
 
         $specification = InputManipulator::splitLines($specification);
 
@@ -32,14 +32,15 @@ class Program
         $this->instructions[] = $instruction;
     }
 
-    #[Pure] public function getSize(): int
+    #[Pure]
+    public function getSize(): int
     {
         return count($this->instructions);
     }
 
     public function clone(): Program
     {
-        $clone = new Program();
+        $clone = new Program;
 
         foreach ($this->instructions as $address => $instruction) {
             $clone->setInstruction($address, $instruction);
@@ -53,7 +54,8 @@ class Program
         $this->instructions[$address] = $instruction;
     }
 
-    #[Pure] public function getInstruction(int $address): Instruction
+    #[Pure]
+    public function getInstruction(int $address): Instruction
     {
         return $this->instructions[$address] ?? new Instruction(Operation::EOF, 0);
     }

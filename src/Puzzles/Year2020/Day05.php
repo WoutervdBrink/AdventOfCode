@@ -5,9 +5,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\Seat;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day05 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $seats = InputManipulator::splitLines($input);
@@ -20,10 +22,11 @@ class Day05 implements PuzzleSolver
         return $maxId;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $seats = InputManipulator::splitLines($input);
-        $ids = array_map(fn($spec) => Seat::fromSpecification($spec)->getId(), $seats);
+        $ids = array_map(fn ($spec) => Seat::fromSpecification($spec)->getId(), $seats);
         sort($ids);
 
         for ($i = 1; $i < count($ids); $i++) {

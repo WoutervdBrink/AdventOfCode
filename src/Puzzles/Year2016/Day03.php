@@ -4,6 +4,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day03 implements PuzzleSolver
 {
@@ -29,9 +30,11 @@ class Day03 implements PuzzleSolver
     private static function isValidTriangle(array $triangle): bool
     {
         sort($triangle);
-        return $triangle[0] + $triangle[1] > $triangle[2];
+
+        return $triangle[2] < $triangle[0] + $triangle[1];
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         return array_reduce(
@@ -41,6 +44,7 @@ class Day03 implements PuzzleSolver
         );
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = self::parseInput($input);

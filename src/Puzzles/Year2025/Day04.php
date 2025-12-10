@@ -5,7 +5,6 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2025;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Entry;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
-use Knevelina\AdventOfCode\Data\Structures\Point;
 use Knevelina\AdventOfCode\Data\Year2025\Day04\Mark;
 use Override;
 
@@ -20,7 +19,7 @@ class Day04 implements PuzzleSolver
         }
         $neighbors = $grid->getNeighborValues($x, $y);
 
-        if (count(array_filter($neighbors, fn(Mark $mark): bool => $mark !== Mark::EMPTY)) < 4) {
+        if (count(array_filter($neighbors, fn (Mark $mark): bool => $mark !== Mark::EMPTY)) < 4) {
             return true;
         }
 
@@ -63,7 +62,7 @@ class Day04 implements PuzzleSolver
 
     private static function parseInput(string $input): Grid
     {
-        return Grid::fromInput($input, manipulator: fn(string $char): Mark => Mark::from($char));
+        return Grid::fromInput($input, manipulator: fn (string $char): Mark => Mark::from($char));
     }
 
     #[Override]
@@ -86,7 +85,7 @@ class Day04 implements PuzzleSolver
             foreach ($toRemove as $entry) {
                 $entry->setValue(Mark::EMPTY);
             }
-        } while (!empty($toRemove));
+        } while (! empty($toRemove));
 
         return $solution;
     }

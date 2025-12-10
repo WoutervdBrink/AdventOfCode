@@ -3,29 +3,24 @@
 namespace Knevelina\AdventOfCode\Tests\Data\Year2020;
 
 use Knevelina\AdventOfCode\Data\Year2020\WaitingArea;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Knevelina\AdventOfCode\Data\Year2020\WaitingArea
- */
+#[CoversClass(WaitingArea::class)]
 class WaitingAreaTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider areas
-     * @param string $area
-     * @param int $row
-     * @param int $col
-     * @param int $occupied
-     */
-    function it_counts_seats_in_line_of_sight(string $area, int $row, int $col, int $occupied): void
+    #[Test]
+    #[DataProvider('areas')]
+    public function it_counts_seats_in_line_of_sight(string $area, int $row, int $col, int $occupied): void
     {
         $area = WaitingArea::fromSpecification($area);
 
         $this->assertEquals($occupied, $area->getOccupiedNeighborsInLinesOfSight($row, $col));
     }
 
-    public function areas(): array
+    public static function areas(): array
     {
         return [
             [
@@ -40,7 +35,7 @@ class WaitingAreaTest extends TestCase
 ...#.....',
                 4,
                 3,
-                8
+                8,
             ],
             [
                 '.............
@@ -48,7 +43,7 @@ class WaitingAreaTest extends TestCase
 .............',
                 1,
                 1,
-                0
+                0,
             ],
             [
                 '.##.##.
@@ -60,7 +55,7 @@ class WaitingAreaTest extends TestCase
 .##.##.',
                 3,
                 3,
-                0
+                0,
             ],
             [
                 '#.##.##.##
@@ -75,8 +70,8 @@ class WaitingAreaTest extends TestCase
 #.#####.##',
                 0,
                 2,
-                5
-            ]
+                5,
+            ],
         ];
     }
 }

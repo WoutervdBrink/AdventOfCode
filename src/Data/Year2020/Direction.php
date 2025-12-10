@@ -8,8 +8,11 @@ use JetBrains\PhpStorm\Pure;
 class Direction
 {
     const NORTH = 0;
+
     const EAST = 1;
+
     const SOUTH = 2;
+
     const WEST = 3;
 
     private int $direction;
@@ -39,7 +42,8 @@ class Direction
         return new self(self::WEST);
     }
 
-    #[Pure] public static function getDirectionForMnemonic(string $mnemonic): int
+    #[Pure]
+    public static function getDirectionForMnemonic(string $mnemonic): int
     {
         return match ($mnemonic) {
             'N' => self::NORTH,
@@ -55,12 +59,14 @@ class Direction
         return $this->direction;
     }
 
-    #[Pure] public function getHorizontalMovement(int $distance = 1): int
+    #[Pure]
+    public function getHorizontalMovement(int $distance = 1): int
     {
         return self::getHorizontalMovementForDirection($this->direction, $distance);
     }
 
-    #[Pure] public static function getHorizontalMovementForDirection(int $direction, int $distance = 1): int
+    #[Pure]
+    public static function getHorizontalMovementForDirection(int $direction, int $distance = 1): int
     {
         return match ($direction) {
             self::EAST => $distance,
@@ -69,12 +75,14 @@ class Direction
         };
     }
 
-    #[Pure] public function getVerticalMovement(int $distance = 1): int
+    #[Pure]
+    public function getVerticalMovement(int $distance = 1): int
     {
         return self::getVerticalMovementForDirection($this->direction, $distance = 1);
     }
 
-    #[Pure] public static function getVerticalMovementForDirection(int $direction, int $distance = 1): int
+    #[Pure]
+    public static function getVerticalMovementForDirection(int $direction, int $distance = 1): int
     {
         return match ($direction) {
             self::NORTH => -$distance,

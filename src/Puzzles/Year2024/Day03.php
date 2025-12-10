@@ -5,13 +5,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 use Knevelina\AdventOfCode\CombinedPuzzleOutput;
 use Knevelina\AdventOfCode\Contracts\CombinedPuzzleSolver;
 use Knevelina\AdventOfCode\Util\StringConsumer;
+use Override;
 
 class Day03 extends CombinedPuzzleSolver
 {
-    /**
-     * @param string $input
-     * @return list<int>
-     */
+    #[Override]
     protected function solve(string $input): CombinedPuzzleOutput
     {
         $consumer = new StringConsumer($input);
@@ -19,17 +17,20 @@ class Day03 extends CombinedPuzzleSolver
         $part1 = 0;
         $part2 = 0;
 
-        while (!$consumer->done()) {
+        while (! $consumer->done()) {
             if ($consumer->peek(4) === 'mul(') {
                 $consumer->consume(4);
-            } else if ($consumer->consumeIf('do(')) {
+            } elseif ($consumer->consumeIf('do(')) {
                 $factor = 1;
+
                 continue;
-            } else if ($consumer->consumeIf('don\'t(')) {
+            } elseif ($consumer->consumeIf('don\'t(')) {
                 $factor = 0;
+
                 continue;
             } else {
                 $consumer->consume(1);
+
                 continue;
             }
 

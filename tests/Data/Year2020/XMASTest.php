@@ -3,15 +3,15 @@
 namespace Knevelina\AdventOfCode\Tests\Data\Year2020;
 
 use Knevelina\AdventOfCode\Data\Year2020\XMAS;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Knevelina\AdventOfCode\Data\Year2020\XMAS
- */
+#[CoversClass(XMAS::class)]
 class XMASTest extends TestCase
 {
-    /** @test */
-    function it_takes_a_preamble(): void
+    #[Test]
+    public function it_takes_a_preamble(): void
     {
         $xmas = new XMAS(3);
 
@@ -20,8 +20,8 @@ class XMASTest extends TestCase
         $this->assertTrue($xmas->push(5));
     }
 
-    /** @test */
-    function it_rejects_invalid_numbers(): void
+    #[Test]
+    public function it_rejects_invalid_numbers(): void
     {
         $xmas = new XMAS(5);
 

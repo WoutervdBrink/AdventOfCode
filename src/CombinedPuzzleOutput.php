@@ -21,16 +21,13 @@ readonly class CombinedPuzzleOutput
          * @var int|float|string The solution of the second part.
          */
         private int|float|string $part2,
-    )
-    {
-    }
+    ) {}
 
     /**
      * Construct a new instance with the specified solutions for part 1 and part 2.
      *
-     * @param int|float|string $part1 The solution of the first part.
-     * @param int|float|string $part2 The solution of the second part.
-     * @return self
+     * @param  int|float|string  $part1  The solution of the first part.
+     * @param  int|float|string  $part2  The solution of the second part.
      */
     public static function of(int|float|string $part1, int|float|string $part2): self
     {
@@ -39,8 +36,6 @@ readonly class CombinedPuzzleOutput
 
     /**
      * Get the solution of the first part.
-     *
-     * @return int|float|string
      */
     public function part1(): int|float|string
     {
@@ -49,8 +44,6 @@ readonly class CombinedPuzzleOutput
 
     /**
      * Get the solution of the second part.
-     *
-     * @return int|float|string
      */
     public function part2(): int|float|string
     {

@@ -6,12 +6,14 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2022\Day02\Move;
 use Knevelina\AdventOfCode\Data\Year2022\Day02\Outcome;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day02 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
-        $games = InputManipulator::splitLines($input, manipulator: fn(string $line): array => [
+        $games = InputManipulator::splitLines($input, manipulator: fn (string $line): array => [
             Move::fromInput($line[0] ?? '(none)'),
             Move::fromInput($line[2] ?? '(none)'),
         ]);
@@ -31,6 +33,7 @@ class Day02 implements PuzzleSolver
         return $score;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $games = InputManipulator::splitLines($input, manipulator: fn (string $line): array => [

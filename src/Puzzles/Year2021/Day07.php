@@ -4,9 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day07 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): float
     {
         $input = InputManipulator::splitLines($input, ',', 'intval');
@@ -21,7 +23,7 @@ class Day07 implements PuzzleSolver
 
         return array_sum(
             array_map(
-                fn(float $fuel): float => abs(
+                fn (float $fuel): float => abs(
                     $fuel - $median
                 ),
                 $input
@@ -29,6 +31,7 @@ class Day07 implements PuzzleSolver
         );
     }
 
+    #[Override]
     public function part2(string $input): float
     {
         $input = InputManipulator::splitLines($input, ',', 'intval');
@@ -38,7 +41,7 @@ class Day07 implements PuzzleSolver
         return min(
             array_sum(
                 array_map(
-                    fn(float $fuel): float => self::plusFactorial(
+                    fn (float $fuel): float => self::plusFactorial(
                         abs(
                             $fuel - $mean
                         )
@@ -48,7 +51,7 @@ class Day07 implements PuzzleSolver
             ),
             array_sum(
                 array_map(
-                    fn(float $fuel): float => self::plusFactorial(
+                    fn (float $fuel): float => self::plusFactorial(
                         abs(
                             $fuel - $mean - 1
                         )

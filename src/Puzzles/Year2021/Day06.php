@@ -4,6 +4,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day06 implements PuzzleSolver
 {
@@ -45,6 +46,7 @@ class Day06 implements PuzzleSolver
         return array_sum($map);
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         $fish = InputManipulator::splitLines($input, ',', 'intval');
@@ -52,6 +54,7 @@ class Day06 implements PuzzleSolver
         return self::simulateEverything($fish, 80);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $fish = InputManipulator::splitLines($input, ',', 'intval');

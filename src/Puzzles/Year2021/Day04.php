@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2021\Bingo;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day04 implements PuzzleSolver
 {
@@ -26,9 +27,10 @@ class Day04 implements PuzzleSolver
         return [$numbers, $cards];
     }
 
+    #[Override]
     public function part1(string $input): int
     {
-        list($numbers, $cards) = self::parseInput($input);
+        [$numbers, $cards] = self::parseInput($input);
 
         foreach ($numbers as $number) {
             /** @var Bingo $card */
@@ -44,9 +46,10 @@ class Day04 implements PuzzleSolver
         return 0;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
-        list($numbers, $cards) = self::parseInput($input);
+        [$numbers, $cards] = self::parseInput($input);
 
         $loser = null;
 
@@ -56,7 +59,7 @@ class Day04 implements PuzzleSolver
                 $card->mark($number);
             }
 
-            $losers = array_filter($cards, fn (Bingo $card): bool => !$card->hasBingo());
+            $losers = array_filter($cards, fn (Bingo $card): bool => ! $card->hasBingo());
 
             if (count($losers) === 1) {
                 $loser = $losers[array_key_first($losers)];

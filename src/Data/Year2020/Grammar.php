@@ -37,7 +37,7 @@ use JetBrains\PhpStorm\Immutable;
 
     public function getRule(int $id): Rule
     {
-        if (!isset($this->rules[$id])) {
+        if (! isset($this->rules[$id])) {
             throw new InvalidArgumentException(sprintf('Rule %d does not exist.', $id));
         }
 

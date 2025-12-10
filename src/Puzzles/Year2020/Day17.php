@@ -6,13 +6,15 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\GameOfLife3D;
 use Knevelina\AdventOfCode\Data\Year2020\GameOfLife4D;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day17 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input);
-        $game = new GameOfLife3D();
+        $game = new GameOfLife3D;
 
         foreach ($input as $y => $line) {
             $line = str_split(trim($line));
@@ -29,10 +31,11 @@ class Day17 implements PuzzleSolver
         return $game->getActiveCubes();
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input);
-        $game = new GameOfLife4D();
+        $game = new GameOfLife4D;
 
         foreach ($input as $y => $line) {
             $line = str_split(trim($line));

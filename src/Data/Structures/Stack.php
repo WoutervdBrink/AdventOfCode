@@ -2,6 +2,8 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures;
 
+use OutOfBoundsException;
+
 class Stack
 {
     private array $values = [];
@@ -25,6 +27,6 @@ class Stack
     {
         return ($length = $this->getLength())
             ? $this->values[$length - 1]
-            : throw new \OutOfBoundsException('Stack is empty');
+            : throw new OutOfBoundsException('Stack is empty');
     }
 }

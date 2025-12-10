@@ -5,17 +5,17 @@ namespace Knevelina\AdventOfCode\Tests\Data\Year2020;
 use Knevelina\AdventOfCode\Data\Year2020\Instruction;
 use Knevelina\AdventOfCode\Data\Year2020\Operation;
 use Knevelina\AdventOfCode\Data\Year2020\Program;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Knevelina\AdventOfCode\Data\Year2020\Program
- */
+#[CoversClass(Program::class)]
 class ProgramTest extends TestCase
 {
-    /** @test */
-    function it_adds_instructions(): void
+    #[Test]
+    public function it_adds_instructions(): void
     {
-        $program = new Program();
+        $program = new Program;
         $ins0 = new Instruction(Operation::NOP, 0);
         $ins1 = new Instruction(Operation::ACC, 2);
 
@@ -26,10 +26,10 @@ class ProgramTest extends TestCase
         $this->assertEquals($ins1, $program->getInstruction(1));
     }
 
-    /** @test */
-    function it_returns_eof_for_undefined_instructions(): void
+    #[Test]
+    public function it_returns_eof_for_undefined_instructions(): void
     {
-        $program = new Program();
+        $program = new Program;
         $program->addInstruction(new Instruction(Operation::ACC, 2));
 
         $ins = $program->getInstruction(1);
@@ -37,8 +37,8 @@ class ProgramTest extends TestCase
         $this->assertEquals(Operation::EOF, $ins->getOperation());
     }
 
-    /** @test */
-    function it_parses_programs(): void
+    #[Test]
+    public function it_parses_programs(): void
     {
         $program = Program::fromSpecification("acc +5\njmp -2\nnop +0");
 
@@ -56,10 +56,10 @@ class ProgramTest extends TestCase
         $this->assertEquals(0, $ins2->getArgument());
     }
 
-    /** @test */
-    function it_has_a_size(): void
+    #[Test]
+    public function it_has_a_size(): void
     {
-        $program = new Program();
+        $program = new Program;
         $instruction = new Instruction(Operation::NOP, 0);
 
         $this->assertEquals(0, $program->getSize());
@@ -75,10 +75,10 @@ class ProgramTest extends TestCase
         $this->assertEquals(4, $program->getSize());
     }
 
-    /** @test */
-    function it_replaces_instructions(): void
+    #[Test]
+    public function it_replaces_instructions(): void
     {
-        $program = new Program();
+        $program = new Program;
         $ins0 = new Instruction(Operation::NOP, 0);
         $ins1 = new Instruction(Operation::NOP, 1);
         $ins2 = new Instruction(Operation::NOP, 2);
@@ -95,10 +95,10 @@ class ProgramTest extends TestCase
         $this->assertEquals($ins3, $program->getInstruction(2));
     }
 
-    /** @test */
-    function it_clones_programs(): void
+    #[Test]
+    public function it_clones_programs(): void
     {
-        $program = new Program();
+        $program = new Program;
         $ins0 = new Instruction(Operation::NOP, 0);
         $ins1 = new Instruction(Operation::NOP, 1);
         $program->addInstruction($ins0);

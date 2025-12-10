@@ -4,20 +4,22 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day05 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input);
         $nice = 0;
 
         foreach ($input as $word) {
-            if (!static::containsThreeVowels($word)) {
+            if (! static::containsThreeVowels($word)) {
                 continue;
             }
 
-            if (!static::containsTwoConsecutiveLetters($word)) {
+            if (! static::containsTwoConsecutiveLetters($word)) {
                 continue;
             }
 
@@ -39,7 +41,7 @@ class Day05 implements PuzzleSolver
     private static function containsTwoConsecutiveLetters(string $word): bool
     {
         foreach (range('a', 'z') as $letter) {
-            if (str_contains($word, $letter . $letter)) {
+            if (str_contains($word, $letter.$letter)) {
                 return true;
             }
         }
@@ -58,17 +60,18 @@ class Day05 implements PuzzleSolver
         return false;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input);
         $nice = 0;
 
         foreach ($input as $word) {
-            if (!self::containsNonOverlappingRepeatingPair($word)) {
+            if (! self::containsNonOverlappingRepeatingPair($word)) {
                 continue;
             }
 
-            if (!self::containsRepeatingletterWithInterleavingLetter($word)) {
+            if (! self::containsRepeatingletterWithInterleavingLetter($word)) {
                 continue;
             }
 
@@ -82,22 +85,24 @@ class Day05 implements PuzzleSolver
     {
         foreach (range('a', 'z') as $a) {
             foreach (range('a', 'z') as $b) {
-                $pair = $a . $b;
-                if (preg_match('/' . $pair . '.*' . $pair . '/', $word)) {
+                $pair = $a.$b;
+                if (preg_match('/'.$pair.'.*'.$pair.'/', $word)) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     private static function containsRepeatingletterWithInterleavingLetter(string $word): bool
     {
         foreach (range('a', 'z') as $letter) {
-            if (preg_match('/' . $letter . '.' . $letter . '/', $word)) {
+            if (preg_match('/'.$letter.'.'.$letter.'/', $word)) {
                 return true;
             }
         }
+
         return false;
     }
 }

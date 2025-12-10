@@ -4,6 +4,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2023;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day01 implements PuzzleSolver
 {
@@ -20,11 +21,13 @@ class Day01 implements PuzzleSolver
         'zero' => 0,
     ];
 
+    #[Override]
     public function part1(string $input): int
     {
         return self::solve($input, includeWords: false);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         return self::solve($input, includeWords: true);
@@ -51,7 +54,7 @@ class Day01 implements PuzzleSolver
                 }
             }
 
-            return intval($digits[0] . $digits[strlen($digits) - 1]);
+            return intval($digits[0].$digits[strlen($digits) - 1]);
         }));
     }
 }

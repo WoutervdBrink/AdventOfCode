@@ -7,7 +7,9 @@ use SplFixedArray;
 class GameOfLife4D
 {
     private array $cubes;
+
     private SplFixedArray $deltas;
+
     private int $activeCubes;
 
     public function __construct()
@@ -37,7 +39,7 @@ class GameOfLife4D
 
     public function evolve(): GameOfLife4D
     {
-        $new = new GameOfLife4D();
+        $new = new GameOfLife4D;
 
         $minX = $maxX = $minY = $maxY = $minZ = $maxZ = $minW = $maxW = 0;
 
@@ -94,7 +96,7 @@ class GameOfLife4D
         $active = 0;
 
         foreach ($this->deltas as $delta) {
-            list($dx, $dy, $dz, $dw) = $delta;
+            [$dx, $dy, $dz, $dw] = $delta;
 
             if ($this->getCube($x + $dx, $y + $dy, $z + $dz, $w + $dw)) {
                 $active++;
@@ -106,15 +108,15 @@ class GameOfLife4D
 
     public function setCube(int $x, int $y, int $z, int $w, bool $active): void
     {
-        if (!isset($this->cubes[$x])) {
+        if (! isset($this->cubes[$x])) {
             $this->cubes[$x] = [];
         }
 
-        if (!isset($this->cubes[$x][$y])) {
+        if (! isset($this->cubes[$x][$y])) {
             $this->cubes[$x][$y] = [];
         }
 
-        if (!isset($this->cubes[$x][$y][$z])) {
+        if (! isset($this->cubes[$x][$y][$z])) {
             $this->cubes[$x][$y][$z] = [];
         }
 
@@ -129,6 +131,4 @@ class GameOfLife4D
     {
         return $this->activeCubes;
     }
-
-
 }

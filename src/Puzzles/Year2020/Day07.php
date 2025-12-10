@@ -6,18 +6,19 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\Bag;
 use Knevelina\AdventOfCode\Data\Year2020\Tree;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day07 implements PuzzleSolver
 {
     private array $bagMap = [];
 
-    /** @noinspection PhpUnusedParameterInspection */
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input);
         $this->bagMap = [];
 
-        $bags = array_map(fn(string $input): Bag => Bag::fromSpecification($input), $input);
+        $bags = array_map(fn (string $input): Bag => Bag::fromSpecification($input), $input);
 
         foreach ($bags as $bag) {
             $tree = $this->getTreeForColor($bag->getColor());
@@ -47,19 +48,20 @@ class Day07 implements PuzzleSolver
 
     protected function getTreeForColor(string $color): Tree
     {
-        if (!isset($this->bagMap[$color])) {
+        if (! isset($this->bagMap[$color])) {
             $this->bagMap[$color] = new Tree($color);
         }
 
         return $this->bagMap[$color];
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input);
         $this->bagMap = [];
 
-        $bags = array_map(fn(string $input): Bag => Bag::fromSpecification($input), $input);
+        $bags = array_map(fn (string $input): Bag => Bag::fromSpecification($input), $input);
 
         foreach ($bags as $bag) {
             $tree = $this->getTreeForColor($bag->getColor());

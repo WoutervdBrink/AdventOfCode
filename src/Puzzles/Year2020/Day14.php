@@ -6,12 +6,15 @@ use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day14 implements PuzzleSolver
 {
     const MASK = 0;
+
     const MEM = 1;
 
+    #[Override]
     public function part1(string $input): int
     {
         $mem = [];
@@ -31,10 +34,6 @@ class Day14 implements PuzzleSolver
         return array_sum($mem);
     }
 
-    /**
-     * @param string $input
-     * @return array
-     */
     private static function parse(string $input): array
     {
         $input = InputManipulator::splitLines($input);
@@ -55,7 +54,8 @@ class Day14 implements PuzzleSolver
         );
     }
 
-    #[Pure] protected static function applyMask(string $mask, int $value): int
+    #[Pure]
+    protected static function applyMask(string $mask, int $value): int
     {
         $masked = 0;
         $bits = self::intToBits($value);
@@ -78,9 +78,10 @@ class Day14 implements PuzzleSolver
     {
         $bits = decbin($value);
 
-        return str_repeat('0', 36 - strlen($bits)) . $bits;
+        return str_repeat('0', 36 - strlen($bits)).$bits;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $mem = [];
@@ -99,10 +100,11 @@ class Day14 implements PuzzleSolver
             }
         }
 
-        return (int)array_sum($mem);
+        return (int) array_sum($mem);
     }
 
-    #[Pure] private static function getAddresses(string $mask, int $address): array
+    #[Pure]
+    private static function getAddresses(string $mask, int $address): array
     {
         $addresses = [''];
 
@@ -116,7 +118,7 @@ class Day14 implements PuzzleSolver
                 case 'X':
                     $new = [];
                     foreach ($addresses as $key => $address) {
-                        $new[] = $address . '1';
+                        $new[] = $address.'1';
                         $addresses[$key] .= '0';
                     }
                     $addresses = array_merge($addresses, $new);

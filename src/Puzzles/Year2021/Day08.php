@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 use InvalidArgumentException;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day08 implements PuzzleSolver
@@ -17,7 +18,7 @@ class Day08 implements PuzzleSolver
             throw new InvalidArgumentException(sprintf('Invalid 7-segement input line "%s"', $line));
         }
 
-        list($signals, $values) = $line;
+        [$signals, $values] = $line;
 
         $signals = explode(' ', $signals);
         $values = explode(' ', $values);
@@ -25,6 +26,7 @@ class Day08 implements PuzzleSolver
         return [$signals, $values];
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input, manipulator: [self::class, 'processLine']);
@@ -42,6 +44,7 @@ class Day08 implements PuzzleSolver
         return $total;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input, manipulator: [self::class, 'processLine']);
@@ -49,7 +52,7 @@ class Day08 implements PuzzleSolver
         $total = 0;
 
         foreach ($input as $line) {
-            list($signals, $values) = $line;
+            [$signals, $values] = $line;
 
             $digitToSignal = [];
 
@@ -121,7 +124,7 @@ class Day08 implements PuzzleSolver
             foreach ($digitToSignal as $digit => $signal) {
                 $signal = str_split($signal);
                 sort($signal);
-                $signal = join('', $signal);
+                $signal = implode('', $signal);
                 $signalToDigit[$signal] = $digit;
             }
 
@@ -130,8 +133,8 @@ class Day08 implements PuzzleSolver
             foreach ($values as $value) {
                 $signal = str_split($value);
                 sort($signal);
-                $signal = join('', $signal);
-                if (!isset($signalToDigit[$signal])) {
+                $signal = implode('', $signal);
+                if (! isset($signalToDigit[$signal])) {
                     throw new RuntimeException(
                         sprintf('Could not decode signal "%s" ("%s") as a digit!', $value, $signal)
                     );

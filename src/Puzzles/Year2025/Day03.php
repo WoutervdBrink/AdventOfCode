@@ -4,14 +4,17 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2025;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day03 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         return self::solve($input, 2);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         return self::solve($input, 12);
@@ -48,7 +51,6 @@ class Day03 implements PuzzleSolver
     }
 
     /**
-     * @param string $input
      * @return int[][]
      */
     private static function parseInput(string $input): array

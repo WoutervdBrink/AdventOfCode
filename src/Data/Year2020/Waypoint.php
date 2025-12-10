@@ -7,6 +7,7 @@ use InvalidArgumentException;
 class Waypoint
 {
     private int $x;
+
     private int $y;
 
     public function __construct()

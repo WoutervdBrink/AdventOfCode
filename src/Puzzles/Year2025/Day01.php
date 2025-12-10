@@ -4,9 +4,12 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2025;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
+use RuntimeException;
 
 class Day01 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = self::parseInput($input);
@@ -26,6 +29,7 @@ class Day01 implements PuzzleSolver
         return $hits;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = self::parseInput($input);
@@ -47,20 +51,16 @@ class Day01 implements PuzzleSolver
         return $hits;
     }
 
-    /**
-     * @param string $input
-     * @return array
-     */
     public static function parseInput(string $input): array
     {
         return InputManipulator::splitLines($input, manipulator: function (string $line): object {
-            if (!preg_match('/^([LR])(\d+)$/', $line, $matches)) {
-                throw new \RuntimeException('Invalid input line: ' . $line);
+            if (! preg_match('/^([LR])(\d+)$/', $line, $matches)) {
+                throw new RuntimeException('Invalid input line: '.$line);
             }
 
-            list (, $direction, $amount) = $matches;
+            [, $direction, $amount] = $matches;
 
-            return (object)[
+            return (object) [
                 'direction' => $direction,
                 'amount' => $amount,
             ];

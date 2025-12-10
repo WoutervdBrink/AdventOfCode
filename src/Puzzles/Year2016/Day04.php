@@ -4,9 +4,12 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
+use RuntimeException;
 
 class Day04 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = self::parseInput($input);
@@ -20,7 +23,7 @@ class Day04 implements PuzzleSolver
                     continue;
                 }
 
-                if (!isset($occurrence[$letter])) {
+                if (! isset($occurrence[$letter])) {
                     $occurrence[$letter] = 0;
                 }
 
@@ -37,6 +40,7 @@ class Day04 implements PuzzleSolver
                     if ($aLetter === $bLetter) {
                         return 0;
                     }
+
                     return $aLetter < $bLetter ? -1 : 1;
                 }
 
@@ -45,7 +49,7 @@ class Day04 implements PuzzleSolver
 
             $actualChecksum = implode(
                 '',
-                array_map(fn(array $element): string => $element[0], array_slice($occurrence, 0, 5))
+                array_map(fn (array $element): string => $element[0], array_slice($occurrence, 0, 5))
             );
 
             if ($actualChecksum === $room->checksum) {
@@ -59,14 +63,14 @@ class Day04 implements PuzzleSolver
     private static function parseInput(string $input): array
     {
         return InputManipulator::splitLines($input, manipulator: function (string $line): object {
-            if (!preg_match('/^(([a-z]+-)+)(\d+)\[([a-z]+)]$/', $line, $matches)) {
-                throw new \RuntimeException(sprintf('Invalid room specification "%s"', $line));
+            if (! preg_match('/^(([a-z]+-)+)(\d+)\[([a-z]+)]$/', $line, $matches)) {
+                throw new RuntimeException(sprintf('Invalid room specification "%s"', $line));
             }
 
             $name = explode('-', $matches[1]);
             array_pop($name);
 
-            return (object)[
+            return (object) [
                 'name' => substr($matches[1], 0, -1),
                 'id' => intval($matches[3]),
                 'checksum' => $matches[4],
@@ -74,6 +78,7 @@ class Day04 implements PuzzleSolver
         });
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = self::parseInput($input);
@@ -84,8 +89,9 @@ class Day04 implements PuzzleSolver
             for ($i = 0; $i < strlen($room->name); $i++) {
                 $encrypted = $room->name[$i];
 
-                if (!ctype_alpha($encrypted)) {
+                if (! ctype_alpha($encrypted)) {
                     $decrypted .= $encrypted;
+
                     continue;
                 }
 

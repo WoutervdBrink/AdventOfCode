@@ -6,13 +6,15 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2015\AdvancedLightGrid;
 use Knevelina\AdventOfCode\Data\Year2015\LightGrid;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day06 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
-        return $this->parseInput(new LightGrid(), $input)->getEnabledLights();
+        return $this->parseInput(new LightGrid, $input)->getEnabledLights();
     }
 
     private function parseInput(LightGrid $grid, string $input): LightGrid
@@ -20,7 +22,7 @@ class Day06 implements PuzzleSolver
         $input = InputManipulator::splitLines($input);
 
         foreach ($input as $instruction) {
-            if (!preg_match('/^(turn on|toggle|turn off) (\d+),(\d+) through (\d+),(\d+)/', $instruction, $matches)) {
+            if (! preg_match('/^(turn on|toggle|turn off) (\d+),(\d+) through (\d+),(\d+)/', $instruction, $matches)) {
                 throw new RuntimeException(sprintf('Could not parse lights instruction "%s"!', $instruction));
             }
 
@@ -45,10 +47,11 @@ class Day06 implements PuzzleSolver
         return $grid;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         /** @var AdvancedLightGrid $grid */
-        $grid = $this->parseInput(new AdvancedLightGrid(), $input);
+        $grid = $this->parseInput(new AdvancedLightGrid, $input);
 
         return $grid->getBrightness();
     }

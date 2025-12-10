@@ -3,12 +3,13 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
-use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Year2022\Day15\Sensor;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day15 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         /** @var array<Sensor> $sensors */
@@ -17,11 +18,11 @@ class Day15 implements PuzzleSolver
         // HACK: The target Y differs between the example and the actual puzzle.
         $targetY = count($sensors) < 20 ? 10 : 2000000;
 
-        $minX = min(array_map(fn(Sensor $sensor): int => $sensor->x, $sensors));
-        $minBeaconX = min(array_map(fn(Sensor $sensor): int => $sensor->beaconX, $sensors));
+        $minX = min(array_map(fn (Sensor $sensor): int => $sensor->x, $sensors));
+        $minBeaconX = min(array_map(fn (Sensor $sensor): int => $sensor->beaconX, $sensors));
 
-        $maxX = max(array_map(fn(Sensor $sensor): int => $sensor->x, $sensors));
-        $maxBeaconX = max(array_map(fn(Sensor $sensor): int => $sensor->beaconX, $sensors));
+        $maxX = max(array_map(fn (Sensor $sensor): int => $sensor->x, $sensors));
+        $maxBeaconX = max(array_map(fn (Sensor $sensor): int => $sensor->beaconX, $sensors));
 
         $start = min($minX, $minBeaconX);
         $end = max($maxX, $maxBeaconX);
@@ -58,6 +59,7 @@ class Day15 implements PuzzleSolver
         return count(array_filter($line));
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         /** @var array<Sensor> $sensors */

@@ -4,9 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\Tickets;
+use Override;
 
 class Day16 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $tickets = Tickets::fromSpecification($input);
@@ -15,7 +17,7 @@ class Day16 implements PuzzleSolver
 
         foreach ($tickets->getTickets() as $ticket) {
             foreach ($ticket as $value) {
-                if (!$tickets->validates($value)) {
+                if (! $tickets->validates($value)) {
                     $errors += $value;
                 }
             }
@@ -24,6 +26,7 @@ class Day16 implements PuzzleSolver
         return $errors;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $tickets = Tickets::fromSpecification($input);
@@ -32,7 +35,7 @@ class Day16 implements PuzzleSolver
 
         $own = array_shift($all);
 
-        $valid = array_filter($all, fn(array $ticket): bool => $tickets->isValid($ticket));
+        $valid = array_filter($all, fn (array $ticket): bool => $tickets->isValid($ticket));
 
         $fields = $tickets->getFields();
 
@@ -66,7 +69,7 @@ class Day16 implements PuzzleSolver
 
             foreach ($fixed as $field => $position) {
                 foreach ($candidates as $candidateField => $range) {
-                    $candidates[$candidateField] = array_filter($range, fn(int $pos): bool => $pos !== $position);
+                    $candidates[$candidateField] = array_filter($range, fn (int $pos): bool => $pos !== $position);
                 }
             }
         }

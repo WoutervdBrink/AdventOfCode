@@ -6,11 +6,14 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Direction;
 use Knevelina\AdventOfCode\Data\Structures\SizedDirection;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
+use RuntimeException;
 
 use function Knevelina\AdventOfCode\Util\Math\sign;
 
 class Day09 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         return self::solve($input, 1);
@@ -23,10 +26,10 @@ class Day09 implements PuzzleSolver
         $rope = [];
 
         for ($i = 0; $i < 10; $i++) {
-            $rope[] = (object)[
+            $rope[] = (object) [
                 'x' => 0,
                 'y' => 0,
-                'visited' => ['0_0']
+                'visited' => ['0_0'],
             ];
         }
 
@@ -61,14 +64,13 @@ class Day09 implements PuzzleSolver
     }
 
     /**
-     * @param string $input
      * @return array<SizedDirection>
      */
     protected static function parseInput(string $input): array
     {
         return InputManipulator::splitLines($input, manipulator: function (string $line): object {
-            if (!preg_match('/^([UDLR]) (\d+)$/', $line, $matches)) {
-                throw new \RuntimeException(sprintf('Invalid movement instruction "%s"', $line));
+            if (! preg_match('/^([UDLR]) (\d+)$/', $line, $matches)) {
+                throw new RuntimeException(sprintf('Invalid movement instruction "%s"', $line));
             }
 
             return new SizedDirection(Direction::fromLetter($matches[1]), intval($matches[2]));
@@ -80,6 +82,7 @@ class Day09 implements PuzzleSolver
         return sprintf('%d_%d', $ropePart->x, $ropePart->y);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         return self::solve($input, 9);

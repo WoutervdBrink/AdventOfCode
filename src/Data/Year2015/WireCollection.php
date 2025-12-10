@@ -9,6 +9,7 @@ use RuntimeException;
 class WireCollection
 {
     private array $wires;
+
     private array $values;
 
     public function __construct(string $specification)
@@ -19,18 +20,21 @@ class WireCollection
             // value|wire -> wire
             if (preg_match('/^([a-z]+|\d+) -> ([a-z]+)$/', $gate, $matches)) {
                 $this->addWire($matches[2], WireOperator::VALUE, $matches[1]);
+
                 continue;
             }
 
             // (wire|value) OP (wire|value) -> wire
             if (preg_match('/^([a-z]+|\d+) (AND|OR|LSHIFT|RSHIFT) ([a-z]+|\d+) -> ([a-z]+)$/', $gate, $matches)) {
                 $this->addWire($matches[4], WireOperator::getOperatorForName($matches[2]), $matches[1], $matches[3]);
+
                 continue;
             }
 
             // NOT (wire|value) -> wire
             if (preg_match('/^NOT ([a-z]+|\d+) -> ([a-z]+)$/', $gate, $matches)) {
                 $this->addWire($matches[2], WireOperator::NOT, $matches[1]);
+
                 continue;
             }
 
@@ -56,7 +60,7 @@ class WireCollection
 
     public function getValue(string $name): int
     {
-        if (!isset($this->values[$name])) {
+        if (! isset($this->values[$name])) {
             $wire = $this->getWire($name);
 
             if ($wire === null) {

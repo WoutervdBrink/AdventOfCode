@@ -5,9 +5,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\XMAS;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day09 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::getListOfIntegers($input);
@@ -17,7 +19,7 @@ class Day09 implements PuzzleSolver
         $num = 0;
 
         foreach ($input as $num) {
-            if (!$xmas->push($num)) {
+            if (! $xmas->push($num)) {
                 break;
             }
         }
@@ -25,6 +27,7 @@ class Day09 implements PuzzleSolver
         return $num;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $invalid = $this->part1($input);

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2020;
 
 class Tree
@@ -24,16 +23,12 @@ class Tree
         $child->setParent($this);
     }
 
-    /**
-     * @param Tree|null $parent
-     */
     public function setParent(?Tree $parent): void
     {
         $this->parent = $parent;
     }
 
     /**
-     * @return string
      * @noinspection PhpUnused
      */
     public function __toString(): string
@@ -43,23 +38,17 @@ class Tree
             $label = $link[0];
             $child = $link[1];
 
-            $string .= ' ' . $label . ':' . $child->__toString();
+            $string .= ' '.$label.':'.$child->__toString();
         }
 
-        return '{' . $string . '}';
+        return '{'.$string.'}';
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return array
-     */
     public function getChildren(): array
     {
         return $this->children;

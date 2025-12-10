@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\ShuntingYard;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day18 implements PuzzleSolver
@@ -49,9 +50,10 @@ class Day18 implements PuzzleSolver
         return $sum;
     }
 
+    #[Override]
     public function part1(string $input): int
     {
-        $converter = new ShuntingYard();
+        $converter = new ShuntingYard;
 
         $converter->addOperator('+', 2, ShuntingYard::LEFT)
             ->addOperator('-', 2, ShuntingYard::LEFT)
@@ -60,9 +62,10 @@ class Day18 implements PuzzleSolver
         return self::execute($converter, $input);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
-        $converter = new ShuntingYard();
+        $converter = new ShuntingYard;
 
         $converter->addOperator('+', 3, ShuntingYard::LEFT)
             ->addOperator('-', 3, ShuntingYard::LEFT)

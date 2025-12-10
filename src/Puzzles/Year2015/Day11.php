@@ -3,6 +3,7 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Override;
 
 class Day11 implements PuzzleSolver
 {
@@ -44,6 +45,7 @@ class Day11 implements PuzzleSolver
                 return true;
             }
         }
+
         return false;
     }
 
@@ -54,6 +56,7 @@ class Day11 implements PuzzleSolver
                 return false;
             }
         }
+
         return true;
     }
 
@@ -65,7 +68,7 @@ class Day11 implements PuzzleSolver
 
             $copy = array_slice($password, $i + 1);
 
-            if ($first === $second && !$findNext) {
+            if ($first === $second && ! $findNext) {
                 return true;
             }
 
@@ -73,9 +76,11 @@ class Day11 implements PuzzleSolver
                 return self::rule3($copy, false);
             }
         }
+
         return false;
     }
 
+    #[Override]
     public function part1(string $input): string
     {
         $encoded = self::encodePassword($input);
@@ -91,6 +96,7 @@ class Day11 implements PuzzleSolver
         return 'error';
     }
 
+    #[Override]
     public function part2(string $input): string
     {
         return $this->part1($this->part1($input));

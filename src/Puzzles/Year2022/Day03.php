@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 use InvalidArgumentException;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day03 implements PuzzleSolver
 {
@@ -23,9 +24,10 @@ class Day03 implements PuzzleSolver
         throw new InvalidArgumentException(sprintf('"%s" is not a valid ruckrack item', $item));
     }
 
+    #[Override]
     public function part1(string $input): int
     {
-        $rucksacks = InputManipulator::splitLines($input, manipulator: fn(string $rucksack): array => [
+        $rucksacks = InputManipulator::splitLines($input, manipulator: fn (string $rucksack): array => [
             substr($rucksack, 0, intval(strlen($rucksack) / 2)),
             substr($rucksack, intval(strlen($rucksack) / 2)),
         ]);
@@ -43,6 +45,7 @@ class Day03 implements PuzzleSolver
         return $sum;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $rucksacks = InputManipulator::splitLines($input, manipulator: 'str_split');

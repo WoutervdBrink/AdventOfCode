@@ -7,10 +7,13 @@ use RuntimeException;
 class ShuntingYard
 {
     const LEFT = 0;
+
     const RIGHT = 1;
 
     private array $operators;
+
     private array $precedence;
+
     private array $associativity;
 
     public function __construct()
@@ -70,7 +73,7 @@ class ShuntingYard
                 while (end($operatorStack) !== '(') {
                     $outputQueue[] = array_pop($operatorStack);
 
-                    if (!$operatorStack) {
+                    if (! $operatorStack) {
                         throw new RuntimeException('Mismatched parentheses!');
                     }
                 }

@@ -4,9 +4,12 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
+use RuntimeException;
 
 class Day08 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): string
     {
         $screen = array_fill(0, 6, array_fill(0, 50, ' '));
@@ -44,7 +47,7 @@ class Day08 implements PuzzleSolver
                     $row[$x] = $column[$y];
                 }
             } else {
-                throw new \RuntimeException(sprintf('Invalid instruction "%s"', $instruction));
+                throw new RuntimeException(sprintf('Invalid instruction "%s"', $instruction));
             }
         }
 
@@ -61,6 +64,7 @@ class Day08 implements PuzzleSolver
         return $litPixels;
     }
 
+    #[Override]
     public function part2(string $input): string
     {
         return 'ZFHFSFOGPO';

@@ -3,9 +3,11 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Override;
 
 class Day03 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = str_split($input);
@@ -28,15 +30,16 @@ class Day03 implements PuzzleSolver
                 default => 0
             };
 
-            if (!isset($visited[$x . '_' . $y])) {
+            if (! isset($visited[$x.'_'.$y])) {
                 $houses++;
-                $visited[$x . '_' . $y] = true;
+                $visited[$x.'_'.$y] = true;
             }
         }
 
         return $houses;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = str_split($input);
@@ -63,7 +66,7 @@ class Day03 implements PuzzleSolver
 
             $key = sprintf('%d_%d', $x[$turn], $y[$turn]);
 
-            if (!isset($visited[$key])) {
+            if (! isset($visited[$key])) {
                 $houses++;
                 $visited[$key] = true;
             }

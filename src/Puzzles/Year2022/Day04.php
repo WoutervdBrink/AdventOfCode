@@ -5,18 +5,18 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2022\Day04\Range;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day04 implements PuzzleSolver
 {
     /**
-     * @param string $input
      * @return array<array<Range>>
      */
     private static function parseInput(string $input): array
     {
         return InputManipulator::splitLines($input, manipulator: function (string $line): array {
-            if (!preg_match('/^(\d+)-(\d+),(\d+)-(\d+)$/', $line, $matches)) {
+            if (! preg_match('/^(\d+)-(\d+),(\d+)-(\d+)$/', $line, $matches)) {
                 throw new RuntimeException(sprintf('Could not parse line "%s"', $line));
             }
 
@@ -27,6 +27,7 @@ class Day04 implements PuzzleSolver
         });
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         return array_reduce(
@@ -42,7 +43,7 @@ class Day04 implements PuzzleSolver
         );
     }
 
-
+    #[Override]
     public function part2(string $input): int
     {
         return array_reduce(
@@ -51,7 +52,7 @@ class Day04 implements PuzzleSolver
                 /** @var array<Range> $pair */
                 [$first, $second] = $pair;
 
-                return $first->hasOverlapWith($second)  ? $total + 1 : $total;
+                return $first->hasOverlapWith($second) ? $total + 1 : $total;
             },
             0
         );

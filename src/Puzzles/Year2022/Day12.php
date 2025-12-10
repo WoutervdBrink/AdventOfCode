@@ -6,13 +6,16 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Entry;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use SplQueue;
 
 class Day12 implements PuzzleSolver
 {
     const START = 0;
+
     const END = 27;
 
+    #[Override]
     public function part1(string $input): int
     {
         $grid = self::parseInput($input);
@@ -25,9 +28,9 @@ class Day12 implements PuzzleSolver
             }
         }
 
-        assert(!is_null($end));
+        assert(! is_null($end));
 
-        $queue = new SplQueue();
+        $queue = new SplQueue;
         $visited = [];
 
         $queue->enqueue([$end]);
@@ -36,7 +39,7 @@ class Day12 implements PuzzleSolver
             $path = $queue->dequeue();
 
             /** @var Entry $entry */
-            $entry = $path[sizeof($path) - 1];
+            $entry = $path[count($path) - 1];
             $value = $entry->getValue();
 
             if ($value === self::START) {
@@ -63,8 +66,8 @@ class Day12 implements PuzzleSolver
 
     private static function parseInput(string $input): Grid
     {
-        $input = InputManipulator::splitLines($input, manipulator: fn(string $line): array => array_map(
-            fn(string $char): int => match ($char) {
+        $input = InputManipulator::splitLines($input, manipulator: fn (string $line): array => array_map(
+            fn (string $char): int => match ($char) {
                 'S' => self::START,
                 'E' => self::END,
                 default => ord($char) - ord('a') + 1
@@ -75,6 +78,7 @@ class Day12 implements PuzzleSolver
         return new Grid($input);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $grid = self::parseInput($input);
@@ -89,9 +93,9 @@ class Day12 implements PuzzleSolver
             }
         }
 
-        assert(!is_null($end));
+        assert(! is_null($end));
 
-        $queue = new SplQueue();
+        $queue = new SplQueue;
         $visited = [];
 
         $queue->enqueue([$end]);
@@ -100,7 +104,7 @@ class Day12 implements PuzzleSolver
             $path = $queue->dequeue();
 
             /** @var Entry $entry */
-            $entry = $path[sizeof($path) - 1];
+            $entry = $path[count($path) - 1];
             $value = $entry->getValue();
 
             if ($value === 1) {

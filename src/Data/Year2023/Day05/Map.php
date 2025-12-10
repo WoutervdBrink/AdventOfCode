@@ -16,7 +16,7 @@ class Map
             throw new InvalidArgumentException(sprintf('Invalid mapping length %d', $length));
         }
 
-        $this->mapping[] = (object)['destination' => $destination, 'source' => $source, 'length' => $length];
+        $this->mapping[] = (object) ['destination' => $destination, 'source' => $source, 'length' => $length];
     }
 
     public function get(int $index)
@@ -27,6 +27,7 @@ class Map
 
             if ($index >= $start && $index <= $end) {
                 $offset = ($index - $start);
+
                 return $mapping->destination + $offset;
             }
         }

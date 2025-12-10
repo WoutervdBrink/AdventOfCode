@@ -12,9 +12,11 @@ use Knevelina\AdventOfCode\Data\Structures\Graph\GraphIO;
 use Knevelina\AdventOfCode\Data\Structures\Graph\Vertex;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Structures\Point;
+use Override;
 
 class Day10 extends CombinedPuzzleSolver
 {
+    #[Override]
     protected function solve(string $input): CombinedPuzzleOutput
     {
         $zeroVertices = self::parse($input);
@@ -25,21 +27,17 @@ class Day10 extends CombinedPuzzleSolver
         return CombinedPuzzleOutput::of($part1, $part2);
     }
 
-    /**
-     * @param string $input
-     * @return Set
-     */
     public function parse(string $input): Set
     {
         $grid = Grid::fromInput($input);
 
         /** @var Map<Point, Vertex> $verticeMap */
-        $verticeMap = new Map();
+        $verticeMap = new Map;
 
         /** @var Set<Vertex> $zeroVertices */
-        $zeroVertices = new Set();
+        $zeroVertices = new Set;
 
-        $graph = new Graph();
+        $graph = new Graph;
 
         foreach ($grid->getEntries() as $entry) {
             $x = $entry->getX();
@@ -61,41 +59,37 @@ class Day10 extends CombinedPuzzleSolver
             }
         }
 
-        GraphIO::writeDot(__DIR__ . '/../../../visuals/2024day10.dot', $graph);
+        GraphIO::writeDot(__DIR__.'/../../../visuals/2024day10.dot', $graph);
 
         return $zeroVertices;
     }
 
     private static function getOrAddVertex(Graph $graph, Map $verticeMap, Point $point, int $value): Vertex
     {
-        if (!$verticeMap->hasKey($point)) {
-            $vertex = $graph->createVertex($point->getX() . '_' . $point->getY(), $value);
+        if (! $verticeMap->hasKey($point)) {
+            $vertex = $graph->createVertex($point->getX().'_'.$point->getY(), $value);
             $verticeMap->put($point, $vertex);
         }
 
         return $verticeMap->get($point);
     }
 
-    /**
-     * @param Set $zeroVertices
-     * @return int
-     */
     private static function search(Set $zeroVertices, bool $countDistinct): int
     {
         $result = 0;
 
         foreach ($zeroVertices as $vertex) {
             /** @var Stack<Vertex> $queue */
-            $queue = new Stack();
+            $queue = new Stack;
             /** @var Set<Vertex> $discovered */
-            $discovered = new Set();
+            $discovered = new Set;
             $queue->push($vertex);
 
-            while (!$queue->isEmpty()) {
+            while (! $queue->isEmpty()) {
                 $vertex = $queue->pop();
 
-                if ($countDistinct || !$discovered->contains($vertex)) {
-                    if (!$countDistinct) {
+                if ($countDistinct || ! $discovered->contains($vertex)) {
+                    if (! $countDistinct) {
                         $discovered->add($vertex);
                     }
 

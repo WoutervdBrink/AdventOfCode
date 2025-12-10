@@ -4,9 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2023;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day04 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): float
     {
         $score = 0;
@@ -21,7 +23,6 @@ class Day04 implements PuzzleSolver
     }
 
     /**
-     * @param string $input
      * @return array<int>
      */
     private static function parse(string $input): array
@@ -46,6 +47,7 @@ class Day04 implements PuzzleSolver
         });
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $cards = self::parse($input);
@@ -59,7 +61,9 @@ class Day04 implements PuzzleSolver
             for ($i = 0; $i < $card; $i++) {
                 $copyId = $id + $i + 1;
 
-                if ($copyId >= count($cards)) break;
+                if ($copyId >= count($cards)) {
+                    break;
+                }
 
                 $copies[$copyId] += $copies[$id];
             }

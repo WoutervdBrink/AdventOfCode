@@ -33,7 +33,7 @@ class Heightmap extends Grid
             $neighbors = $cursor->getNeighbors(false);
 
             foreach ($neighbors as $neighbor) {
-                if (!isset($visited[$neighbor->hash()])) {
+                if (! isset($visited[$neighbor->hash()])) {
                     $queue[] = $neighbor;
                 }
             }

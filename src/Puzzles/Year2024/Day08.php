@@ -7,9 +7,11 @@ use Knevelina\AdventOfCode\Contracts\CombinedPuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Entry;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Structures\Point;
+use Override;
 
 class Day08 extends CombinedPuzzleSolver
 {
+    #[Override]
     protected function solve(string $input): CombinedPuzzleOutput
     {
         $grid = Grid::fromInput($input, manipulator: 'strval');
@@ -19,7 +21,7 @@ class Day08 extends CombinedPuzzleSolver
 
         foreach ($grid->getEntries() as $entry) {
             if (($freq = $entry->getValue()) !== '.') {
-                if (!isset($antennas[$freq])) {
+                if (! isset($antennas[$freq])) {
                     $antennas[$freq] = [];
                 }
 

@@ -4,9 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\TreeMap;
+use Override;
 
 class Day03 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $map = new TreeMap($input);
@@ -14,16 +16,16 @@ class Day03 implements PuzzleSolver
         return $map->traverse(3, 1);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $map = new TreeMap($input);
 
-        return (
+        return
             $map->traverse(1, 1) *
             $map->traverse(3, 1) *
             $map->traverse(5, 1) *
             $map->traverse(7, 1) *
-            $map->traverse(1, 2)
-        );
+            $map->traverse(1, 2);
     }
 }

@@ -5,33 +5,35 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 use Illuminate\Support\Collection;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day06 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         return collect(InputManipulator::splitLines($input, "\n\n"))
             ->map(
-                fn(string $group): int => collect(str_split(str_replace("\n", '', $group)))
+                fn (string $group): int => collect(str_split(str_replace("\n", '', $group)))
                     ->unique()
                     ->count()
             )
             ->sum();
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         return collect(InputManipulator::splitLines($input, "\n\n"))
             ->map(
-                callback: fn(string $group): int => collect(explode("\n", $group))
-                ->map(fn(string $answer): array => str_split($answer))
-                ->reduce(
-                    callback: fn(?Collection $intersect, array $answer):
-                Collection => $intersect ?
-                    $intersect->intersect($answer) :
-                    collect($answer)
-                )
-                ->count()
+                fn (string $group): int => collect(explode("\n", $group))
+                    ->map(fn (string $answer): array => str_split($answer))
+                    ->reduce(
+                        fn (?Collection $intersect, array $answer): Collection => $intersect
+                            ? $intersect->intersect($answer)
+                            : collect($answer)
+                    )
+                    ->count()
             )
             ->sum();
     }

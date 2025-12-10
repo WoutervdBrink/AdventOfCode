@@ -7,13 +7,19 @@ use SplFixedArray;
 class GameOfLife3D
 {
     private int $minX;
+
     private int $maxX;
+
     private int $minY;
+
     private int $maxY;
+
     private int $minZ;
+
     private int $maxZ;
 
     private array $cubes;
+
     private SplFixedArray $deltas;
 
     public function __construct()
@@ -68,7 +74,7 @@ class GameOfLife3D
 
     public function evolve(): GameOfLife3D
     {
-        $new = new GameOfLife3D();
+        $new = new GameOfLife3D;
 
         for ($x = $this->minX - 1; $x <= $this->maxX + 1; $x++) {
             for ($y = $this->minY - 1; $y <= $this->maxY + 1; $y++) {
@@ -99,7 +105,7 @@ class GameOfLife3D
         $active = 0;
 
         foreach ($this->deltas as $delta) {
-            list($dx, $dy, $dz) = $delta;
+            [$dx, $dy, $dz] = $delta;
 
             if ($this->getCube($x + $dx, $y + $dy, $z + $dz)) {
                 $active++;
@@ -111,11 +117,11 @@ class GameOfLife3D
 
     public function setCube(int $x, int $y, int $z, bool $active): void
     {
-        if (!isset($this->cubes[$x])) {
+        if (! isset($this->cubes[$x])) {
             $this->cubes[$x] = [];
         }
 
-        if (!isset($this->cubes[$x][$y])) {
+        if (! isset($this->cubes[$x][$y])) {
             $this->cubes[$x][$y] = [];
         }
 
@@ -134,7 +140,7 @@ class GameOfLife3D
         $out = '';
 
         for ($z = $this->minZ; $z <= $this->maxZ; $z++) {
-            $out .= sprintf('z=%d', $z) . PHP_EOL;
+            $out .= sprintf('z=%d', $z).PHP_EOL;
 
             for ($x = $this->minX; $x <= $this->maxX; $x++) {
                 for ($y = $this->minY; $y <= $this->maxY; $y++) {

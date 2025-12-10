@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Data\Year2021;
 class Cave
 {
     private array $connections;
+
     private bool $isBig;
 
     public function __construct(private string $name)
@@ -18,9 +19,6 @@ class Cave
         $this->connections[] = $other;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -34,19 +32,13 @@ class Cave
         return $this->connections;
     }
 
-    /**
-     * @return bool
-     */
     public function isBig(): bool
     {
         return $this->isBig;
     }
 
-    /**
-     * @return bool
-     */
     public function isSmall(): bool
     {
-        return !$this->isBig;
+        return ! $this->isBig;
     }
 }

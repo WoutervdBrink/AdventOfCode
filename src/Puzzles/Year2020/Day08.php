@@ -7,9 +7,11 @@ use Knevelina\AdventOfCode\Data\Year2020\CPU;
 use Knevelina\AdventOfCode\Data\Year2020\Instruction;
 use Knevelina\AdventOfCode\Data\Year2020\Operation;
 use Knevelina\AdventOfCode\Data\Year2020\Program;
+use Override;
 
 class Day08 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $program = Program::fromSpecification($input);
@@ -20,6 +22,7 @@ class Day08 implements PuzzleSolver
         return $cpu->getAccumulator();
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $program = Program::fromSpecification($input);

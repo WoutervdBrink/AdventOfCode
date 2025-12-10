@@ -4,7 +4,7 @@ use Dotenv\Dotenv;
 use Knevelina\AdventOfCode\PuzzleInputRetriever;
 use Knevelina\AdventOfCode\PuzzleSolverCreator;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
@@ -22,10 +22,10 @@ if ($argc === 3) {
 try {
     PuzzleSolverCreator::createPuzzle($year, $day);
 
-    if (!empty($_ENV['SESSION_COOKIE'])) {
+    if (! empty($_ENV['SESSION_COOKIE'])) {
         PuzzleInputRetriever::retrievePuzzleInput($year, $day);
     }
-} catch (RuntimeException | InvalidArgumentException $e) {
+} catch (RuntimeException|InvalidArgumentException $e) {
     echo $e->getMessage();
     exit(1);
 }

@@ -54,7 +54,7 @@ class OctopusGrid extends Grid
                 $x = $fromX + $dx;
                 $y = $fromY + $dy;
 
-                if (!$this->isWithinBounds($x, $y)) {
+                if (! $this->isWithinBounds($x, $y)) {
                     continue;
                 }
 

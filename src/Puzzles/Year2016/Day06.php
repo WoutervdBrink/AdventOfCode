@@ -4,12 +4,15 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day06 implements PuzzleSolver
 {
     const APPROACH_MIN = 0;
+
     const APPROACH_MAX = 1;
 
+    #[Override]
     public function part1(string $input): string
     {
         return self::solve($input, self::APPROACH_MAX);
@@ -23,7 +26,7 @@ class Day06 implements PuzzleSolver
 
         foreach ($input as $message) {
             foreach ($message as $col => $character) {
-                if (!isset($occurrences[$col][$character])) {
+                if (! isset($occurrences[$col][$character])) {
                     $occurrences[$col][$character] = 0;
                 }
 
@@ -52,6 +55,7 @@ class Day06 implements PuzzleSolver
         return $message;
     }
 
+    #[Override]
     public function part2(string $input): string
     {
         return self::solve($input, self::APPROACH_MIN);

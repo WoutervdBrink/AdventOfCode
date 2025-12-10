@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Set;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day09 implements PuzzleSolver
 {
@@ -18,7 +19,7 @@ class Day09 implements PuzzleSolver
         $locations = [];
 
         foreach ($input as $route) {
-            if (!preg_match('/^([a-zA-Z]+) to ([a-zA-Z]+) = (\d+)$/', $route, $matches)) {
+            if (! preg_match('/^([a-zA-Z]+) to ([a-zA-Z]+) = (\d+)$/', $route, $matches)) {
                 throw new InvalidArgumentException(sprintf('Invalid route definition "%s"', $route));
             }
 
@@ -29,10 +30,10 @@ class Day09 implements PuzzleSolver
             $locations[] = $from;
             $locations[] = $to;
 
-            if (!isset($distances[$from])) {
+            if (! isset($distances[$from])) {
                 $distances[$from] = [];
             }
-            if (!isset($distances[$to])) {
+            if (! isset($distances[$to])) {
                 $distances[$to] = [];
             }
 
@@ -59,11 +60,13 @@ class Day09 implements PuzzleSolver
         return $best;
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         return self::solve($input, PHP_INT_MAX, 'min');
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         return self::solve($input, 0, 'max');

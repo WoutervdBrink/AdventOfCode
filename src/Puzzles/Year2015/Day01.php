@@ -3,9 +3,11 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Override;
 
 class Day01 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = str_split(trim($input));
@@ -26,6 +28,7 @@ class Day01 implements PuzzleSolver
         return $floor;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $floor = 0;

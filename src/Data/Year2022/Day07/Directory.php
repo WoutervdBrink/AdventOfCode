@@ -9,13 +9,11 @@ class Directory implements Node
      */
     private array $children;
 
-    public function __construct(private readonly string $name)
-    {
-    }
+    public function __construct(private readonly string $name) {}
 
     public function getSize(): int
     {
-        return array_sum(array_map(fn(Node $node): int => $node->getSize(), $this->children));
+        return array_sum(array_map(fn (Node $node): int => $node->getSize(), $this->children));
     }
 
     public function getName(): string
@@ -24,7 +22,7 @@ class Directory implements Node
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getChildren(): array
     {

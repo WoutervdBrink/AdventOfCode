@@ -9,14 +9,16 @@ use Knevelina\AdventOfCode\Data\Year2022\Day07\File;
 use Knevelina\AdventOfCode\Data\Year2022\Day07\Node;
 use Knevelina\AdventOfCode\InputManipulator;
 use OutOfBoundsException;
+use Override;
 
 class Day07 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): float
     {
         $root = self::parseInput($input);
 
-        return array_sum(array_filter(self::getDirectorySizes($root), fn(int $size): bool => $size <= 100000));
+        return array_sum(array_filter(self::getDirectorySizes($root), fn (int $size): bool => $size <= 100000));
     }
 
     private static function parseInput(string $input): Directory
@@ -26,7 +28,7 @@ class Day07 implements PuzzleSolver
         // Ignore 'cd /'
         array_shift($input);
 
-        $workingDirectory = new Stack();
+        $workingDirectory = new Stack;
         $workingDirectory->push($root = new Directory(''));
 
         foreach ($input as $line) {
@@ -45,7 +47,7 @@ class Day07 implements PuzzleSolver
                     }
                 }
 
-                if (!$found) {
+                if (! $found) {
                     throw new OutOfBoundsException(
                         sprintf('Trying to change into non-existing directory "%s"', $target)
                     );
@@ -72,7 +74,7 @@ class Day07 implements PuzzleSolver
         $sizes = [];
 
         if ($node instanceof Directory) {
-            $sizes[] =$node->getSize();
+            $sizes[] = $node->getSize();
         }
 
         foreach ($node->getChildren() as $child) {
@@ -82,6 +84,7 @@ class Day07 implements PuzzleSolver
         return $sizes;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $root = self::parseInput($input);

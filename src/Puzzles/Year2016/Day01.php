@@ -5,26 +5,30 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 use Generator;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day01 implements PuzzleSolver
 {
     const NORTH = 0;
+
     const EAST = 1;
+
     const SOUTH = 2;
+
     const WEST = 3;
 
     const RIGHT = 1;
+
     const LEFT = -1;
 
     /**
-     * @param string $input
      * @return Generator<array<int>>
      */
     private static function getMoves(string $input): Generator
     {
         $input = InputManipulator::splitLines($input, delimiter: ',', manipulator: function (string $move): array {
-            if (!preg_match('/([LR])(\d+)/', $move, $matches)) {
+            if (! preg_match('/([LR])(\d+)/', $move, $matches)) {
                 throw new RuntimeException(sprintf('Invalid move "%s"', $move));
             }
 
@@ -33,7 +37,7 @@ class Day01 implements PuzzleSolver
                     'L' => self::LEFT,
                     'R' => self::RIGHT,
                 },
-                intval($matches[2])
+                intval($matches[2]),
             ];
         });
 
@@ -65,6 +69,7 @@ class Day01 implements PuzzleSolver
         }
     }
 
+    #[Override]
     public function part1(string $input): float
     {
         $moves = self::getMoves($input);
@@ -77,6 +82,7 @@ class Day01 implements PuzzleSolver
         return abs($x) + abs($y);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $x = 0;
@@ -100,7 +106,7 @@ class Day01 implements PuzzleSolver
                     self::EAST, self::WEST => 0
                 };
 
-                $key = $x . '_' . $y;
+                $key = $x.'_'.$y;
 
                 if (isset($history[$key])) {
                     return abs($x) + abs($y);

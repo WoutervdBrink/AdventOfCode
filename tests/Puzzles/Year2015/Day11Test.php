@@ -4,54 +4,54 @@ namespace Knevelina\AdventOfCode\Tests\Puzzles\Year2015;
 
 use Knevelina\AdventOfCode\Puzzles\Year2015\Day11;
 use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
+use Override;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Knevelina\AdventOfCode\Puzzles\Year2015\Day11
- */
+#[CoversClass(Day11::class)]
 class Day11Test extends PuzzleSolverTestCase
 {
-    public function getExamples(): array
+    #[Override]
+    public static function getExamples(): array
     {
         return [
             [1, 1, 'abcdffaa'],
-            [2, 1, 'ghjaabcc']
+            [2, 1, 'ghjaabcc'],
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider firstRequirementExamples
-     */
-    function it_tests_the_first_requirement(bool $meets, string $password): void
+    #[Test]
+    #[DataProvider('firstRequirementExamples')]
+    public function it_tests_the_first_requirement(bool $meets, string $password): void
     {
         $password = Day11::encodePassword($password);
 
         $this->assertEquals($meets, Day11::rule1($password));
     }
 
-    /**
-     * @test
-     * @dataProvider secondRequirementExamples
-     */
-    function it_tests_the_second_requirement(bool $meets, string $password): void
+    #[Test]
+    #[DataProvider('secondRequirementExamples')]
+    public function it_tests_the_second_requirement(bool $meets, string $password): void
     {
         $password = Day11::encodePassword($password);
 
         $this->assertEquals($meets, Day11::rule2($password));
     }
 
-    /**
-     * @test
-     * @dataProvider thirdRequirementExamples
-     */
-    function it_tests_the_third_requirement(bool $meets, string $password): void
+    #[Test]
+    #[DataProvider('thirdRequirementExamples')]
+    public function it_tests_the_third_requirement(bool $meets, string $password): void
     {
         $password = Day11::encodePassword($password);
 
         $this->assertEquals($meets, Day11::rule3($password));
     }
 
-    public function firstRequirementExamples(): array
+    /**
+     * @return array{0: bool, 1: string}[]
+     */
+    public static function firstRequirementExamples(): array
     {
         return [
             [true, 'hijklmmn'],
@@ -61,7 +61,10 @@ class Day11Test extends PuzzleSolverTestCase
         ];
     }
 
-    public function secondRequirementExamples(): array
+    /**
+     * @return array{0: bool, 1: string}[]
+     */
+    public static function secondRequirementExamples(): array
     {
         return [
             [false, 'hijknmmn'],
@@ -73,7 +76,10 @@ class Day11Test extends PuzzleSolverTestCase
         ];
     }
 
-    public function thirdRequirementExamples(): array
+    /**
+     * @return array{0: bool, 1: string}[]
+     */
+    public static function thirdRequirementExamples(): array
     {
         return [
             [true, 'abbceffg'],
@@ -83,12 +89,14 @@ class Day11Test extends PuzzleSolverTestCase
         ];
     }
 
+    #[Override]
     public function getSolutionForPart1(): string
     {
         return 'hxbxxyzz';
     }
 
-    public function getSolutionForPart2(): string|int|null
+    #[Override]
+    public function getSolutionForPart2(): string
     {
         return 'hxcaabcc';
     }

@@ -4,9 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day01 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): float
     {
         $lines = self::parse($input);
@@ -19,6 +21,7 @@ class Day01 implements PuzzleSolver
         return $score;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $lines = self::parse($input, sort: false);
@@ -32,7 +35,7 @@ class Day01 implements PuzzleSolver
     {
         $lines = InputManipulator::splitLines(
             $input,
-            manipulator: fn(string $line): array => explode('   ', $line, 2)
+            manipulator: fn (string $line): array => explode('   ', $line, 2)
         );
         $lines = array_map(null, ...$lines);
 

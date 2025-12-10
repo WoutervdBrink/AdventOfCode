@@ -4,10 +4,12 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day05 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): string
     {
         return self::solve($input, function (array &$from, array &$to, int $amount): void {
@@ -45,7 +47,7 @@ class Day05 implements PuzzleSolver
         $stacks = array_fill(
             0,
             $numStacks = ceil(
-                array_reduce($inputStacks, fn(int $max, string $line): int => max($max, strlen($line)), 0) / 4
+                array_reduce($inputStacks, fn (int $max, string $line): int => max($max, strlen($line)), 0) / 4
             ),
             []
         );
@@ -60,11 +62,11 @@ class Day05 implements PuzzleSolver
         }
 
         $moves = InputManipulator::splitLines($inputMoves, manipulator: function (string $inputMove): object {
-            if (!preg_match('/^move (\d+) from (\d+) to (\d+)$/', $inputMove, $matches)) {
+            if (! preg_match('/^move (\d+) from (\d+) to (\d+)$/', $inputMove, $matches)) {
                 throw new RuntimeException(sprintf('Invalid move description "%s"', $inputMove));
             }
 
-            return (object)[
+            return (object) [
                 'amount' => $matches[1],
                 'from' => $matches[2],
                 'to' => $matches[3],
@@ -76,9 +78,10 @@ class Day05 implements PuzzleSolver
 
     private static function getAnswerForStacks(mixed $stacks): string
     {
-        return implode('', array_map(fn(array $stack): string => array_shift($stack), $stacks));
+        return implode('', array_map(fn (array $stack): string => array_shift($stack), $stacks));
     }
 
+    #[Override]
     public function part2(string $input): string
     {
         return self::solve($input, function (array &$from, array &$to, int $amount): void {

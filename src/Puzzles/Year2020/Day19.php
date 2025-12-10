@@ -4,15 +4,17 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2020\Grammar;
+use Override;
 
 class Day19 implements PuzzleSolver
 {
     private Grammar $grammar;
+
     private array $cache;
 
     private function getRegex(int $id): string
     {
-        if (!isset($this->cache[$id])) {
+        if (! isset($this->cache[$id])) {
             $rule = $this->grammar->getRule($id);
 
             $regex = count($rule->getAlternatives()) > 1 ? '(' : '';
@@ -23,18 +25,19 @@ class Day19 implements PuzzleSolver
                 }
 
                 if (is_array($alternative)) {
-                    $regex .= implode('', array_map(fn(int $id): string => self::getRegex($id), $alternative));
+                    $regex .= implode('', array_map(fn (int $id): string => self::getRegex($id), $alternative));
                 } else {
                     $regex .= $alternative;
                 }
             }
 
-            $this->cache[$id] = $regex . (count($rule->getAlternatives()) > 1 ? ')' : '');
+            $this->cache[$id] = $regex.(count($rule->getAlternatives()) > 1 ? ')' : '');
         }
 
         return $this->cache[$id];
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         $input = explode("\n\n", $input, 2);
@@ -46,7 +49,7 @@ class Day19 implements PuzzleSolver
         $this->grammar = Grammar::fromSpecification($rules);
 
         $regex = $this->getRegex(0);
-        $regex = '/^' . $regex . '$/';
+        $regex = '/^'.$regex.'$/';
 
         $sum = 0;
 
@@ -59,6 +62,7 @@ class Day19 implements PuzzleSolver
         return $sum;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = explode("\n\n", $input, 2);
@@ -69,15 +73,15 @@ class Day19 implements PuzzleSolver
         $this->cache = [];
         $this->grammar = Grammar::fromSpecification($rules);
 
-        $this->cache[8] = '(' . $this->getRegex(42) . '+)';
+        $this->cache[8] = '('.$this->getRegex(42).'+)';
 
         $reg42 = $this->getRegex(42);
         $reg31 = $this->getRegex(31);
 
-        $this->cache[11] = '(?<X11>' . $reg42 . '(?&X11)' . $reg31 . '|' . $reg42 . $reg31 . ')';
+        $this->cache[11] = '(?<X11>'.$reg42.'(?&X11)'.$reg31.'|'.$reg42.$reg31.')';
 
         $regex = $this->getRegex(0);
-        $regex = '/^' . $regex . '$/';
+        $regex = '/^'.$regex.'$/';
 
         $sum = 0;
 

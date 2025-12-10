@@ -4,6 +4,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day07 implements PuzzleSolver
 {
@@ -60,6 +61,7 @@ class Day07 implements PuzzleSolver
         return $abas;
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         $input = self::parseInput($input);
@@ -83,6 +85,7 @@ class Day07 implements PuzzleSolver
         return count($input);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = self::parseInput($input);
@@ -96,6 +99,7 @@ class Day07 implements PuzzleSolver
                     }
 
                     $abas = array_merge($abas, self::getAbas($part));
+
                     return $abas;
                 },
                 []
@@ -109,7 +113,7 @@ class Day07 implements PuzzleSolver
 
                     $part = substr($part, 1, -1);
 
-                    if (str_contains($part, $aba[1] . $aba[0] . $aba[1])) {
+                    if (str_contains($part, $aba[1].$aba[0].$aba[1])) {
                         return true;
                     }
                 }

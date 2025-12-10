@@ -1,14 +1,13 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Data\Year2020;
-
 
 use JetBrains\PhpStorm\Pure;
 
 class TreeMap
 {
     private array $map;
+
     private int $size;
 
     public function __construct(string $input)
@@ -58,7 +57,8 @@ class TreeMap
         return $this->map[$y][$x % $this->size] ?? ' ';
     }
 
-    #[Pure] public function getHeight(): int
+    #[Pure]
+    public function getHeight(): int
     {
         return count($this->map);
     }

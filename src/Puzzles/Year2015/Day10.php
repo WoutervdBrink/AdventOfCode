@@ -3,9 +3,11 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2015;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Override;
 
 class Day10 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = array_map('intval', str_split($input));
@@ -40,6 +42,7 @@ class Day10 implements PuzzleSolver
         return array_map('intval', str_split($result));
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = array_map('intval', str_split($input));

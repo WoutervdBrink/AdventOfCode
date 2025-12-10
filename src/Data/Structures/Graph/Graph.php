@@ -2,11 +2,9 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures\Graph;
 
-use ArrayIterator;
-use Ds\Vector;
 use Ds\Map;
 use Ds\Set;
-use InvalidArgumentException;
+use Ds\Vector;
 use IteratorAggregate;
 use Traversable;
 
@@ -35,9 +33,9 @@ class Graph implements IteratorAggregate
      */
     public function __construct()
     {
-        $this->vertices = new Set();
+        $this->vertices = new Set;
 
-        $this->edges = new Map();
+        $this->edges = new Map;
 
         $this->nextLabel = 0;
     }
@@ -45,14 +43,15 @@ class Graph implements IteratorAggregate
     /**
      * Create a vertex and add it to this graph.
      *
-     * @param string|null $label The label of the vertex. Does not have to be unique among the graph.
-     * @param mixed $value The value associated with the vertex.
+     * @param  string|null  $label  The label of the vertex. Does not have to be unique among the graph.
+     * @param  mixed  $value  The value associated with the vertex.
      * @return Vertex The newly created vertex.
      */
     public function createVertex(?string $label = null, mixed $value = null): Vertex
     {
-        $vertex = new Vertex($this, $label ?? (string)$this->nextLabel++, $value);
+        $vertex = new Vertex($this, $label ?? (string) $this->nextLabel++, $value);
         $this->vertices->add($vertex);
+
         return $vertex;
     }
 
@@ -61,20 +60,20 @@ class Graph implements IteratorAggregate
      *
      * If the edge already exists, its weight is updated to the supplied weight.
      *
-     * @param Vertex $from The source vector for this edge.
-     * @param Vertex $to The target vector for this edge.
-     * @param int $weight The weight of the edge.
-     * @return void
+     * @param  Vertex  $from  The source vector for this edge.
+     * @param  Vertex  $to  The target vector for this edge.
+     * @param  int  $weight  The weight of the edge.
      */
     public function addEdge(Vertex $from, Vertex $to, int $weight = 1): void
     {
         if ($this->edges->hasKey($from)) {
             if ($this->edges->get($from)->hasKey($to)) {
                 $this->edges->get($from)->get($to)->weight = $weight;
+
                 return;
             }
         } else {
-            $this->edges->put($from, new Map());
+            $this->edges->put($from, new Map);
         }
 
         $edge = new Edge($from, $to, $weight);
@@ -109,7 +108,7 @@ class Graph implements IteratorAggregate
 
     public function hasEdge(Vertex $from, Vertex $to): bool
     {
-        if (!$this->edges->hasKey($from)) {
+        if (! $this->edges->hasKey($from)) {
             return false;
         }
 
@@ -118,7 +117,7 @@ class Graph implements IteratorAggregate
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getIterator(): Traversable
     {
@@ -138,12 +137,12 @@ class Graph implements IteratorAggregate
      *
      * A neighbor is any vertex v for which there exists an edge (u -> v) with u the specified vertex.
      *
-     * @param Vertex $from The vertex to query.
+     * @param  Vertex  $from  The vertex to query.
      * @return list<Vertex> All vertices which have an edge from the specified vertex to themselves.
      */
     public function getNeighbors(Vertex $from): array
     {
-        if (!$this->edges->hasKey($from)) {
+        if (! $this->edges->hasKey($from)) {
             return [];
         }
 
@@ -154,7 +153,7 @@ class Graph implements IteratorAggregate
 
     public function getIncidenceFrom(Vertex $vertex): int
     {
-        if (!$this->edges->hasKey($vertex)) {
+        if (! $this->edges->hasKey($vertex)) {
             return 0;
         }
 

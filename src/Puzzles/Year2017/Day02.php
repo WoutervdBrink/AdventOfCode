@@ -4,18 +4,19 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2017;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day02 implements PuzzleSolver
 {
     /**
-     * @param string $input
      * @return array<array<int>>
      */
     private static function parseInput(string $input): array
     {
-        return InputManipulator::splitLines($input, manipulator: fn(string $line): array => array_map('intval', preg_split('/\W+/', $line)));
+        return InputManipulator::splitLines($input, manipulator: fn (string $line): array => array_map('intval', preg_split('/\W+/', $line)));
     }
 
+    #[Override]
     public function part1(string $input): float
     {
         $input = self::parseInput($input);
@@ -25,6 +26,7 @@ class Day02 implements PuzzleSolver
         }, $input));
     }
 
+    #[Override]
     public function part2(string $input): float
     {
         $input = self::parseInput($input);

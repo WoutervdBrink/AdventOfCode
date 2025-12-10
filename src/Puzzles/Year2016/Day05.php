@@ -3,15 +3,17 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2016;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Override;
 
 class Day05 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): string
     {
         $password = '';
 
         for ($i = 0; ; $i++) {
-            $hash = hash('md5', $input . $i);
+            $hash = hash('md5', $input.$i);
 
             for ($j = 0; $j < 5; $j++) {
                 if ($hash[$j] !== '0') {
@@ -29,13 +31,14 @@ class Day05 implements PuzzleSolver
         }
     }
 
+    #[Override]
     public function part2(string $input): string
     {
         $password = str_repeat('_', 8);
         $completed = 0;
 
         for ($i = 0; ; $i++) {
-            $hash = hash('md5', $input . $i);
+            $hash = hash('md5', $input.$i);
 
             for ($j = 0; $j < 5; $j++) {
                 if ($hash[$j] !== '0') {

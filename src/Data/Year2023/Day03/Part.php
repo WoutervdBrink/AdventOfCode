@@ -8,7 +8,5 @@ final class Part
         public readonly int $x,
         public readonly int $y,
         public readonly int $partNumber,
-    )
-    {
-    }
+    ) {}
 }

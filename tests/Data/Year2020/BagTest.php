@@ -1,35 +1,35 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Tests\Data\Year2020;
 
 use InvalidArgumentException;
 use Knevelina\AdventOfCode\Data\Year2020\Bag;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Knevelina\AdventOfCode\Data\Year2020\Bag
- */
+#[CoversClass(Bag::class)]
 class BagTest extends TestCase
 {
-    /** @test */
-    function it_has_a_color()
+    #[Test]
+    public function it_has_a_color()
     {
         $bag = new Bag('red');
 
         $this->assertEquals('red', $bag->getColor());
     }
 
-    /** @test */
-    function it_rejects_invalid_colors(): void
+    #[Test]
+    public function it_rejects_invalid_colors(): void
     {
         $this->expectExceptionObject(new InvalidArgumentException('Specification is missing the bag color!'));
 
         Bag::fromSpecification('bags contain no other bags.');
     }
 
-    /** @test */
-    function it_accepts_colors()
+    #[Test]
+    public function it_accepts_colors()
     {
         $bag = new Bag('red');
         $bag->accept('red', 1);
@@ -41,8 +41,8 @@ class BagTest extends TestCase
         $this->assertEquals(['red' => 1, 'green' => 2], $bag->getAcceptableColors());
     }
 
-    /** @test */
-    function it_rejects_colors()
+    #[Test]
+    public function it_rejects_colors()
     {
         $bag = new Bag('red');
         $bag->accept('blue', 3);
@@ -50,59 +50,54 @@ class BagTest extends TestCase
         $this->assertEquals(0, $bag->accepts('green'));
     }
 
-    public function specifications(): array
+    public static function specifications(): array
     {
         return [
             [
                 'light red bags contain 1 bright white bag, 2 muted yellow bags.',
                 'light red',
                 [1, 'bright white'],
-                [2, 'muted yellow']
+                [2, 'muted yellow'],
             ],
             [
                 'dark orange bags contain 3 bright white bags, 4 muted yellow bags.',
                 'dark orange',
                 [3, 'bright white'],
-                [4, 'muted yellow']
+                [4, 'muted yellow'],
             ],
             ['bright white bags contain 1 shiny gold bag.', 'bright white', [1, 'shiny gold']],
             [
                 'muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.',
                 'muted yellow',
                 [2, 'shiny gold'],
-                [9, 'faded blue']
+                [9, 'faded blue'],
             ],
             [
                 'shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.',
                 'shiny gold',
                 [1, 'dark olive'],
-                [2, 'vibrant plum']
+                [2, 'vibrant plum'],
             ],
             [
                 'dark olive bags contain 3 faded blue bags, 4 dotted black bags.',
                 'dark olive',
                 [3, 'faded blue'],
-                [4, 'dotted black']
+                [4, 'dotted black'],
             ],
             [
                 'vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.',
                 'vibrant plum',
                 [5, 'faded blue'],
-                [6, 'dotted black']
+                [6, 'dotted black'],
             ],
             ['faded blue bags contain no other bags.', 'faded blue'],
-            ['dotted black bags contain no other bags.', 'dotted black']
+            ['dotted black bags contain no other bags.', 'dotted black'],
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider specifications
-     * @param string $specification
-     * @param string $color
-     * @param array ...$acceptedColors
-     */
-    function it_parses_specifications(string $specification, string $color, array ...$acceptedColors): void
+    #[DataProvider('specifications')]
+    #[Test]
+    public function it_parses_specifications(string $specification, string $color, array ...$acceptedColors): void
     {
         $bag = Bag::fromSpecification($specification);
 
@@ -124,14 +119,11 @@ class BagTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider specifications
-     * @param string $specification
-     * @param string $color
-     * @param array ...$acceptedColors
      * @noinspection PhpUnusedParameterInspection
      */
-    function it_has_a_to_string_method(string $specification, string $color, array ...$acceptedColors): void
+    #[DataProvider('specifications')]
+    #[Test]
+    public function it_has_a_to_string_method(string $specification, string $color, array ...$acceptedColors): void
     {
         $bag = Bag::fromSpecification($specification);
 

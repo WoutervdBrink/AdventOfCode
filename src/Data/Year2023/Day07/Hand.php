@@ -16,7 +16,7 @@ class Hand
     public readonly Type $type;
 
     /**
-     * @param array<Card> $cards
+     * @param  array<Card>  $cards
      */
     private function __construct(array $cards, public readonly int $bid)
     {
@@ -61,7 +61,7 @@ class Hand
     protected static function determineType(array $cards): Type
     {
         /** @var WeakMap<Card, int> $cardMap */
-        $cardMap = new WeakMap();
+        $cardMap = new WeakMap;
 
         foreach ($cards as $card) {
             $cardMap[$card] = ($cardMap[$card] ?? 0) + 1;

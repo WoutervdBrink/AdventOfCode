@@ -14,9 +14,11 @@ use Knevelina\AdventOfCode\CombinedPuzzleOutput;
 abstract class CombinedPuzzleSolver implements PuzzleSolver
 {
     private ?int $inputHash;
+
     private ?CombinedPuzzleOutput $result;
 
-    private function solveIfNeeded(string $input): void {
+    private function solveIfNeeded(string $input): void
+    {
         $hash = crc32($input);
 
         if (empty($this->result) || $hash !== $this->inputHash) {
@@ -25,18 +27,19 @@ abstract class CombinedPuzzleSolver implements PuzzleSolver
         }
     }
 
-
-    protected abstract function solve(string $input): CombinedPuzzleOutput;
+    abstract protected function solve(string $input): CombinedPuzzleOutput;
 
     public function part1(string $input): string|int|float
     {
         $this->solveIfNeeded($input);
+
         return $this->result->part1();
     }
 
     public function part2(string $input): string|int|float
     {
         $this->solveIfNeeded($input);
+
         return $this->result->part2();
     }
 }

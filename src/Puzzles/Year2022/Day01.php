@@ -4,6 +4,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day01 implements PuzzleSolver
 {
@@ -28,15 +29,18 @@ class Day01 implements PuzzleSolver
         return $elves;
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         return max(self::getElves($input));
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $elves = self::getElves($input);
         rsort($elves);
+
         return array_shift($elves) + array_shift($elves) + array_shift($elves);
     }
 }

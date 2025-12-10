@@ -22,7 +22,7 @@ class AdvancedLightGrid extends LightGrid
 
     public function turnOn(int $fromRow, int $fromCol, int $toRow, int $toCol): void
     {
-        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn(int $old): int => $old + 1);
+        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (int $old): int => $old + 1);
     }
 
     private function apply(int $fromRow, int $fromCol, int $toRow, int $toCol, callable $action): void
@@ -36,15 +36,16 @@ class AdvancedLightGrid extends LightGrid
 
     public function toggle($fromRow, $fromCol, $toRow, $toCol): void
     {
-        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn(int $old): int => $old + 2);
+        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (int $old): int => $old + 2);
     }
 
     public function turnOff($fromRow, $fromCol, $toRow, $toCol): void
     {
-        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn(int $old): int => max(0, $old - 1));
+        $this->apply($fromRow, $fromCol, $toRow, $toCol, fn (int $old): int => max(0, $old - 1));
     }
 
-    #[Pure] public function getBrightness(): int
+    #[Pure]
+    public function getBrightness(): int
     {
         $sum = 0;
 

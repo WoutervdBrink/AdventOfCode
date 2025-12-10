@@ -31,7 +31,7 @@ use JetBrains\PhpStorm\Immutable;
                 $alternatives[] = $alternative[1];
             } else {
                 $alternatives[] = array_map(
-                    fn(string $id): int => intval($id),
+                    fn (string $id): int => intval($id),
                     explode(' ', $alternative)
                 );
             }

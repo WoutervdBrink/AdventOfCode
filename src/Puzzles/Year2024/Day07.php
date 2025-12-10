@@ -5,6 +5,7 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2024;
 use Knevelina\AdventOfCode\CombinedPuzzleOutput;
 use Knevelina\AdventOfCode\Contracts\CombinedPuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day07 extends CombinedPuzzleSolver
 {
@@ -33,7 +34,7 @@ class Day07 extends CombinedPuzzleSolver
         if ($checkConcat) {
             if (
                 self::endsWith($target, $tail) &&
-                self::isPossible(intdiv($target, (int) pow(10, self::digits($tail))), $operands, $checkConcat)
+                self::isPossible(intdiv($target, pow(10, self::digits($tail))), $operands, $checkConcat)
             ) {
                 return true;
             }
@@ -43,7 +44,6 @@ class Day07 extends CombinedPuzzleSolver
     }
 
     /**
-     * @param string $input
      * @return list<object{value: int, operands: list<int>}>
      */
     private static function parse(string $input): array
@@ -54,11 +54,13 @@ class Day07 extends CombinedPuzzleSolver
                 $line = explode(': ', $line, 2);
                 $value = intval($line[0]);
                 $operands = array_map('intval', explode(' ', $line[1]));
-                return (object)compact('value', 'operands');
+
+                return (object) compact('value', 'operands');
             }
         );
     }
 
+    #[Override]
     protected function solve(string $input): CombinedPuzzleOutput
     {
         $equations = self::parse($input);
@@ -71,7 +73,7 @@ class Day07 extends CombinedPuzzleSolver
             if (self::isPossible($target, $equation->operands)) {
                 $part1 += $target;
                 $part2 += $target;
-            } else if (self::isPossible($target, $equation->operands, true)) {
+            } elseif (self::isPossible($target, $equation->operands, true)) {
                 $part2 += $target;
             }
         }

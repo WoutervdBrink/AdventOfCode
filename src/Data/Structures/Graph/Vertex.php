@@ -2,8 +2,6 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures\Graph;
 
-use InvalidArgumentException;
-
 /**
  * A vertex belonging to a graph. The vertex has a label, an optional value, and zero or more edges towards other
  * vertices in the graph.
@@ -37,9 +35,9 @@ class Vertex
     /**
      * Construct a new graph vertex.
      *
-     * @param Graph $graph The graph to which the vertex belongs.
-     * @param string $label The label of the vertex. Does not have to be unique among the graph.
-     * @param mixed|null $value The value associated with the vertex.
+     * @param  Graph  $graph  The graph to which the vertex belongs.
+     * @param  string  $label  The label of the vertex. Does not have to be unique among the graph.
+     * @param  mixed|null  $value  The value associated with the vertex.
      */
     public function __construct(Graph $graph, string $label, mixed $value = null)
     {
@@ -52,10 +50,6 @@ class Vertex
 
     /**
      * Add an edge from this vertex to another vertex.
-     *
-     * @param Vertex $other
-     * @param int $weight
-     * @return void
      */
     public function addEdgeTo(Vertex $other, int $weight = 1): void
     {
@@ -65,9 +59,6 @@ class Vertex
     /**
      * Query whether this vertex is adjacent to another vertex. Here, adjacency means there exists an edge with this
      * vertex as its source, and the other vertex as its target.
-     *
-     * @param Vertex $other
-     * @return bool
      */
     public function isAdjacentTo(Vertex $other): bool
     {
@@ -88,6 +79,7 @@ class Vertex
     /**
      * Get the amount of neighbors this vertex has. Here, a neighbor is any vertex this vertex has an edge to.
      * Consequently, vertices which have an edge pointing towards this vertex will not be included in the result.
+     *
      * @return int The amount of neighbors of this vertex.
      */
     public function getIncidenceFrom(): int

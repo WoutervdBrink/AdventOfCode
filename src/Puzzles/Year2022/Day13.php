@@ -2,18 +2,20 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2022;
 
+use ArrayObject;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Stack;
 use Knevelina\AdventOfCode\Data\Year2022\Day13\Result;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day13 implements PuzzleSolver
 {
     private static function parsePacket(string $packet): array
     {
-        $stack = new Stack();
+        $stack = new Stack;
 
-        $stack->push(new \ArrayObject());
+        $stack->push(new ArrayObject);
         $value = '';
 
         $packet = str_split($packet);
@@ -27,7 +29,7 @@ class Day13 implements PuzzleSolver
                     }
                     break;
                 case '[':
-                    $stack->push(new \ArrayObject());
+                    $stack->push(new ArrayObject);
                     break;
                 case ']':
                     if (strlen($value)) {
@@ -54,15 +56,14 @@ class Day13 implements PuzzleSolver
 
         return [
             self::parsePacket($first),
-            self::parsePacket($second)
+            self::parsePacket($second),
         ];
     }
 
     /**
-     * @param string $input
      * @return array<int, array<array|int>>
      */
-    private static function parseInput(string $input): array 
+    private static function parseInput(string $input): array
     {
         return InputManipulator::splitLines($input, delimiter: "\n\n", manipulator: fn (string $pair): array => self::parsePair($pair));
     }
@@ -76,7 +77,7 @@ class Day13 implements PuzzleSolver
             $left = $list1[$l];
             $right = $list2[$r];
 
-            if (is_integer($left) && is_integer($right)) {
+            if (is_int($left) && is_int($right)) {
                 if ($left < $right) {
                     return Result::VALID;
                 } elseif ($left > $right) {
@@ -84,6 +85,7 @@ class Day13 implements PuzzleSolver
                 } else {
                     $l++;
                     $r++;
+
                     continue;
                 }
             }
@@ -97,12 +99,13 @@ class Day13 implements PuzzleSolver
 
                 $l++;
                 $r++;
+
                 continue;
             }
 
-            if (is_integer($left) && !is_integer($right)) {
+            if (is_int($left) && ! is_int($right)) {
                 $list1[$l] = [$left];
-            } elseif (is_integer($right) && !is_integer($left)) {
+            } elseif (is_int($right) && ! is_int($left)) {
                 $list2[$r] = [$right];
             }
         }
@@ -117,7 +120,8 @@ class Day13 implements PuzzleSolver
 
         return Result::INDECISIVE;
     }
-    
+
+    #[Override]
     public function part1(string $input): int
     {
         $lists = self::parseInput($input);
@@ -133,6 +137,7 @@ class Day13 implements PuzzleSolver
         return $sum;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = self::parseInput($input);
@@ -140,13 +145,13 @@ class Day13 implements PuzzleSolver
         $packets = array_reduce(
             $input,
             fn (array $packets, array $pair) => [...$packets, ...$pair],
-            [ [[2]], [[6]] ]
+            [[[2]], [[6]]]
         );
 
         usort($packets, function (array $packet1, array $packet2): int {
             $result = self::verifyList($packet1, $packet2);
 
-            return match($result) {
+            return match ($result) {
                 Result::VALID => -1,
                 Result::INDECISIVE => 0,
                 Result::INVALID => 1

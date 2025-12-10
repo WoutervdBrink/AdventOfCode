@@ -12,7 +12,7 @@ class PuzzleInputRetriever
 
     public static function retrievePuzzleInput(int $year, int $day)
     {
-        if (self::putFileCallback(self::getPuzzleInputPath($year, $day), fn() => self::getPuzzleInput($year, $day))) {
+        if (self::putFileCallback(self::getPuzzleInputPath($year, $day), fn () => self::getPuzzleInput($year, $day))) {
             printf("Retrieved input for %04d day %02d\n", $year, $day);
         }
     }
@@ -29,7 +29,7 @@ class PuzzleInputRetriever
     {
         $jar = CookieJar::fromArray(['session' => $_ENV['SESSION_COOKIE'] ?? ''], 'adventofcode.com');
 
-        $client = new Client();
+        $client = new Client;
 
         $response = $client->request(
             'GET',

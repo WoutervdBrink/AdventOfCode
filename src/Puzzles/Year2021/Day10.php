@@ -5,16 +5,18 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Stack;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day10 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::splitLines($input, manipulator: 'str_split');
         $score = 0;
 
         foreach ($input as $line) {
-            $stack = new Stack();
+            $stack = new Stack;
 
             foreach ($line as $char) {
                 if (in_array($char, ['(', '[', '{', '<'])) {
@@ -47,13 +49,14 @@ class Day10 implements PuzzleSolver
         return $score;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input, manipulator: 'str_split');
         $scores = [];
 
         foreach ($input as $line) {
-            $stack = new Stack();
+            $stack = new Stack;
 
             $illegal = false;
 
@@ -78,7 +81,7 @@ class Day10 implements PuzzleSolver
                 }
             }
 
-            if (!$illegal) {
+            if (! $illegal) {
                 $score = 0;
 
                 while ($char = $stack->pop()) {
@@ -98,6 +101,6 @@ class Day10 implements PuzzleSolver
 
         sort($scores);
 
-        return $scores[count($scores) / 2];
+        return $scores[floor(count($scores) / 2)];
     }
 }

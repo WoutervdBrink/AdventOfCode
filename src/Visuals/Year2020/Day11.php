@@ -4,10 +4,11 @@ namespace Knevelina\AdventOfCode\Visuals\Year2020;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleVisualizer;
 use Knevelina\AdventOfCode\Data\Year2020\WaitingArea;
+use Override;
 
 class Day11 implements PuzzleVisualizer
 {
-
+    #[Override]
     public function visualize(string $input, string $path): void
     {
         $area = WaitingArea::fromSpecification($input);
@@ -20,12 +21,12 @@ class Day11 implements PuzzleVisualizer
         }
 
         $iterations = collect($iterations)
-            ->map(fn(WaitingArea $area): array => $area->getSeats());
+            ->map(fn (WaitingArea $area): array => $area->getSeats());
 
-        $data = 'window.areaWidth = ' . $area->getWidth() . ';' . PHP_EOL;
-        $data .= 'window.areaHeight = ' . $area->getHeight() . ';' . PHP_EOL;
-        $data .= 'window.iterations = ' . json_encode($iterations, JSON_PRETTY_PRINT) . ';';
+        $data = 'window.areaWidth = '.$area->getWidth().';'.PHP_EOL;
+        $data .= 'window.areaHeight = '.$area->getHeight().';'.PHP_EOL;
+        $data .= 'window.iterations = '.json_encode($iterations, JSON_PRETTY_PRINT).';';
 
-        file_put_contents($path . '.js', $data);
+        file_put_contents($path.'.js', $data);
     }
 }

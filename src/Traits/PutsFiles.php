@@ -6,8 +6,9 @@ trait PutsFiles
 {
     private static function putDirForPath(string $path): bool
     {
-        if (!is_dir($dir = dirname($path))) {
+        if (! is_dir($dir = dirname($path))) {
             mkdir($dir, 0770, true);
+
             return true;
         }
 
@@ -18,8 +19,9 @@ trait PutsFiles
     {
         self::putDirForPath($path);
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             file_put_contents($path, $contents);
+
             return true;
         }
 

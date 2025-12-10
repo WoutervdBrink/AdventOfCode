@@ -4,12 +4,15 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2020;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day10 implements PuzzleSolver
 {
     private array $arrangements;
+
     private int $max;
 
+    #[Override]
     public function part1(string $input): int
     {
         $input = InputManipulator::getListOfIntegers($input);
@@ -32,6 +35,7 @@ class Day10 implements PuzzleSolver
         return ($c_1 + 1) * ($c_3 + 1);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::getListOfIntegers($input);
@@ -47,7 +51,7 @@ class Day10 implements PuzzleSolver
 
     protected function getArrangements(array $input, int $adapter): int
     {
-        if (!isset($this->arrangements[$adapter])) {
+        if (! isset($this->arrangements[$adapter])) {
             if ($adapter === $this->max) {
                 return $this->arrangements[$adapter] = 1;
             }

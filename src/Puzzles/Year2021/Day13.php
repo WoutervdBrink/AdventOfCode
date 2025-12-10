@@ -5,9 +5,12 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
+use RuntimeException;
 
 class Day13 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $map = $this->solve($input, 1);
@@ -18,21 +21,22 @@ class Day13 implements PuzzleSolver
                 $sum += $map->getValue($x, $y);
             }
         }
+
         return $sum;
     }
 
     private function solve(string $input, int $part): Grid
     {
-        list($dots, $instructions) = explode("\n\n", $input, 2);
+        [$dots, $instructions] = explode("\n\n", $input, 2);
 
-        $dots = InputManipulator::splitLines($dots, manipulator: fn(string $line): array => explode(',', trim($line), 2)
+        $dots = InputManipulator::splitLines($dots, manipulator: fn (string $line): array => explode(',', trim($line), 2)
         );
 
         $width = 0;
         $height = 0;
 
         foreach ($dots as $dot) {
-            list ($x, $y) = $dot;
+            [$x, $y] = $dot;
 
             $width = max($width, $x);
             $height = max($height, $y);
@@ -44,7 +48,7 @@ class Day13 implements PuzzleSolver
         $map = Grid::emptyFromDimensions($width, $height);
 
         foreach ($dots as $dot) {
-            list ($x, $y) = $dot;
+            [$x, $y] = $dot;
 
             $map->setValue($x, $y, 1);
         }
@@ -52,8 +56,8 @@ class Day13 implements PuzzleSolver
         $instructions = InputManipulator::splitLines($instructions);
 
         for ($i = 0; $i < ($part === 1 ? 1 : count($instructions)); $i++) {
-            if (!preg_match('/^fold along ([xy])=(\d+)$/', $instructions[$i], $matches)) {
-                throw new \RuntimeException(sprintf('Could not parse instruction %s', $instructions[0]));
+            if (! preg_match('/^fold along ([xy])=(\d+)$/', $instructions[$i], $matches)) {
+                throw new RuntimeException(sprintf('Could not parse instruction %s', $instructions[0]));
             }
 
             $direction = $matches[1];
@@ -88,10 +92,10 @@ class Day13 implements PuzzleSolver
             $map = $next;
         }
 
-
         return $map;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $map = $this->solve($input, 2);

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode;
-
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Contracts\PuzzleVisualizer;
@@ -14,26 +12,19 @@ class PuzzleSolverExecutor
     {
         $class = sprintf('Knevelina\\AdventOfCode\\Puzzles\\Year%04d\\Day%02d', $year, $day);
 
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             throw new RuntimeException(sprintf('No implementation exists for %d day %d!', $year, $day));
         }
 
-        if (!class_implements($class, PuzzleSolver::class)) {
+        if (! class_implements($class, PuzzleSolver::class)) {
             throw new RuntimeException(sprintf('The implementation for %d day %d is not an AbstractPuzzleSolver!', $year, $day));
         }
 
-        return new $class();
+        return new $class;
     }
 
     /**
      * Execute the puzzle solver for a certain day and part.
-     *
-     * @param int $year
-     * @param int $day
-     * @param int $part
-     * @param string $input
-     * @param bool $reportTiming
-     * @return string|int
      */
     public static function execute(PuzzleSolver $solver, int $part, string $input, bool $reportTiming = false): string|int
     {
@@ -56,13 +47,13 @@ class PuzzleSolverExecutor
 
         $class = sprintf('Knevelina\\AdventOfCode\\Visuals\\Year%04d\\Day%02d', $year, $day);
 
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             echo $class;
             throw new RuntimeException(sprintf('No visualization exists for day %d!', $day));
         }
 
         /** @var PuzzleVisualizer $solver */
-        $solver = new $class();
+        $solver = new $class;
 
         $path = sprintf('%s/../visuals/year%04d_day%02d', __DIR__, $year, $day);
 

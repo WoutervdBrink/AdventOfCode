@@ -8,9 +8,11 @@ use JetBrains\PhpStorm\Pure;
 class Bingo
 {
     const WIDTH = 5;
+
     const HEIGHT = 5;
 
     private array $values;
+
     private array $marked;
 
     public function __construct(array $values)
@@ -40,22 +42,25 @@ class Bingo
         }
     }
 
-    #[Pure] public function getValue(int $x, int $y): int
+    #[Pure]
+    public function getValue(int $x, int $y): int
     {
         return $this->values[self::encodeCoordinate($x, $y)];
     }
 
-    #[Pure] public static function encodeCoordinate(int $x, int $y): int
+    #[Pure]
+    public static function encodeCoordinate(int $x, int $y): int
     {
         return $y * self::WIDTH + $x;
     }
 
-    #[Pure] public function hasBingo(): bool
+    #[Pure]
+    public function hasBingo(): bool
     {
         for ($x = 0; $x < static::WIDTH; $x++) {
             $won = true;
             for ($y = 0; $y < static::HEIGHT; $y++) {
-                if (!$this->isMarked($x, $y)) {
+                if (! $this->isMarked($x, $y)) {
                     $won = false;
                     break;
                 }
@@ -68,7 +73,7 @@ class Bingo
         for ($y = 0; $y < static::HEIGHT; $y++) {
             $won = true;
             for ($x = 0; $x < static::WIDTH; $x++) {
-                if (!$this->isMarked($x, $y)) {
+                if (! $this->isMarked($x, $y)) {
                     $won = false;
                     break;
                 }
@@ -81,17 +86,19 @@ class Bingo
         return false;
     }
 
-    #[Pure] public function isMarked(int $x, int $y): bool
+    #[Pure]
+    public function isMarked(int $x, int $y): bool
     {
         return $this->marked[self::encodeCoordinate($x, $y)];
     }
 
     public function getUnmarkedNumbers(): array
     {
-        return array_filter($this->values, fn(int $index): bool => !$this->marked[$index], ARRAY_FILTER_USE_KEY);
+        return array_filter($this->values, fn (int $index): bool => ! $this->marked[$index], ARRAY_FILTER_USE_KEY);
     }
 
-    #[Pure] public function __toString(): string
+    #[Pure]
+    public function __toString(): string
     {
         $str = '';
 

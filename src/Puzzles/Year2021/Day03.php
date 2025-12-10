@@ -4,10 +4,12 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 use RuntimeException;
 
 class Day03 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): float
     {
         $input = InputManipulator::splitLines($input);
@@ -36,6 +38,7 @@ class Day03 implements PuzzleSolver
         return $gamma * $epsilon;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = InputManipulator::splitLines($input);
@@ -48,7 +51,7 @@ class Day03 implements PuzzleSolver
 
     private static function findOxygenGeneratorRating(array $lines): int
     {
-        return self::findRating($lines, 0, fn(array $zeroCandidates, array $oneCandidates): array => match (true) {
+        return self::findRating($lines, 0, fn (array $zeroCandidates, array $oneCandidates): array => match (true) {
             count($zeroCandidates) > count($oneCandidates) => $zeroCandidates,
 
             default => $oneCandidates
@@ -57,20 +60,18 @@ class Day03 implements PuzzleSolver
 
     private static function findRating(array $lines, int $index, callable $candidateDecider): int
     {
-        list($zeroCandidates, $oneCandidates) = self::findZeroAndOneCandidates($lines, $index);
+        [$zeroCandidates, $oneCandidates] = self::findZeroAndOneCandidates($lines, $index);
 
         $candidates = $candidateDecider($zeroCandidates, $oneCandidates);
 
         if (count($candidates) === 1) {
-            return (int)bindec($candidates[0]);
+            return (int) bindec($candidates[0]);
         }
 
         return self::findRating($candidates, $index + 1, $candidateDecider);
     }
 
     /**
-     * @param array $lines
-     * @param int $index
      * @return array[]
      */
     private static function findZeroAndOneCandidates(array $lines, int $index): array
@@ -96,12 +97,12 @@ class Day03 implements PuzzleSolver
             }
         }
 
-        return array($zeroCandidates, $oneCandidates);
+        return [$zeroCandidates, $oneCandidates];
     }
 
     private static function findCO2ScrubberRating(array $lines): int
     {
-        return self::findRating($lines, 0, fn(array $zeroCandidates, array $oneCandidates): array => match (true) {
+        return self::findRating($lines, 0, fn (array $zeroCandidates, array $oneCandidates): array => match (true) {
             count($zeroCandidates) > count($oneCandidates) => $oneCandidates,
 
             default => $zeroCandidates

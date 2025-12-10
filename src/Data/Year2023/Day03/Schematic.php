@@ -40,13 +40,13 @@ final class Schematic
         $gears = [];
 
         $this->parts = array_filter($parts, function (Part $part) use (&$gears): bool {
-            $symbols = array_filter($this->grid->getSlice($part->x - 1, $part->y - 1, $part->x + strlen($part->partNumber), $part->y + 1), fn(Entry $entry): bool => !ctype_digit($entry->getValue()) && $entry->getValue() !== '.');
+            $symbols = array_filter($this->grid->getSlice($part->x - 1, $part->y - 1, $part->x + strlen($part->partNumber), $part->y + 1), fn (Entry $entry): bool => ! ctype_digit($entry->getValue()) && $entry->getValue() !== '.');
 
             /** @var Entry $symbol */
             foreach ($symbols as $symbol) {
                 if ($symbol->getValue() === '*') {
-                    $key = $symbol->getX() . '_' . $symbol->getY();
-                    if (!isset($gears[$key])) {
+                    $key = $symbol->getX().'_'.$symbol->getY();
+                    if (! isset($gears[$key])) {
                         $gears[$key] = new Gear($symbol->getX(), $symbol->getY());
                     }
                     $gears[$key]->addPart($part);
@@ -61,7 +61,7 @@ final class Schematic
 
     public static function fromInput(string $input): Schematic
     {
-        return new Schematic(Grid::fromInput($input, fn($cell) => $cell));
+        return new Schematic(Grid::fromInput($input, fn ($cell) => $cell));
     }
 
     /**
@@ -72,9 +72,6 @@ final class Schematic
         return $this->parts;
     }
 
-    /**
-     * @return Grid
-     */
     public function getGrid(): Grid
     {
         return $this->grid;
@@ -82,11 +79,11 @@ final class Schematic
 
     public function getSumOfPartNumbers(): int
     {
-        return array_sum(array_map(fn(Part $part): int => $part->partNumber, $this->parts));
+        return array_sum(array_map(fn (Part $part): int => $part->partNumber, $this->parts));
     }
 
     public function getSumOfGearRatios(): int
     {
-        return array_sum(array_map(fn(Gear $gear): int => $gear->getRatio(), $this->gears));
+        return array_sum(array_map(fn (Gear $gear): int => $gear->getRatio(), $this->gears));
     }
 }

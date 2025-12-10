@@ -9,6 +9,7 @@ use RuntimeException;
 final class Almanac
 {
     const MAPS = ['seed-to-soil', 'soil-to-fertilizer', 'fertilizer-to-water', 'water-to-light', 'light-to-temperature', 'temperature-to-humidity', 'humidity-to-location'];
+
     /**
      * @var array<int>
      */
@@ -31,11 +32,11 @@ final class Almanac
 
     public static function fromSpecification(string $input): Almanac
     {
-        $almanac = new Almanac();
+        $almanac = new Almanac;
 
         $input = InputManipulator::splitLines($input);
 
-        if (!preg_match('/^seeds: ((\d+ ?)+)$/', array_shift($input), $matches)) {
+        if (! preg_match('/^seeds: ((\d+ ?)+)$/', array_shift($input), $matches)) {
             throw new InvalidArgumentException('Could not find seeds in input specification');
         }
 
@@ -56,15 +57,15 @@ final class Almanac
         $key = null;
         $mapping = null;
 
-        while (!is_null($line = array_shift($input))) {
+        while (! is_null($line = array_shift($input))) {
             if (preg_match('/^([a-z]+-to-[a-z]+) map:$/', $line, $matches)) {
-                if (!is_null($key) && !is_null($mapping)) {
+                if (! is_null($key) && ! is_null($mapping)) {
                     $almanac->addMap($key, $mapping);
                 }
 
                 $key = $matches[1];
-                $mapping = new Map();
-            } else if (preg_match('/^(\d+) (\d+) (\d+)$/', $line, $matches)) {
+                $mapping = new Map;
+            } elseif (preg_match('/^(\d+) (\d+) (\d+)$/', $line, $matches)) {
                 if (is_null($key) || is_null($mapping)) {
                     throw new RuntimeException('Tried to add data when no mapping identifier was present yet');
                 }
@@ -73,7 +74,7 @@ final class Almanac
             }
         }
 
-        if (!is_null($key) && !is_null($mapping)) {
+        if (! is_null($key) && ! is_null($mapping)) {
             $almanac->addMap($key, $mapping);
         }
 
@@ -91,7 +92,7 @@ final class Almanac
 
     public function getMinLocationForSeedRanges(): int
     {
-        return min(array_map(fn(array $range): int => $this->getMinLocationForSeedRange($range[0], $range[0] + $range[1]), $this->seedRanges));
+        return min(array_map(fn (array $range): int => $this->getMinLocationForSeedRange($range[0], $range[0] + $range[1]), $this->seedRanges));
     }
 
     private function getMinLocationForSeedRange(int $start, int $end): int
@@ -103,12 +104,12 @@ final class Almanac
             $cursor = $map->getRanges($cursor);
         }
 
-        return min(array_map(fn(array $range): int => $range[0], $cursor));
+        return min(array_map(fn (array $range): int => $range[0], $cursor));
     }
 
     public function getMap(string $key): Map
     {
-        if (!isset($this->mappings[$key])) {
+        if (! isset($this->mappings[$key])) {
             throw new InvalidArgumentException(sprintf('Mapping "%s" is not registered', $key));
         }
 
@@ -117,7 +118,7 @@ final class Almanac
 
     public function getMinLocationForSeeds(): int
     {
-        return min(array_map(fn(int $seed): int => $this->getLocationForSeed($seed), $this->seeds));
+        return min(array_map(fn (int $seed): int => $this->getLocationForSeed($seed), $this->seeds));
     }
 
     private function getLocationForSeed(int $seed): int

@@ -6,9 +6,7 @@ use LogicException;
 
 class File implements Node
 {
-    public function __construct(private readonly string $name, private readonly int $size)
-    {
-    }
+    public function __construct(private readonly string $name, private readonly int $size) {}
 
     public function getSize(): int
     {
@@ -16,7 +14,7 @@ class File implements Node
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getChildren(): array
     {

@@ -5,9 +5,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2023;
 use InvalidArgumentException;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day06 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $races = self::parse($input);
@@ -21,7 +23,6 @@ class Day06 implements PuzzleSolver
     }
 
     /**
-     * @param string $input
      * @return array<object{"time": int, "distance": int}>
      */
     private static function parse(string $input): array
@@ -43,7 +44,7 @@ class Day06 implements PuzzleSolver
         $result = [];
 
         for ($i = 0; $i < count($data[0]); $i++) {
-            $result[] = (object)['time' => $data[0][$i], 'distance' => $data[1][$i],];
+            $result[] = (object) ['time' => $data[0][$i], 'distance' => $data[1][$i]];
         }
 
         return $result;
@@ -68,9 +69,10 @@ class Day06 implements PuzzleSolver
         $root1 = ($time + sqrt($discriminant)) / 2;
         $root2 = ($time - sqrt($discriminant)) / 2;
 
-        return (int)-(floor($root2) - ceil($root1) + 1);
+        return (int) -(floor($root2) - ceil($root1) + 1);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $input = explode("\n", $input, 2);

@@ -2,8 +2,8 @@
 
 namespace Knevelina\AdventOfCode\Data\Structures\Grid;
 
-use InvalidArgumentException;
 use Ds\Map;
+use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use Knevelina\AdventOfCode\Data\Structures\Graph\Graph;
 use Knevelina\AdventOfCode\Data\Structures\Graph\Vertex;
@@ -29,7 +29,6 @@ class Grid
 
     /**
      * Construct a new map.
-     * @param array $rows
      */
     final public function __construct(array $rows)
     {
@@ -66,16 +65,16 @@ class Grid
     public function toGraph(): Map
     {
         /** @var Map<Point, Vertex> $verticeMap */
-        $verticeMap = new Map();
+        $verticeMap = new Map;
 
-        $graph = new Graph();
+        $graph = new Graph;
 
         foreach ($this->getEntries() as $entry) {
             $x = $entry->getX();
             $y = $entry->getY();
             $value = $entry->getValue();
             $point = new Point($x, $y);
-            $vertex = $graph->createVertex($point->getX() . '_' . $point->getY(), $value);
+            $vertex = $graph->createVertex($point->getX().'_'.$point->getY(), $value);
             $verticeMap->put($point, $vertex);
         }
 
@@ -86,7 +85,7 @@ class Grid
     {
         $rows = InputManipulator::splitLines(
             $input,
-            manipulator: fn(string $line): array => array_map($manipulator ?? 'intval', str_split($line))
+            manipulator: fn (string $line): array => array_map($manipulator ?? 'intval', str_split($line))
         );
 
         return new static($rows);
@@ -125,40 +124,33 @@ class Grid
         $this->entries[$index]->setValue($value);
     }
 
-    #[Pure] protected function encodeCoordinates(int $x, int $y): ?int
+    #[Pure]
+    protected function encodeCoordinates(int $x, int $y): ?int
     {
-        if (!$this->isWithinBounds($x, $y)) {
+        if (! $this->isWithinBounds($x, $y)) {
             return null;
         }
 
         return $y * $this->getWidth() + $x;
     }
 
-    #[Pure] public function isWithinBounds(int $x, int $y): bool
+    #[Pure]
+    public function isWithinBounds(int $x, int $y): bool
     {
-        return !($x < 0 || $x >= $this->getWidth() || $y < 0 || $y >= $this->getHeight());
+        return ! ($x < 0 || $x >= $this->getWidth() || $y < 0 || $y >= $this->getHeight());
     }
 
-    /**
-     * @return int
-     */
     public function getWidth(): int
     {
         return $this->width;
     }
 
-    /**
-     * @return int
-     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
     /**
-     * @param int $x
-     * @param int $y
-     * @param bool $includeDiagonals
      * @return list<Entry>
      */
     public function getNeighbors(int $x, int $y, bool $includeDiagonals = true): array
@@ -169,14 +161,14 @@ class Grid
                     $this->get($x - 1, $y - 1),
                     $this->get($x - 1, $y + 1),
                     $this->get($x + 1, $y - 1),
-                    $this->get($x + 1, $y + 1)
+                    $this->get($x + 1, $y + 1),
                 ] : []),
                 $this->get($x, $y - 1),
                 $this->get($x, $y + 1),
                 $this->get($x - 1, $y),
                 $this->get($x + 1, $y),
             ],
-            fn(?Entry $value): bool => !is_null($value)
+            fn (?Entry $value): bool => ! is_null($value)
         ));
     }
 
@@ -197,7 +189,7 @@ class Grid
             for ($y = $y1; $y <= $y2; $y++) {
                 $entry = $this->get($x, $y);
 
-                if (!is_null($entry)) {
+                if (! is_null($entry)) {
                     $entries[] = $entry;
                 }
             }
@@ -211,7 +203,8 @@ class Grid
         return array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->getSlice($x1, $y1, $x2, $y2));
     }
 
-    #[Pure] public function get(int $x, int $y): ?Entry
+    #[Pure]
+    public function get(int $x, int $y): ?Entry
     {
         $index = $this->encodeCoordinates($x, $y);
 
@@ -222,7 +215,8 @@ class Grid
         return $this->entries[$index];
     }
 
-    #[Pure] public function getValue(int $x, int $y, mixed $default = null): mixed
+    #[Pure]
+    public function getValue(int $x, int $y, mixed $default = null): mixed
     {
         return $this->get($x, $y)?->getValue() ?? $default;
     }
@@ -251,11 +245,11 @@ class Grid
         for ($y = 0; $y < $this->getHeight(); $y++) {
             $rows[] = $this->getRowValues($y);
         }
+
         return $rows;
     }
 
     /**
-     * @param int $y
      * @return list<Entry>
      */
     public function getRow(int $y): array
@@ -264,11 +258,11 @@ class Grid
         for ($x = 0; $x < $this->getWidth(); $x++) {
             $row[] = $this->entries[$this->encodeCoordinates($x, $y)];
         }
+
         return $row;
     }
 
     /**
-     * @param int $x
      * @return list<Entry>
      */
     public function getColumn(int $x): array
@@ -277,6 +271,7 @@ class Grid
         for ($y = 0; $y < $this->getHeight(); $y++) {
             $col[] = $this->entries[$this->encodeCoordinates($x, $y)];
         }
+
         return $col;
     }
 
@@ -286,6 +281,7 @@ class Grid
         for ($x = 0; $x < $this->getWidth(); $x++) {
             $row[] = $this->getValue($x, $y);
         }
+
         return $row;
     }
 
@@ -295,6 +291,7 @@ class Grid
         for ($x = 0; $x < $this->getWidth(); $x++) {
             $cols[] = $this->getColumnValues($x);
         }
+
         return $cols;
     }
 
@@ -304,6 +301,7 @@ class Grid
         for ($y = 0; $y < $this->getHeight(); $y++) {
             $column[] = $this->getValue($x, $y);
         }
+
         return $column;
     }
 
@@ -311,7 +309,7 @@ class Grid
     {
         return new static(
             array_map(
-                fn(int $y): array => array_slice(array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->entries), $y * $this->getWidth(), $this->getWidth()),
+                fn (int $y): array => array_slice(array_map(fn (Entry $entry): mixed => $entry->getValue(), $this->entries), $y * $this->getWidth(), $this->getWidth()),
                 range(0, $this->getHeight() - 1)
             )
         );

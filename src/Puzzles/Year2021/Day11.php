@@ -4,9 +4,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2021\OctopusGrid;
+use Override;
 
 class Day11 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $map = OctopusGrid::fromInput($input);
@@ -19,6 +21,7 @@ class Day11 implements PuzzleSolver
         return $flashes;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $map = OctopusGrid::fromInput($input);

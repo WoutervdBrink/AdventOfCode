@@ -7,16 +7,14 @@ readonly class Range
     protected function __construct(
         public int $start,
         public int $end,
-    )
-    {
-    }
+    ) {}
 
     public function accepts(int $needle): bool
     {
         return $needle >= $this->start && $needle <= $this->end;
     }
 
-    public static function someAccept(int $needle, Range...$ranges): bool
+    public static function someAccept(int $needle, Range ...$ranges): bool
     {
         foreach ($ranges as $range) {
             if ($range->accepts($needle)) {
@@ -31,10 +29,9 @@ readonly class Range
      * Merge the given range(s), resulting in one or more ranges that cover the same values as every original range
      * would have done, but in an efficient matter: overlapping ranges are merged.
      *
-     * @param Range ...$ranges
      * @return Range[]
      */
-    public static function merge(Range...$ranges): array
+    public static function merge(Range ...$ranges): array
     {
         if (empty($ranges)) {
             return [];
@@ -55,6 +52,7 @@ readonly class Range
             // Next:         [ ..........
             if ($next->start <= $cursor->end + 1) {
                 $cursor = Range::of($cursor->start, max($cursor->end, $next->end));
+
                 continue;
             }
 

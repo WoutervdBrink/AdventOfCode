@@ -9,10 +9,15 @@ use Knevelina\AdventOfCode\InputManipulator;
 class WaitingArea
 {
     const FLOOR = 0;
+
     const EMPTY = 1;
+
     const OCCUPIED = 2;
+
     private array $seats;
+
     private int $width;
+
     private int $height;
 
     public function __construct(int $width, int $height)
@@ -62,7 +67,8 @@ class WaitingArea
         $this->seats[$row][$col] = $seat;
     }
 
-    #[Pure] public static function charToSeat(string $char): int
+    #[Pure]
+    public static function charToSeat(string $char): int
     {
         return match ($char) {
             '.' => self::FLOOR,
@@ -212,14 +218,15 @@ class WaitingArea
     {
         return collect($this->seats)
             ->map(
-                fn(array $row): string => collect($row)->map(
-                    fn(int $seat): string => self::seatToChar($seat)
+                fn (array $row): string => collect($row)->map(
+                    fn (int $seat): string => self::seatToChar($seat)
                 )->join('')
             )
             ->join(PHP_EOL);
     }
 
-    #[Pure] public static function seatToChar(int $seat): string
+    #[Pure]
+    public static function seatToChar(int $seat): string
     {
         return match ($seat) {
             self::FLOOR => '.',

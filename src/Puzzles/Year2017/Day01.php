@@ -3,6 +3,7 @@
 namespace Knevelina\AdventOfCode\Puzzles\Year2017;
 
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
+use Override;
 
 class Day01 implements PuzzleSolver
 {
@@ -22,11 +23,13 @@ class Day01 implements PuzzleSolver
         return $sum;
     }
 
+    #[Override]
     public function part1(string $input): int
     {
         return self::solve($input, 1);
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         return self::solve($input, intval(strlen($input) / 2));

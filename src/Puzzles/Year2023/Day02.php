@@ -5,9 +5,11 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2023;
 use InvalidArgumentException;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day02 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $games = array_filter(self::parse($input), function (object $game): bool {
@@ -20,13 +22,13 @@ class Day02 implements PuzzleSolver
             return true;
         });
 
-        return array_sum(array_map(fn(object $game): int => $game->id, $games));
+        return array_sum(array_map(fn (object $game): int => $game->id, $games));
     }
 
     private static function parse(string $input): array
     {
         return InputManipulator::splitLines($input, manipulator: function (string $line): object {
-            if (!preg_match('/Game (\d+)/', $line, $matches)) {
+            if (! preg_match('/Game (\d+)/', $line, $matches)) {
                 throw new InvalidArgumentException(sprintf('Could not find game ID in line "%s"', $line));
             }
 
@@ -34,7 +36,7 @@ class Day02 implements PuzzleSolver
 
             $line = explode(';', $line);
             $picks = array_map(function (string $pick): object {
-                $cursor = (object)['red' => 0, 'green' => 0, 'blue' => 0];
+                $cursor = (object) ['red' => 0, 'green' => 0, 'blue' => 0];
 
                 preg_match_all('/(\d+) (red|green|blue)/', $pick, $matches);
 
@@ -45,13 +47,14 @@ class Day02 implements PuzzleSolver
                 return $cursor;
             }, $line);
 
-            return (object)[
+            return (object) [
                 'id' => $id,
                 'picks' => $picks,
             ];
         });
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         return array_sum(array_map(function (object $game): int {
@@ -65,6 +68,7 @@ class Day02 implements PuzzleSolver
                 $blue = max($pick->blue, $blue);
 
             }
+
             return $red * $green * $blue;
         }, self::parse($input)));
     }

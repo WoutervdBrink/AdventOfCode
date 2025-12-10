@@ -6,9 +6,11 @@ use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Year2022\Day08\Tree;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day08 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $treeMap = self::parseInput($input);
@@ -18,14 +20,14 @@ class Day08 implements PuzzleSolver
             self::analyzeTreeLine(array_reverse($treeLine));
         }
 
-        return count(array_filter($treeMap->getValues(), fn(Tree $tree): bool => $tree->isVisible()));
+        return count(array_filter($treeMap->getValues(), fn (Tree $tree): bool => $tree->isVisible()));
     }
 
     private static function parseInput(string $input): Grid
     {
         /** @var array<array<Tree>> $trees */
-        $trees = InputManipulator::splitLines($input, manipulator: fn(string $line): array => array_map(
-            fn(string $char): Tree => new Tree(intval($char)),
+        $trees = InputManipulator::splitLines($input, manipulator: fn (string $line): array => array_map(
+            fn (string $char): Tree => new Tree(intval($char)),
             str_split($line)
         ));
 
@@ -47,6 +49,7 @@ class Day08 implements PuzzleSolver
         }
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $treeMap = self::parseInput($input);
@@ -58,14 +61,13 @@ class Day08 implements PuzzleSolver
 
         return array_reduce(
             $treeMap->getValues(),
-            fn(int $max, Tree $tree): int => max($tree->getScore(), $max),
+            fn (int $max, Tree $tree): int => max($tree->getScore(), $max),
             0
         );
     }
 
     /**
-     * @param array<Tree> $treeLine
-     * @return void
+     * @param  array<Tree>  $treeLine
      */
     private static function calculateScenicScores(array $treeLine): void
     {

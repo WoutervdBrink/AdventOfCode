@@ -2,6 +2,7 @@
 
 namespace Knevelina\AdventOfCode\Puzzles\Year2025;
 
+use InvalidArgumentException;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Structures\Range;
 use Knevelina\AdventOfCode\InputManipulator;
@@ -40,22 +41,21 @@ class Day05 implements PuzzleSolver
     }
 
     /**
-     * @param string $input
      * @return object{'ranges': Range[], ingredients: int[]}
      */
     private static function parseInput(string $input): object
     {
         $input = explode("\n\n", $input);
         if (count($input) !== 2) {
-            throw new \InvalidArgumentException('Invalid input: should contain two sections separated by two blank lines.');
+            throw new InvalidArgumentException('Invalid input: should contain two sections separated by two blank lines.');
         }
 
         [$rangesInput, $ingredientsInput] = $input;
 
         /** @var Range[] $ranges */
         $ranges = InputManipulator::splitLines($rangesInput, manipulator: function (string $line): Range {
-            if (!preg_match('/^(\d+)-(\d+)$/', $line, $matches)) {
-                throw new \InvalidArgumentException('Invalid range specification: should be two integers separated by -.');
+            if (! preg_match('/^(\d+)-(\d+)$/', $line, $matches)) {
+                throw new InvalidArgumentException('Invalid range specification: should be two integers separated by -.');
             }
 
             return Range::of(intval($matches[1]), intval($matches[2]));
@@ -65,6 +65,6 @@ class Day05 implements PuzzleSolver
 
         $ingredients = InputManipulator::getListOfIntegers($ingredientsInput);
 
-        return (object)compact('ranges', 'ingredients');
+        return (object) compact('ranges', 'ingredients');
     }
 }

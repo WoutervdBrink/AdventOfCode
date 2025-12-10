@@ -8,14 +8,16 @@ use Knevelina\AdventOfCode\Data\Structures\Direction;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Entry;
 use Knevelina\AdventOfCode\Data\Structures\Grid\Grid;
 use Knevelina\AdventOfCode\Data\Structures\Point;
+use Override;
 
 class Day06 extends CombinedPuzzleSolver
 {
+    #[Override]
     protected function solve(string $input): CombinedPuzzleOutput
     {
         $grid = Grid::fromInput($input, manipulator: 'strval');
         $guard = collect($grid->getEntries())
-            ->filter(fn(Entry $entry): bool => $entry->getValue() === '^')
+            ->filter(fn (Entry $entry): bool => $entry->getValue() === '^')
             ->firstOrFail();
 
         $x = $guard->getX();
@@ -30,7 +32,7 @@ class Day06 extends CombinedPuzzleSolver
         do {
             $key = self::encodeCoordinates($grid, $x, $y);
 
-            if (!isset($jumpTable[$key])) {
+            if (! isset($jumpTable[$key])) {
                 $nextX = $x;
                 $nextY = $y;
 
@@ -49,7 +51,7 @@ class Day06 extends CombinedPuzzleSolver
                     $direction = $direction->clockwise();
                 }
 
-                $jumpTable[$key] = (object)[
+                $jumpTable[$key] = (object) [
                     'x' => $nextX,
                     'y' => $nextY,
                     'direction' => $direction,
@@ -77,11 +79,10 @@ class Day06 extends CombinedPuzzleSolver
                 $entry = [];
             }
             /** @var array<int, array> $seen */
-
             do {
                 $key = self::encodeCoordinates($grid, $x, $y);
 
-                if (!isset($jumpTable[$key]) || $x === $obsX || $y === $obsY) {
+                if (! isset($jumpTable[$key]) || $x === $obsX || $y === $obsY) {
                     $nextX = $x;
                     $nextY = $y;
 
@@ -89,7 +90,7 @@ class Day06 extends CombinedPuzzleSolver
                         $nextX = $nextX + $direction->getHorizontalMovement();
                         $nextY = $nextY + $direction->getVerticalMovement();
                         $nextValue = $grid->getValue($nextX, $nextY, ' ');
-                    } while ($nextValue !== '#' && $nextValue !== ' ' && !($nextX === $obsX && $nextY === $obsY));
+                    } while ($nextValue !== '#' && $nextValue !== ' ' && ! ($nextX === $obsX && $nextY === $obsY));
 
                     if ($nextValue === '#' || ($nextX === $obsX && $nextY === $obsY)) {
                         $nextX = $nextX - $direction->getHorizontalMovement();
@@ -128,7 +129,7 @@ class Day06 extends CombinedPuzzleSolver
     {
         return new Point(
             $coordinates % $grid->getWidth(),
-            floor($coordinates / $grid->getWidth())
+            (int) floor($coordinates / $grid->getWidth())
         );
     }
 }

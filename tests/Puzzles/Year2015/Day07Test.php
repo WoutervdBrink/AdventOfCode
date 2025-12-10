@@ -1,29 +1,31 @@
 <?php
 
-
 namespace Knevelina\AdventOfCode\Tests\Puzzles\Year2015;
 
-
+use Knevelina\AdventOfCode\Puzzles\Year2015\Day07;
 use Knevelina\AdventOfCode\Tests\PuzzleSolverTestCase;
+use Override;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Knevelina\AdventOfCode\Puzzles\Year2015\Day07
- */
+#[CoversClass(Day07::class)]
 class Day07Test extends PuzzleSolverTestCase
 {
-    public function getExamples(): array
+    #[Override]
+    public static function getExamples(): array
     {
         return [
-            [1, 1, 65079]
+            [1, 1, 65079],
         ];
     }
 
+    #[Override]
     public function getSolutionForPart1(): int
     {
         return 956;
     }
 
-    public function getSolutionForPart2(): int|null
+    #[Override]
+    public function getSolutionForPart2(): int
     {
         return 40149;
     }

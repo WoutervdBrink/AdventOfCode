@@ -8,17 +8,19 @@ use Knevelina\AdventOfCode\Data\Year2020\Direction;
 use Knevelina\AdventOfCode\Data\Year2020\Ship;
 use Knevelina\AdventOfCode\Data\Year2020\Waypoint;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day12 implements PuzzleSolver
 {
+    #[Override]
     public function part1(string $input): int
     {
         $moves = InputManipulator::splitLines($input);
 
-        $ship = new Ship();
+        $ship = new Ship;
 
         foreach ($moves as $move) {
-            if (!preg_match('/^([NSEWLRF])(\d+)$/', $move, $matches)) {
+            if (! preg_match('/^([NSEWLRF])(\d+)$/', $move, $matches)) {
                 throw new InvalidArgumentException(sprintf('Invalid move "%s"', $move));
             }
 
@@ -44,15 +46,16 @@ class Day12 implements PuzzleSolver
         return abs($ship->getX()) + abs($ship->getY());
     }
 
+    #[Override]
     public function part2(string $input): int
     {
         $moves = InputManipulator::splitLines($input);
 
-        $ship = new Ship();
-        $waypoint = new Waypoint();
+        $ship = new Ship;
+        $waypoint = new Waypoint;
 
         foreach ($moves as $move) {
-            if (!preg_match('/^([NSEWLRF])(\d+)$/', $move, $matches)) {
+            if (! preg_match('/^([NSEWLRF])(\d+)$/', $move, $matches)) {
                 throw new InvalidArgumentException(sprintf('Invalid move "%s"', $move));
             }
 

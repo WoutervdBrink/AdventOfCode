@@ -5,15 +5,15 @@ namespace Knevelina\AdventOfCode\Tests\Data\Year2015;
 use Knevelina\AdventOfCode\Data\Year2015\Wire;
 use Knevelina\AdventOfCode\Data\Year2015\WireCollection;
 use Knevelina\AdventOfCode\Data\Year2015\WireOperator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Knevelina\AdventOfCode\Data\Year2015\WireCollection
- */
+#[CoversClass(WireCollection::class)]
 class WireCollectionTest extends TestCase
 {
-    /** @test */
-    function it_gets_wire_values()
+    #[Test]
+    public function it_gets_wire_values()
     {
         $wc = new WireCollection(
             '123 -> x
@@ -36,24 +36,24 @@ NOT y -> i'
         $this->assertEquals(456, $wc->getValue('y'));
     }
 
-    /** @test */
-    function it_rejects_invalid_gates(): void
+    #[Test]
+    public function it_rejects_invalid_gates(): void
     {
         $this->expectExceptionMessage('Invalid gate specification');
 
         new WireCollection('abc');
     }
 
-    /** @test */
-    function it_rejects_double_wires(): void
+    #[Test]
+    public function it_rejects_double_wires(): void
     {
         $this->expectExceptionMessage('Trying to add existing');
 
         new WireCollection("123 -> y\n456 -> y");
     }
 
-    /** @test */
-    function it_rejects_non_existent_wires(): void
+    #[Test]
+    public function it_rejects_non_existent_wires(): void
     {
         $wc = new WireCollection('123 -> y');
 
@@ -62,22 +62,22 @@ NOT y -> i'
         $wc->getValue('x');
     }
 
-    /** @test */
-    function it_gets_wires(): void
+    #[Test]
+    public function it_gets_wires(): void
     {
         $wc = new WireCollection("123 -> y\nNOT y -> x");
 
         $this->assertEquals(
             [
                 'y' => new Wire(WireOperator::VALUE, [123]),
-                'x' => new Wire(WireOperator::NOT, ['y'])
+                'x' => new Wire(WireOperator::NOT, ['y']),
             ],
             $wc->getWires()
         );
     }
 
-    /** @test */
-    function it_removes_wires(): void
+    #[Test]
+    public function it_removes_wires(): void
     {
         $wc = new WireCollection("123 -> y\nNOT y -> x");
 

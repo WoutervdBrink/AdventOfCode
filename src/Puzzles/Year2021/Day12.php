@@ -5,22 +5,23 @@ namespace Knevelina\AdventOfCode\Puzzles\Year2021;
 use Knevelina\AdventOfCode\Contracts\PuzzleSolver;
 use Knevelina\AdventOfCode\Data\Year2021\Cave;
 use Knevelina\AdventOfCode\InputManipulator;
+use Override;
 
 class Day12 implements PuzzleSolver
 {
-
+    #[Override]
     public function part1(string $input): int
     {
-        $input = InputManipulator::splitLines($input, manipulator: fn(string $line): array => explode('-', $line, 2));
+        $input = InputManipulator::splitLines($input, manipulator: fn (string $line): array => explode('-', $line, 2));
 
         $caves = [];
 
         foreach ($input as $edge) {
-            list ($from, $to) = $edge;
-            if (!isset($caves[$from])) {
+            [$from, $to] = $edge;
+            if (! isset($caves[$from])) {
                 $caves[$from] = new Cave($from);
             }
-            if (!isset($caves[$to])) {
+            if (! isset($caves[$to])) {
                 $caves[$to] = new Cave($to);
             }
             $from = $caves[$from];
@@ -47,6 +48,7 @@ class Day12 implements PuzzleSolver
 
             if ($connection->getName() === 'end') {
                 $routes++;
+
                 continue;
             }
 
@@ -56,18 +58,19 @@ class Day12 implements PuzzleSolver
         return $routes;
     }
 
+    #[Override]
     public function part2(string $input): int
     {
-        $input = InputManipulator::splitLines($input, manipulator: fn(string $line): array => explode('-', $line, 2));
+        $input = InputManipulator::splitLines($input, manipulator: fn (string $line): array => explode('-', $line, 2));
 
         $caves = [];
 
         foreach ($input as $edge) {
-            list ($from, $to) = $edge;
-            if (!isset($caves[$from])) {
+            [$from, $to] = $edge;
+            if (! isset($caves[$from])) {
                 $caves[$from] = new Cave($from);
             }
-            if (!isset($caves[$to])) {
+            if (! isset($caves[$to])) {
                 $caves[$to] = new Cave($to);
             }
             $from = $caves[$from];
