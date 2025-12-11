@@ -33,6 +33,13 @@ class Day10 implements PuzzleSolver
     #[Override]
     public function part2(string $input): int
     {
-        return 0;
+        $machines = self::parse($input);
+        $solution = 0;
+
+        foreach ($machines as $machine) {
+            $solution += $machine->getFewestJoltageButtons();
+        }
+
+        return $solution;
     }
 }

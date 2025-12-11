@@ -15,6 +15,7 @@ class Day10Test extends PuzzleSolverTestCase
     {
         return [
             [1, 1, 7],
+            [1, 2, 33],
         ];
     }
 
@@ -22,5 +23,11 @@ class Day10Test extends PuzzleSolverTestCase
     public function getSolutionForPart1(): int
     {
         return 461;
+    }
+
+    #[Override]
+    public function getSolutionForPart2(): int
+    {
+        return 16386;
     }
 }

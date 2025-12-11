@@ -115,4 +115,59 @@ readonly class Machine
 
         return new self($lights, $buttons, $joltageRequirements);
     }
+
+    public function getFewestJoltageButtons(): int
+    {
+        $problem = 'minimize'.PHP_EOL.'  ';
+
+        $problem .= implode(' + ', array_map(fn (int $buttonIdx): string => 'x'.$buttonIdx, array_keys($this->buttons))).PHP_EOL.PHP_EOL;
+
+        $problem .= 'subject to'.PHP_EOL;
+
+        foreach ($this->joltage as $idx => $joltage) {
+            $problem .= '  c'.$idx.': ';
+            $xs = [];
+            foreach ($this->buttons as $buttonIdx => $button) {
+                if (in_array($idx, $button)) {
+                    $xs[] = 'x'.$buttonIdx;
+                }
+            }
+            $problem .= implode(' + ', $xs);
+            $problem .= ' = '.$joltage.PHP_EOL;
+        }
+
+        $problem .= PHP_EOL.'bounds'.PHP_EOL;
+
+        foreach (array_keys($this->buttons) as $idx) {
+            $problem .= '  x'.$idx.' >= 0'.PHP_EOL;
+        }
+
+        $problem .= PHP_EOL.'integers '.PHP_EOL;
+        foreach (array_keys($this->buttons) as $idx) {
+            $problem .= ' x'.$idx;
+        }
+
+        $problem .= PHP_EOL.PHP_EOL.'end'.PHP_EOL;
+
+        $problemfile = tempnam(sys_get_temp_dir(), 'aoc_problem');
+        $outfile = tempnam(sys_get_temp_dir(), 'aoc_outfile');
+
+        file_put_contents($problemfile, $problem);
+
+        $output = [];
+        $return = 0;
+        exec('glpsol --lp '.$problemfile.' -w '.$outfile.' 2>&1', $output, $return);
+
+        if ($return !== 0) {
+            throw new RuntimeException('Executing glpsol returned in exit code '.$return.': '.implode(PHP_EOL, $output));
+        }
+
+        $out = file_get_contents($outfile);
+
+        if (preg_match('/obj = (\d+)/', $out, $match)) {
+            return intval($match[1]);
+        }
+
+        throw new RuntimeException('glpsol did not return an objective '.implode(PHP_EOL, $output));
+    }
 }
