@@ -14,11 +14,13 @@ namespace Knevelina\AdventOfCode\Data\Structures\Graph;
  * to associate values of any type to a graph's vertices without cluttering its visual representation.
  *
  * Edges are always directional. To create an undirected graph, simply add the reverse edge.
+ *
+ * @template T Type of value held by the vertex.
  */
 class Vertex
 {
     /**
-     * @var Graph The graph to which this vertex belongs.
+     * @var Graph<T> The graph to which this vertex belongs.
      */
     public readonly Graph $graph;
 
@@ -28,16 +30,16 @@ class Vertex
     public readonly string $label;
 
     /**
-     * @var mixed The value associated with this vertex.
+     * @var T The value associated with this vertex.
      */
     public mixed $value;
 
     /**
      * Construct a new graph vertex.
      *
-     * @param  Graph  $graph  The graph to which the vertex belongs.
+     * @param  Graph<T>  $graph  The graph to which the vertex belongs.
      * @param  string  $label  The label of the vertex. Does not have to be unique among the graph.
-     * @param  mixed|null  $value  The value associated with the vertex.
+     * @param  ?T  $value  The value associated with the vertex.
      */
     public function __construct(Graph $graph, string $label, mixed $value = null)
     {
@@ -50,6 +52,8 @@ class Vertex
 
     /**
      * Add an edge from this vertex to another vertex.
+     *
+     * @param  Vertex<T>  $other
      */
     public function addEdgeTo(Vertex $other, int $weight = 1): void
     {
@@ -59,6 +63,8 @@ class Vertex
     /**
      * Query whether this vertex is adjacent to another vertex. Here, adjacency means there exists an edge with this
      * vertex as its source, and the other vertex as its target.
+     *
+     * @param  Vertex<T>  $other
      */
     public function isAdjacentTo(Vertex $other): bool
     {
@@ -69,7 +75,7 @@ class Vertex
      * Get the neighbors of this vertex. Here, a neighbor is any vertex this vertex has an edge to. Consequently,
      * vertices which have an edge pointing towards this vertex will not be included in the result.
      *
-     * @return list<Vertex>
+     * @return list<Vertex<T>>
      */
     public function getNeighbors(): array
     {
@@ -77,7 +83,7 @@ class Vertex
     }
 
     /**
-     * Get the amount of neighbors this vertex has. Here, a neighbor is any vertex this vertex has an edge to.
+     * Get the amount of vertices this vertex points to. Here, a neighbor is any vertex this vertex has an edge to.
      * Consequently, vertices which have an edge pointing towards this vertex will not be included in the result.
      *
      * @return int The amount of neighbors of this vertex.
@@ -87,12 +93,11 @@ class Vertex
         return $this->graph->getIncidenceFrom($this);
     }
 
-    public function __debugInfo(): ?array
+    public function __debugInfo(): array
     {
         return [
             'label' => $this->label,
             'value' => $this->value,
-            'edges' => $this->edges,
         ];
     }
 }

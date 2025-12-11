@@ -10,9 +10,14 @@ use InvalidArgumentException;
  * The existence of an edge from a source to a target implies you can 'visit' the target vertex from the source vertex.
  *
  * The optional weight is 1 by default and can be set and queried.
+ *
+ * @template T Type of values held by the vertices.
  */
 class Edge
 {
+    /**
+     * @var Graph<T>
+     */
     public readonly Graph $graph;
 
     /**
@@ -20,26 +25,15 @@ class Edge
      *
      * The provided vertices must belong to the same graph.
      *
-     * @param  Vertex  $from  The source vertex of this edge.
-     * @param  Vertex  $to  The target vertex of this edge.
+     * @param  Vertex<T>  $from  The source vertex of this edge.
+     * @param  Vertex<T>  $to  The target vertex of this edge.
      * @param  int  $weight  The initial weight of this edge.
      *
      * @throws InvalidArgumentException if the edges do not belong to the same graph.
      */
     public function __construct(
-        /**
-         * @var Vertex The source vertex of this edge.
-         */
         public readonly Vertex $from,
-
-        /**
-         * @var Vertex The target vertex of this edge.
-         */
         public readonly Vertex $to,
-
-        /**
-         * @var int The weight of this edge.
-         */
         public int $weight,
     ) {
         if (($graph = $from->graph) !== $to->graph) {
@@ -55,8 +49,8 @@ class Edge
      * If the given edge is the source, the target is given, and vice versa. If the vertex is not part of the edge, an
      * exception is thrown.
      *
-     * @param  Vertex  $v  The vertex for which to find the other end.
-     * @return Vertex The other end of the edge. Guaranteed not to be equal to <code>$v</code>.
+     * @param  Vertex<T>  $v  The vertex for which to find the other end.
+     * @return Vertex<T> The other end of the edge. Guaranteed not to be equal to <code>$v</code>.
      *
      * @throws InvalidArgumentException if the specified vertex is not part of this edge.
      */
@@ -76,7 +70,7 @@ class Edge
     /**
      * Query whether the edge contains this vertex as its source or target.
      *
-     * @param  Vertex  $v  The vertex to query.
+     * @param  Vertex<T>  $v  The vertex to query.
      * @return bool <code>true</code> when this edge has the specified vertex as either its source or its target;
      *              <code>false</code> otherwise.
      */
@@ -85,7 +79,7 @@ class Edge
         return $this->from === $v || $this->to === $v;
     }
 
-    public function __debugInfo(): ?array
+    public function __debugInfo(): array
     {
         return [
             'from' => $this->from,
