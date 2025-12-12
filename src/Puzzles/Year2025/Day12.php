@@ -65,8 +65,6 @@ class Day12 implements PuzzleSolver
                 }
             }
 
-            echo 'Area #'.$idx.': lower = '.$lowerBound.', upper = '.$upperBound.', area = '.$area->area.PHP_EOL;
-
             if ($area->area >= $upperBound) {
                 // Strong accept: presents fit without packing.
                 $valid++;
